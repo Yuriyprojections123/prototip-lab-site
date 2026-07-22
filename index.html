@@ -1,296 +1,416 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ПРОТОТИП LAB — дизайн, 3D-моделирование, печать, сканирование и малосерийное производство изделий под ключ.">
-  <meta name="theme-color" content="#0a0a0a">
-  <meta property="og:title" content="ПРОТОТИП LAB — от идеи до объекта">
-  <meta property="og:description" content="Студия дизайна и цифрового производства полного цикла.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/hero-prototip-lab-v2.png">
-  <title>ПРОТОТИП LAB — дизайн и производство</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ПРОТОТИП LAB — дизайн и производство физических объектов</title>
+  <meta name="description" content="Студия полного цикла: 3D-моделирование, сканирование, прототипирование, производство и финишная отделка.">
+  <meta name="theme-color" content="#6D4DFF">
+  <link rel="canonical" href="/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+body{margin:0;background:#FAFAFC}
+a{color:#6D4DFF} a:hover{color:#5A3BEC}
+@keyframes floatChip{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes floatChip2{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+</style>
 </head>
-<body>
-  <a class="skip-link" href="#main">Перейти к содержанию</a>
-  <div class="noise" aria-hidden="true"></div>
-
-  <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="ПРОТОТИП LAB — на главную">
-      <img class="brand-logo" src="prototip_logo.png" alt="ПРОТОТИП LAB — студия дизайна и производства" width="1792" height="896">
+<body data-page="Home">
+<div style="font-family:'Manrope',sans-serif;color:#16161D;background:#FAFAFC">
+  <header class="site-header" style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid #ECEDF3;font-family:'Manrope',sans-serif">
+  <div style="max-width:1240px;margin:0 auto;padding:0 24px;height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#16161D">
+      <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="plTop" x1="8" y1="6" x2="40" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#F2F3F7"></stop><stop offset="1" stop-color="#C2C5D4"></stop></linearGradient>
+          <linearGradient id="plLeft" x1="8" y1="14" x2="24" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#4A4C5A"></stop><stop offset="1" stop-color="#22232D"></stop></linearGradient>
+          <linearGradient id="plRight" x1="24" y1="22" x2="42" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#8A6BFF"></stop><stop offset="1" stop-color="#5A3BEC"></stop></linearGradient>
+        </defs>
+        <path d="M24 4L42 13V15L24 24L6 15V13L24 4Z" fill="url(#plTop)"></path>
+        <path d="M6 15L24 24V44L6 35V15Z" fill="url(#plLeft)"></path>
+        <path d="M42 15L24 24V44L42 35V15Z" fill="url(#plRight)"></path>
+        <g transform="translate(28,27) skewY(-26.565)"><path d="M0 0H8V8H6V2.2H2V8H0V0Z" fill="rgba(255,255,255,.9)"></path></g>
+      </svg>
+      <span style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:14px;letter-spacing:.05em;white-space:nowrap">ПРОТОТИП <span style="color:#6D4DFF">LAB</span></span>
+        <span style="font-size:8px;font-weight:600;letter-spacing:.3em;color:#8A8FA3;text-transform:uppercase;white-space:nowrap">студия дизайна и производства</span>
+      </span>
     </a>
-
-    <nav class="desktop-nav" aria-label="Основная навигация">
-      <a href="#services">Услуги</a>
-      <a href="#process">Процесс</a>
-      <a href="#tech">Технологии</a>
-      <a href="#faq">FAQ</a>
+    <nav class="site-nav" style="display:flex;align-items:center;gap:30px;font-size:14px;font-weight:600">
+      <a href="services.html" style="color:#4E5468;text-decoration:none;transition:color .2s" style-hover="color:#16161D">Услуги</a>
+      <a href="portfolio.html" style="color:#4E5468;text-decoration:none;transition:color .2s" style-hover="color:#16161D">Портфолио</a>
+      <a href="about.html" style="color:#4E5468;text-decoration:none;transition:color .2s" style-hover="color:#16161D">О студии</a>
+      <a href="contact.html" style="color:#4E5468;text-decoration:none;transition:color .2s" style-hover="color:#16161D">Контакты</a>
     </nav>
+    <a class="header-cta" href="contact.html" style="display:inline-flex;align-items:center;gap:10px;background:#6D4DFF;color:#fff;font-weight:600;font-size:14px;padding:12px 24px;border-radius:999px;text-decoration:none;box-shadow:0 8px 20px rgba(109,77,255,.28);transition:transform .2s,background .2s,box-shadow .2s" style-hover="transform:translateY(-2px);background:#5A3BEC;box-shadow:0 12px 28px rgba(109,77,255,.36);color:#fff">Рассчитать проект <span style="font-size:16px;line-height:1">→</span></a>
+  </div>
+</header>
 
-    <a class="header-cta" href="#brief">Обсудить проект <span>↗</span></a>
-    <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false">
-      <span></span><span></span>
-    </button>
-  </header>
-
-  <nav class="mobile-menu" aria-label="Мобильная навигация" aria-hidden="true">
-    <a href="#services">Услуги</a>
-    <a href="#process">Процесс</a>
-    <a href="#tech">Технологии</a>
-    <a href="#faq">FAQ</a>
-    <a class="mobile-menu-cta" href="#brief">Обсудить проект ↗</a>
-  </nav>
-
-  <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true">
-        <img src="assets/hero-prototip-lab-v2.png" alt="" width="1672" height="941" fetchpriority="high">
-      </div>
-      <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-copy">
-        <div class="eyebrow"><span></span> Студия дизайна и производства</div>
-        <h1 id="hero-title">От идеи<br>до <em>объекта</em></h1>
-        <p>Превращаем изображения, эскизы и цифровые концепции в реальные вещи — от первой 3D-модели до покраски и сборки.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#brief">Рассчитать проект <span>↗</span></a>
-          <a class="text-link" href="#services">Что мы создаём <span>↓</span></a>
+  <section data-screen-label="Hero" style="position:relative;overflow:hidden;padding:88px 24px 72px">
+    <div style="position:absolute;left:-160px;top:-120px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(109,77,255,.12),transparent 65%);pointer-events:none"></div>
+    <div style="position:absolute;right:-100px;top:180px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(109,77,255,.1),transparent 65%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:10px;background:#F0EDFF;color:#5A3BEC;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 16px;border-radius:999px">Идея · Модель · Реальность</div>
+        <h1 style="margin:26px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(38px,4.6vw,62px);line-height:1.06;letter-spacing:-.015em">Проектируем и создаём <span style="color:#6D4DFF">физические объекты</span></h1>
+        <p style="margin:24px 0 0;max-width:480px;font-size:18px;line-height:1.65;color:#5A6070;text-wrap:pretty">От идеи, фотографии или эскиза — до полностью готового изделия. Дизайн, инжиниринг и производство в одной студии.</p>
+        <div style="margin-top:36px;display:flex;flex-wrap:wrap;gap:14px">
+          <a href="contact.html" style="display:inline-flex;align-items:center;gap:10px;background:#6D4DFF;color:#fff;font-weight:700;font-size:15px;padding:16px 32px;border-radius:999px;text-decoration:none;box-shadow:0 12px 28px rgba(109,77,255,.3);transition:transform .2s,background .2s" style-hover="transform:translateY(-2px);background:#5A3BEC;color:#fff">Рассчитать проект →</a>
+          <a href="portfolio.html" style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:#16161D;border:1px solid #E3E5EE;font-weight:600;font-size:15px;padding:16px 32px;border-radius:999px;text-decoration:none;transition:border-color .2s,color .2s,transform .2s" style-hover="border-color:#6D4DFF;color:#5A3BEC;transform:translateY(-2px)">Посмотреть работы</a>
+        </div>
+        <div style="margin-top:44px;display:flex;gap:36px;flex-wrap:wrap">
+          <div><div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:24px;color:#16161D">1000+</div><div style="margin-top:4px;font-size:13px;color:#8A8FA3">успешных проектов</div></div>
+          <div><div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:24px;color:#16161D">5+ лет</div><div style="margin-top:4px;font-size:13px;color:#8A8FA3">в 3D-индустрии</div></div>
+          <div><div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:24px;color:#16161D">50 мкм</div><div style="margin-top:4px;font-size:13px;color:#8A8FA3">точность деталей</div></div>
         </div>
       </div>
-      <div class="hero-meta" aria-label="Ключевые технологии">
-        <span>FDM</span><span>SLA</span><span>3D SCAN</span><span>POST-PROCESS</span>
-      </div>
-      <div class="hero-index" aria-hidden="true">01 <span>/</span> 06</div>
-    </section>
-
-    <section class="manifesto section-shell reveal">
-      <div class="section-label"><span>01</span> О студии</div>
-      <div class="manifesto-content">
-        <p class="manifesto-lead">Мы не просто печатаем<br>по готовым файлам.</p>
-        <div class="manifesto-body">
-          <p>Большая часть проектов начинается с фотографии, рисунка или слов. Мы переводим идею в точную цифровую форму, продумываем конструкцию и доводим изделие до готового результата.</p>
-          <p>Дизайнеры, инженеры и мастера производства работают как одна команда — поэтому объект выглядит убедительно и работает так, как задумано.</p>
+      <div style="position:relative">
+        <div style="position:relative;border-radius:32px;overflow:hidden;background:linear-gradient(160deg,#EFEDF8,#E3E0F2);box-shadow:0 24px 64px rgba(22,22,29,.1);aspect-ratio:4/3.4">
+          <img class="slot-image" src="assets/hero-studio.webp" alt="Коллаж: фигурка, шлем, сканер, CAD-модель" width="1448" height="1086" loading="eager" fetchpriority="high">
+        </div>
+        <div style="position:absolute;left:-24px;top:36px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #ECEDF3;border-radius:16px;padding:12px 18px;box-shadow:0 12px 32px rgba(22,22,29,.12);display:flex;align-items:center;gap:10px;animation:floatChip 6s ease-in-out infinite;pointer-events:none">
+          <span style="width:8px;height:8px;border-radius:50%;background:#6D4DFF"></span>
+          <span style="font-size:13px;font-weight:700">3D-сканирование</span>
+          <span style="font-size:11px;color:#8A8FA3">реверс-инжиниринг</span>
+        </div>
+        <div style="position:absolute;right:-18px;bottom:48px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid #ECEDF3;border-radius:16px;padding:12px 18px;box-shadow:0 12px 32px rgba(22,22,29,.12);display:flex;align-items:center;gap:10px;animation:floatChip2 7s ease-in-out infinite;pointer-events:none">
+          <span style="width:8px;height:8px;border-radius:50%;background:#22C55E"></span>
+          <span style="font-size:13px;font-weight:700">Готово к отгрузке</span>
+          <span style="font-size:11px;color:#8A8FA3">покраска · сборка</span>
         </div>
       </div>
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>DESIGN</span><i>✦</i><span>MODEL</span><i>✦</i><span>PRODUCE</span><i>✦</i><span>FINISH</span><i>✦</i>
-          <span>DESIGN</span><i>✦</i><span>MODEL</span><i>✦</i><span>PRODUCE</span><i>✦</i><span>FINISH</span><i>✦</i>
-        </div>
-      </div>
-    </section>
+    </div>
+    <div style="position:relative;max-width:1240px;margin:64px auto 0;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;color:#8A8FA3;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">
+      <span>Концепт</span><span style="color:#C9CBD6">→</span><span>3D-модель</span><span style="color:#C9CBD6">→</span><span>Прототип</span><span style="color:#C9CBD6">→</span><span>Производство</span><span style="color:#C9CBD6">→</span><span>Покраска</span><span style="color:#C9CBD6">→</span><span>Готовое изделие</span>
+    </div>
+  </section>
 
-    <section class="services section-shell" id="services" aria-labelledby="services-title">
-      <div class="section-heading reveal">
-        <div class="section-label"><span>02</span> Направления</div>
-        <h2 id="services-title">Создаём то,<br>чего <em>ещё нет</em></h2>
-        <p>Берём на себя весь путь: от неопределённой идеи до тиража готовых объектов.</p>
-      </div>
-
-      <div class="service-list">
-        <article class="service-item reveal" data-service="01">
-          <div class="service-number">01</div>
-          <div class="service-name"><h3>Фигурки и персонажи</h3><span>Коллекционные модели, статуэтки и герои по фотографии</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-        <article class="service-item reveal" data-service="02">
-          <div class="service-number">02</div>
-          <div class="service-name"><h3>Мерч и бренд-объекты</h3><span>Подарки, награды и фирменные изделия с характером бренда</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-        <article class="service-item reveal" data-service="03">
-          <div class="service-number">03</div>
-          <div class="service-name"><h3>Косплей и реквизит</h3><span>Шлемы, маски, элементы костюма и сценические объекты</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-        <article class="service-item reveal" data-service="04">
-          <div class="service-number">04</div>
-          <div class="service-name"><h3>Прототипы для бизнеса</h3><span>Демонстрационные и функциональные образцы перед запуском</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-        <article class="service-item reveal" data-service="05">
-          <div class="service-number">05</div>
-          <div class="service-name"><h3>3D-моделирование</h3><span>Скульптинг, промышленный дизайн и подготовка к производству</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-        <article class="service-item reveal" data-service="06">
-          <div class="service-number">06</div>
-          <div class="service-name"><h3>Сканирование и реверс</h3><span>Цифровые копии, восстановление геометрии и адаптация деталей</span></div>
-          <div class="service-icon" aria-hidden="true">↗</div>
-        </article>
-      </div>
-    </section>
-
-    <section class="object-break" aria-label="Подход студии">
-      <div class="object-break-art" aria-hidden="true">
-        <div class="orbital orbital-one"></div>
-        <div class="orbital orbital-two"></div>
-        <div class="prototype-cube"><span></span><span></span><span></span></div>
-      </div>
-      <div class="object-break-copy reveal">
-        <div class="eyebrow"><span></span> Задача любой сложности</div>
-        <blockquote>«Если идею можно описать — мы найдём способ её произвести»</blockquote>
-        <p>Вы приносите референс. Мы предлагаем материал, технологию и конструкцию.</p>
-      </div>
-    </section>
-
-    <section class="process section-shell" id="process" aria-labelledby="process-title">
-      <div class="section-heading reveal">
-        <div class="section-label"><span>03</span> Как работаем</div>
-        <h2 id="process-title">Один процесс.<br><em>Предсказуемый</em> результат.</h2>
-      </div>
-
-      <ol class="process-grid">
-        <li class="process-card reveal">
-          <span class="process-no">01</span><span class="process-tag">INPUT</span>
-          <h3>Идея и бриф</h3>
-          <p>Обсуждаем задачу, тираж, размеры, сроки и желаемый результат. Можно прийти с одним изображением.</p>
-        </li>
-        <li class="process-card reveal">
-          <span class="process-no">02</span><span class="process-tag">DESIGN</span>
-          <h3>Цифровая модель</h3>
-          <p>Создаём 3D-модель, прорабатываем детали и согласовываем внешний вид до производства.</p>
-        </li>
-        <li class="process-card reveal">
-          <span class="process-no">03</span><span class="process-tag">MAKE</span>
-          <h3>Производство</h3>
-          <p>Выбираем технологию и материал под задачу, печатаем и контролируем точность геометрии.</p>
-        </li>
-        <li class="process-card reveal">
-          <span class="process-no">04</span><span class="process-tag">FINISH</span>
-          <h3>Финиш и сборка</h3>
-          <p>Шлифуем, грунтуем, красим, собираем — и передаём полностью готовый физический объект.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="tech section-shell" id="tech" aria-labelledby="tech-title">
-      <div class="tech-top reveal">
+  <section data-screen-label="Услуги" style="padding:96px 24px;background:#fff;border-top:1px solid #F0F1F5;border-bottom:1px solid #F0F1F5">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:52px">
         <div>
-          <div class="section-label"><span>04</span> Технологии</div>
-          <h2 id="tech-title">Точность<br>в <em>деталях</em></h2>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Направления работы</div>
+          <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12;letter-spacing:-.01em">Создаём то,<br>чего ещё нет</h2>
         </div>
-        <p>Подбираем технологию не по привычке, а под функцию, поверхность, размер и бюджет конкретного объекта.</p>
+        <a href="services.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:#6D4DFF;text-decoration:none">Все услуги →</a>
       </div>
-
-      <div class="tech-grid">
-        <article class="tech-card tech-card-accent reveal">
-          <div class="tech-code">FDM</div><span class="tech-chip">FUNCTION</span>
-          <h3>Прочная печать</h3>
-          <p>Корпуса, мастер-модели, крупные объекты и функциональные детали из инженерных пластиков.</p>
-          <div class="tech-lines" aria-hidden="true"></div>
-        </article>
-        <article class="tech-card reveal">
-          <div class="tech-code">SLA</div><span class="tech-chip">DETAIL</span>
-          <h3>Высокая детализация</h3>
-          <p>Миниатюры, лица, фактуры и формы, где важна точность каждого миллиметра.</p>
-          <div class="tech-droplet" aria-hidden="true"></div>
-        </article>
-        <article class="tech-card reveal">
-          <div class="tech-code">SCAN</div><span class="tech-chip">CAPTURE</span>
-          <h3>3D-сканирование</h3>
-          <p>Фиксируем реальную геометрию объекта для копирования, доработки или реверс-инжиниринга.</p>
-          <div class="scan-grid" aria-hidden="true"></div>
-        </article>
-        <article class="tech-card tech-card-wide reveal">
-          <div class="tech-code">POST</div><span class="tech-chip">CRAFT</span>
-          <h3>Постобработка</h3>
-          <p>Поверхность определяет впечатление. Убираем следы производства, грунтуем, окрашиваем и наносим спецэффекты — от матового soft-touch до реалистичного металла.</p>
-          <div class="finish-swatches" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-        </article>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <a href="figurines.html" style="display:block;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/figurine-portrait.webp" alt="Фигурка — рендер" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">Фигурки и коллекционные модели</h3>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#5A6070">Портретные фигурки по фотографии, статуэтки, персонажи аниме и игр.</p>
+          </div>
+        </a>
+        <a href="cosplay.html" style="display:block;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/helmet-hero.webp" alt="Шлем — рендер" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">Косплей и реквизит</h3>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#5A6070">Шлемы, броня, маски и аксессуары с покраской и финишной отделкой.</p>
+          </div>
+        </a>
+        <a href="merch.html" style="display:block;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/merch.webp" alt="Брендированный продукт" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">Корпоративный мерч</h3>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#5A6070">Награды, подарки, промо-продукция и выставочные модели для брендов.</p>
+          </div>
+        </a>
+        <a href="modeling.html" style="display:block;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/modeling.webp" alt="CAD / скульптинг" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">3D-моделирование</h3>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#5A6070">Профессиональные модели по эскизу, фотографии, референсу или чертежу.</p>
+          </div>
+        </a>
+        <a href="scanning.html" style="display:block;position:relative;background:linear-gradient(150deg,#6D4DFF,#5A3BEC);border-radius:24px;overflow:hidden;text-decoration:none;color:#fff;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 24px 56px rgba(109,77,255,.4);color:#fff">
+          <div style="aspect-ratio:4/3;background:rgba(255,255,255,.08)"><img class="slot-image" src="assets/scanner.webp" alt="3D-сканер / mesh" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">3D-сканирование</h3>
+              <span style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:999px">Наша сила</span>
+            </div>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.82)">Реверс-инжиниринг, оцифровка объектов, CAD-реконструкция, реставрация.</p>
+          </div>
+        </a>
+        <a href="services.html#prototyping" style="display:block;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/prototype.webp" alt="Инженерный прототип" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:24px 24px 28px">
+            <h3 style="margin:0;font-family:'Unbounded',sans-serif;font-weight:500;font-size:17px">Прототипирование</h3>
+            <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#5A6070">Функциональные прототипы, инженерные детали и малые серии.</p>
+          </div>
+        </a>
       </div>
-    </section>
-
-    <section class="fit section-shell reveal">
-      <div class="fit-heading">
-        <div class="section-label"><span>05</span> Для кого</div>
-        <h2>Одна студия.<br>Разные <em>масштабы.</em></h2>
-      </div>
-      <div class="fit-list">
-        <div><span>01</span><h3>Бизнес</h3><p>Прототипы, мерч, POS‑материалы и малые серии.</p></div>
-        <div><span>02</span><h3>Авторы</h3><p>Персонажи, арт‑объекты и коллекционные тиражи.</p></div>
-        <div><span>03</span><h3>Частные клиенты</h3><p>Подарки и уникальные вещи по вашей идее.</p></div>
-      </div>
-    </section>
-
-    <section class="faq section-shell" id="faq" aria-labelledby="faq-title">
-      <div class="faq-heading reveal">
-        <div class="section-label"><span>06</span> Вопросы</div>
-        <h2 id="faq-title">До старта<br><em>проекта</em></h2>
-      </div>
-      <div class="accordion reveal">
-        <details>
-          <summary><span>Можно обратиться без готовой 3D-модели?</span><i>+</i></summary>
-          <p>Да. Достаточно описания, фотографии, рисунка или набора референсов. Мы разработаем модель и подготовим её к выбранной технологии производства.</p>
-        </details>
-        <details>
-          <summary><span>Как формируется стоимость?</span><i>+</i></summary>
-          <p>На неё влияют сложность моделирования, размеры, материал, детализация, постобработка и тираж. После короткого брифа мы предложим понятную смету по этапам.</p>
-        </details>
-        <details>
-          <summary><span>Можно сделать только один экземпляр?</span><i>+</i></summary>
-          <p>Конечно. Мы работаем как с единичными объектами, так и с малыми сериями. При повторном производстве готовая цифровая модель сокращает сроки запуска.</p>
-        </details>
-        <details>
-          <summary><span>Вы красите и собираете изделия?</span><i>+</i></summary>
-          <p>Да. Постобработка, покраска, тонировка и сборка — часть полного цикла. Вы получаете готовое изделие, а не набор напечатанных деталей.</p>
-        </details>
-        <details>
-          <summary><span>Сколько времени занимает проект?</span><i>+</i></summary>
-          <p>Срок зависит от моделирования и технологии. Простые задачи могут занять несколько дней, сложные проекты — несколько недель. Оценку даём до старта.</p>
-        </details>
-      </div>
-    </section>
-
-    <section class="brief" id="brief" aria-labelledby="brief-title">
-      <div class="brief-glow" aria-hidden="true"></div>
-      <div class="brief-inner reveal">
-        <div class="brief-kicker">Есть идея?</div>
-        <h2 id="brief-title">Давайте придадим<br>ей <em>форму.</em></h2>
-        <p>Расскажите о задаче в нескольких словах. На первом этапе достаточно идеи или изображения.</p>
-        <form class="brief-form" id="brief-form">
-          <label>
-            <span>Как к вам обращаться</span>
-            <input name="name" type="text" autocomplete="name" placeholder="Имя" required>
-          </label>
-          <label>
-            <span>Как с вами связаться</span>
-            <input name="contact" type="text" placeholder="Телефон, email или Telegram" required>
-          </label>
-          <label class="form-wide">
-            <span>Что хотите создать</span>
-            <textarea name="project" rows="3" placeholder="Например: фигурка персонажа по рисунку, высота 25 см" required></textarea>
-          </label>
-          <button class="button button-dark form-wide" type="submit">Подготовить заявку <span>↗</span></button>
-          <div class="form-status form-wide" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-brand">
-      <a class="brand brand-light" href="#top">
-        <img class="brand-logo footer-logo" src="prototip_logo.png" alt="ПРОТОТИП LAB — студия дизайна и производства" width="1792" height="896" loading="lazy">
-      </a>
-      <p>Дизайн и цифровое производство<br>полного цикла.</p>
     </div>
-    <div class="footer-nav">
-      <span>НАВИГАЦИЯ</span>
-      <a href="#services">Услуги</a><a href="#process">Процесс</a><a href="#tech">Технологии</a><a href="#faq">FAQ</a>
+  </section>
+
+  <section data-screen-label="Почему мы" style="padding:96px 24px">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:56px;align-items:start">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Почему мы</div>
+        <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Мы не печатаем файлы. Мы создаём изделия.</h2>
+        <p style="margin:20px 0 0;font-size:15px;line-height:1.7;color:#5A6070;text-wrap:pretty">Большинство проектов начинается с фотографии, рисунка или слов. Дизайнеры, инженеры и мастера производства работают как одна команда — поэтому объект выглядит убедительно и работает так, как задумано.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="width:44px;height:44px;border-radius:14px;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-family:'Unbounded',sans-serif;font-weight:600;font-size:15px">01</div>
+          <h3 style="margin:18px 0 8px;font-size:16px;font-weight:800">Полный цикл</h3>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:#5A6070">От концепта и промышленного дизайна до покраски, сборки и доставки готового изделия.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="width:44px;height:44px;border-radius:14px;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-family:'Unbounded',sans-serif;font-weight:600;font-size:15px">02</div>
+          <h3 style="margin:18px 0 8px;font-size:16px;font-weight:800">Инженерная точность</h3>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:#5A6070">Реверс-инжиниринг, CAD-реконструкция и контроль геометрии на каждом этапе.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="width:44px;height:44px;border-radius:14px;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-family:'Unbounded',sans-serif;font-weight:600;font-size:15px">03</div>
+          <h3 style="margin:18px 0 8px;font-size:16px;font-weight:800">Дизайн-мышление</h3>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:#5A6070">Продумываем форму, конструкцию и материал так, чтобы вещь хотелось взять в руки.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="width:44px;height:44px;border-radius:14px;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-family:'Unbounded',sans-serif;font-weight:600;font-size:15px">04</div>
+          <h3 style="margin:18px 0 8px;font-size:16px;font-weight:800">Один экземпляр или серия</h3>
+          <p style="margin:0;font-size:13.5px;line-height:1.65;color:#5A6070">Единичные объекты и малые тиражи. Готовая цифровая модель ускоряет повторный запуск.</p>
+        </div>
+      </div>
     </div>
-    <div class="footer-contact">
-      <span>НАЧАТЬ ПРОЕКТ</span>
-      <a href="#brief">Заполнить бриф ↗</a>
-      <p>От идеи и цифровой модели<br>до готового объекта.</p>
+  </section>
+
+  <section data-screen-label="Процесс" style="padding:96px 24px;background:#fff;border-top:1px solid #F0F1F5;border-bottom:1px solid #F0F1F5">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Как мы работаем</div>
+        <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Один процесс. Предсказуемый результат.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+        <div style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:20px;padding:26px 22px;transition:transform .25s,border-color .25s" style-hover="transform:translateY(-4px);border-color:#6D4DFF">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#6D4DFF;text-transform:uppercase">Шаг 01</div>
+          <h3 style="margin:14px 0 8px;font-size:15px;font-weight:800">Идея и бриф</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Обсуждаем задачу, размеры, тираж и сроки. Достаточно одного изображения.</p>
+        </div>
+        <div style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:20px;padding:26px 22px;transition:transform .25s,border-color .25s" style-hover="transform:translateY(-4px);border-color:#6D4DFF">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#6D4DFF;text-transform:uppercase">Шаг 02</div>
+          <h3 style="margin:14px 0 8px;font-size:15px;font-weight:800">Цифровая модель</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Моделируем или сканируем, прорабатываем детали и согласовываем до производства.</p>
+        </div>
+        <div style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:20px;padding:26px 22px;transition:transform .25s,border-color .25s" style-hover="transform:translateY(-4px);border-color:#6D4DFF">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#6D4DFF;text-transform:uppercase">Шаг 03</div>
+          <h3 style="margin:14px 0 8px;font-size:15px;font-weight:800">Производство</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Подбираем технологию и материал под задачу, контролируем точность геометрии.</p>
+        </div>
+        <div style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:20px;padding:26px 22px;transition:transform .25s,border-color .25s" style-hover="transform:translateY(-4px);border-color:#6D4DFF">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#6D4DFF;text-transform:uppercase">Шаг 04</div>
+          <h3 style="margin:14px 0 8px;font-size:15px;font-weight:800">Финиш и сборка</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Шлифуем, грунтуем, красим и собираем — поверхность определяет впечатление.</p>
+        </div>
+        <div style="background:#17181D;border:1px solid #17181D;border-radius:20px;padding:26px 22px;color:#fff;transition:transform .25s" style-hover="transform:translateY(-4px)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.16em;color:#9B7FFF;text-transform:uppercase">Шаг 05</div>
+          <h3 style="margin:14px 0 8px;font-size:15px;font-weight:800">Готовое изделие</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#B9BDCB">Вы получаете законченный объект, а не набор напечатанных деталей.</p>
+        </div>
+      </div>
     </div>
-    <div class="footer-bottom"><span>© <span id="year"></span> ПРОТОТИП LAB</span><a href="#top">Наверх ↑</a></div>
+  </section>
+
+  <section data-screen-label="Проекты" style="padding:96px 24px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:52px">
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Избранные проекты</div>
+          <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Из портфолио</h2>
+        </div>
+        <a href="portfolio.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:#6D4DFF;text-decoration:none">Все работы →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <a href="case-helmet.html" style="display:block;background:#fff;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/helmet-hero.webp" alt="Шлем мандалорца — фото" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:22px 24px 26px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A8FA3">Косплей</div>
+            <h3 style="margin:8px 0 0;font-size:16px;font-weight:800">Шлем со светом и подгонкой по скану головы</h3>
+          </div>
+        </a>
+        <a href="case-award.html" style="display:block;background:#fff;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/award-hero.webp" alt="Корпоративная награда — фото" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:22px 24px 26px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A8FA3">Корпоративный мерч</div>
+            <h3 style="margin:8px 0 0;font-size:16px;font-weight:800">Серия наград для IT-конференции — 120 штук</h3>
+          </div>
+        </a>
+        <a href="case-part.html" style="display:block;background:#fff;border:1px solid #ECEDF3;border-radius:24px;overflow:hidden;text-decoration:none;color:#16161D;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-6px);box-shadow:0 20px 48px rgba(22,22,29,.1);color:#16161D">
+          <div style="aspect-ratio:4/3;background:linear-gradient(160deg,#EFEDF8,#E5E2F4)"><img class="slot-image" src="assets/part-hero.webp" alt="Деталь после реверса — фото" width="1448" height="1086" loading="eager"></div>
+          <div style="padding:22px 24px 26px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8A8FA3">Реверс-инжиниринг</div>
+            <h3 style="margin:8px 0 0;font-size:16px;font-weight:800">Снятая с производства деталь — восстановлена по скану</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Для кого" style="padding:96px 24px;background:#fff;border-top:1px solid #F0F1F5;border-bottom:1px solid #F0F1F5">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:56px;align-items:center">
+      <div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Для кого</div>
+        <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Одна студия. Разные масштабы.</h2>
+        <p style="margin:20px 0 0;font-size:15px;line-height:1.7;color:#5A6070">Работаем с компаниями и частными клиентами — от единичного подарка до серийного мерча и инженерных задач.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Бизнес</span>
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Стартапы</span>
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Продуктовые дизайнеры</span>
+        <span style="background:#F0EDFF;border:1px solid #DCD3FF;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600;color:#5A3BEC">Коллекционеры</span>
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Косплей-мастера</span>
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Ивент-агентства</span>
+        <span style="background:#F0EDFF;border:1px solid #DCD3FF;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600;color:#5A3BEC">Маркетинг-команды</span>
+        <span style="background:#FAFAFC;border:1px solid #ECEDF3;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:600">Частные клиенты</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Технологии" style="padding:96px 24px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;margin-bottom:52px">
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Технологии</div>
+          <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Точность в деталях</h2>
+        </div>
+        <p style="margin:0;max-width:380px;font-size:14px;line-height:1.65;color:#5A6070">Подбираем технологию не по привычке, а под функцию, поверхность, размер и бюджет конкретного объекта.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:26px;color:#6D4DFF">FDM</div>
+          <h3 style="margin:16px 0 8px;font-size:15px;font-weight:800">Прочная печать</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Корпуса, мастер-модели, крупные объекты и функциональные детали из инженерных пластиков.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:26px;color:#6D4DFF">SLA</div>
+          <h3 style="margin:16px 0 8px;font-size:15px;font-weight:800">Высокая детализация</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Миниатюры, лица, фактуры и формы, где важна точность каждого миллиметра.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:26px;color:#6D4DFF">SCAN</div>
+          <h3 style="margin:16px 0 8px;font-size:15px;font-weight:800">3D-сканирование</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Фиксируем реальную геометрию объекта для копирования, доработки или реверс-инжиниринга.</p>
+        </div>
+        <div style="background:#fff;border:1px solid #ECEDF3;border-radius:20px;padding:28px;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 16px 40px rgba(22,22,29,.08)">
+          <div style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:26px;color:#6D4DFF">POST</div>
+          <h3 style="margin:16px 0 8px;font-size:15px;font-weight:800">Постобработка</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#5A6070">Шлифовка, грунт, покраска и спецэффекты — от матового soft-touch до реалистичного металла.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section data-screen-label="Отзывы" style="padding:96px 24px;background:#fff;border-top:1px solid #F0F1F5">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="text-align:center;max-width:640px;margin:0 auto 56px">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#6D4DFF">Отзывы</div>
+        <h2 style="margin:16px 0 0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);line-height:1.12">Что говорят клиенты</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <figure style="margin:0;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:20px">
+          <blockquote style="margin:0;font-size:15px;line-height:1.7;color:#16161D">«Принесли одну фотографию деда в молодости — получили портретную фигурку, от которой вся семья плакала. Сходство поразительное»</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:12px;margin-top:auto">
+            <span style="width:40px;height:40px;border-radius:50%;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-weight:800;font-size:14px">АК</span>
+            <span><span style="display:block;font-size:14px;font-weight:700">Анна К.</span><span style="display:block;font-size:12px;color:#8A8FA3">частный заказ, портретная фигурка</span></span>
+          </figcaption>
+        </figure>
+        <figure style="margin:0;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:20px">
+          <blockquote style="margin:0;font-size:15px;line-height:1.7;color:#16161D">«Восстановили деталь, которую производитель снял с производства 15 лет назад. Отсканировали сломанную, доработали конструкцию — новая работает лучше оригинала»</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:12px;margin-top:auto">
+            <span style="width:40px;height:40px;border-radius:50%;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-weight:800;font-size:14px">ДС</span>
+            <span><span style="display:block;font-size:14px;font-weight:700">Дмитрий С.</span><span style="display:block;font-size:12px;color:#8A8FA3">главный инженер, производственная компания</span></span>
+          </figcaption>
+        </figure>
+        <figure style="margin:0;background:#FAFAFC;border:1px solid #ECEDF3;border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:20px">
+          <blockquote style="margin:0;font-size:15px;line-height:1.7;color:#16161D">«Заказывали 200 фирменных наград к конференции. Сделали в срок, каждая — как из фирменного бутика. Гости спрашивали, где такие купить»</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:12px;margin-top:auto">
+            <span style="width:40px;height:40px;border-radius:50%;background:#F0EDFF;display:grid;place-items:center;color:#6D4DFF;font-weight:800;font-size:14px">МЛ</span>
+            <span><span style="display:block;font-size:14px;font-weight:700">Мария Л.</span><span style="display:block;font-size:12px;color:#8A8FA3">event-директор, ивент-агентство</span></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+
+  <div style="font-family:'Manrope',sans-serif">
+  <section style="padding:96px 24px;background:#FAFAFC">
+    <div style="max-width:1240px;margin:0 auto;position:relative;overflow:hidden;border-radius:36px;background:linear-gradient(135deg,#6D4DFF 0%,#8A63FF 55%,#A88BFF 100%);padding:clamp(48px,6vw,88px);color:#fff;box-shadow:0 24px 64px rgba(109,77,255,.32)">
+      <div style="position:absolute;right:-120px;top:-140px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.16);filter:blur(80px);pointer-events:none"></div>
+      <div style="position:absolute;left:40%;bottom:-180px;width:380px;height:380px;border-radius:50%;background:rgba(38,20,110,.35);filter:blur(90px);pointer-events:none"></div>
+      <div style="position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px">
+        <div style="max-width:560px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75)">Есть идея?</div>
+          <h2 style="margin:18px 0 16px;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,44px);line-height:1.1;letter-spacing:-.01em">Давайте придадим ей форму</h2>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:rgba(255,255,255,.82)">Расскажите о задаче в нескольких словах. На первом этапе достаточно идеи, фотографии или эскиза.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:260px">
+          <a href="contact.html" style="display:inline-flex;justify-content:center;align-items:center;gap:10px;background:#fff;color:#5A3BEC;font-weight:700;font-size:15px;padding:16px 32px;border-radius:999px;text-decoration:none;box-shadow:0 12px 28px rgba(26,12,80,.25);transition:transform .2s" style-hover="transform:translateY(-2px);color:#5A3BEC">Рассчитать проект →</a>
+          <a href="https://t.me/prototiplab" style="display:inline-flex;justify-content:center;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.45);color:#fff;font-weight:600;font-size:15px;padding:15px 32px;border-radius:999px;text-decoration:none;transition:background .2s" style-hover="background:rgba(255,255,255,.12);color:#fff">Написать в Telegram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer" style="background:#17181D;color:#fff;padding:72px 24px 32px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px 32px">
+        <div>
+          <a href="index.html" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#fff">
+            <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pfTop" x1="8" y1="6" x2="40" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#F2F3F7"></stop><stop offset="1" stop-color="#C2C5D4"></stop></linearGradient>
+                <linearGradient id="pfLeft" x1="8" y1="14" x2="24" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#5A5C6C"></stop><stop offset="1" stop-color="#2E2F3B"></stop></linearGradient>
+                <linearGradient id="pfRight" x1="24" y1="22" x2="42" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#8A6BFF"></stop><stop offset="1" stop-color="#5A3BEC"></stop></linearGradient>
+              </defs>
+              <path d="M24 4L42 13V15L24 24L6 15V13L24 4Z" fill="url(#pfTop)"></path>
+              <path d="M6 15L24 24V44L6 35V15Z" fill="url(#pfLeft)"></path>
+              <path d="M42 15L24 24V44L42 35V15Z" fill="url(#pfRight)"></path>
+              <g transform="translate(28,27) skewY(-26.565)"><path d="M0 0H8V8H6V2.2H2V8H0V0Z" fill="rgba(255,255,255,.9)"></path></g>
+            </svg>
+            <span style="display:flex;flex-direction:column;gap:3px">
+              <span style="font-family:'Unbounded',sans-serif;font-weight:600;font-size:14px;letter-spacing:.05em">ПРОТОТИП <span style="color:#9B7FFF">LAB</span></span>
+              <span style="font-size:8px;font-weight:600;letter-spacing:.3em;color:#7A7F92;text-transform:uppercase">студия дизайна и производства</span>
+            </span>
+          </a>
+          <p style="margin:20px 0 0;max-width:300px;font-size:13px;line-height:1.7;color:#9AA0B4">Проектируем и создаём физические объекты — от идеи, фотографии или эскиза до полностью готового изделия.</p>
+        </div>
+        <nav style="display:flex;flex-direction:column;gap:12px;font-size:13px">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.22em;color:#6E7388;text-transform:uppercase;margin-bottom:6px">Студия</span>
+          <a href="index.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Главная</a>
+          <a href="portfolio.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Портфолио</a>
+          <a href="about.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">О студии</a>
+          <a href="contact.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Контакты</a>
+        </nav>
+        <nav style="display:flex;flex-direction:column;gap:12px;font-size:13px">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.22em;color:#6E7388;text-transform:uppercase;margin-bottom:6px">Услуги</span>
+          <a href="modeling.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">3D-моделирование</a>
+          <a href="scanning.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">3D-сканирование</a>
+          <a href="figurines.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Фигурки и коллекционные модели</a>
+          <a href="merch.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Корпоративный мерч</a>
+          <a href="cosplay.html" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Косплей и реквизит</a>
+        </nav>
+        <nav style="display:flex;flex-direction:column;gap:12px;font-size:13px">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.22em;color:#6E7388;text-transform:uppercase;margin-bottom:6px">Связаться</span>
+          <a href="https://t.me/prototiplab" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">Telegram</a>
+          <a href="https://wa.me/79000000000" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">WhatsApp</a>
+          <a href="mailto:hello@prototip-lab.ru" style="color:#C6CADB;text-decoration:none;transition:color .2s" style-hover="color:#fff">hello@prototip-lab.ru</a>
+          <span style="color:#8A8FA3">Москва</span>
+        </nav>
+      </div>
+      <div style="margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:#6E7388">
+        <span>© 2026 ПРОТОТИП LAB — студия дизайна и производства</span>
+        <span>Дизайн · Инжиниринг · Производство</span>
+      </div>
+    </div>
   </footer>
-
-  <script src="script.js"></script>
+</div>
+</div>
+<script src="script.js" defer></script>
 </body>
 </html>

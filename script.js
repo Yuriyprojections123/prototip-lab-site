@@ -1,68 +1,121 @@
-const header = document.querySelector('.site-header');
-const menuButton = document.querySelector('.menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const setMenu = (isOpen) => {
-  menuButton.classList.toggle('active', isOpen);
-  mobileMenu.classList.toggle('open', isOpen);
-  menuButton.setAttribute('aria-expanded', String(isOpen));
-  menuButton.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
-  mobileMenu.setAttribute('aria-hidden', String(!isOpen));
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-};
-
-menuButton.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
-mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') setMenu(false);
+document.addEventListener('DOMContentLoaded', () => {
+  enableDesignedHoverStates();
+  setupMobileNavigation();
+  markCurrentNavigationItem();
+  setupProjectForm();
 });
 
-const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 30);
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+function enableDesignedHoverStates() {
+  if (!window.matchMedia('(hover: hover)').matches) return;
 
-const revealElements = document.querySelectorAll('.reveal');
-if (reduceMotion || !('IntersectionObserver' in window)) {
-  revealElements.forEach((element) => element.classList.add('visible'));
-} else {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+  document.querySelectorAll('[style-hover]').forEach((element) => {
+    const declarations = element.getAttribute('style-hover')
+      .split(';')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const separator = part.indexOf(':');
+        return [part.slice(0, separator).trim(), part.slice(separator + 1).trim()];
+      });
+    const original = new Map();
+
+    element.addEventListener('mouseenter', () => {
+      declarations.forEach(([property, value]) => {
+        original.set(property, element.style.getPropertyValue(property));
+        element.style.setProperty(property, value);
+      });
     });
-  }, { threshold: .12, rootMargin: '0px 0px -40px' });
-  revealElements.forEach((element) => revealObserver.observe(element));
-}
 
-document.querySelectorAll('.accordion details').forEach((details) => {
-  details.addEventListener('toggle', () => {
-    if (!details.open) return;
-    document.querySelectorAll('.accordion details').forEach((other) => {
-      if (other !== details) other.open = false;
+    element.addEventListener('mouseleave', () => {
+      declarations.forEach(([property]) => {
+        const value = original.get(property);
+        if (value) element.style.setProperty(property, value);
+        else element.style.removeProperty(property);
+      });
     });
   });
-});
+}
 
-const form = document.querySelector('#brief-form');
-const formStatus = form.querySelector('.form-status');
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const data = new FormData(form);
-  const brief = [
-    'Заявка для ПРОТОТИП LAB',
-    `Имя: ${data.get('name')}`,
-    `Контакт: ${data.get('contact')}`,
-    `Проект: ${data.get('project')}`
-  ].join('\n');
+function setupMobileNavigation() {
+  const header = document.querySelector('.site-header');
+  const nav = header?.querySelector('.site-nav');
+  const inner = header?.firstElementChild;
+  if (!header || !nav || !inner) return;
 
-  try {
-    await navigator.clipboard.writeText(brief);
-    formStatus.textContent = 'Заявка скопирована. Отправьте её команде ПРОТОТИП LAB удобным способом.';
-  } catch {
-    formStatus.textContent = 'Заявка подготовлена. Скопируйте данные и отправьте их команде ПРОТОТИП LAB.';
-  }
-});
+  nav.id = 'site-navigation';
+  const button = document.createElement('button');
+  button.className = 'menu-toggle';
+  button.type = 'button';
+  button.setAttribute('aria-label', 'Открыть меню');
+  button.setAttribute('aria-controls', nav.id);
+  button.setAttribute('aria-expanded', 'false');
+  button.innerHTML = '<span></span>';
+  inner.insertBefore(button, nav);
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+  const close = () => {
+    nav.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Открыть меню');
+  };
+
+  button.addEventListener('click', () => {
+    const opening = !nav.classList.contains('is-open');
+    nav.classList.toggle('is-open', opening);
+    button.setAttribute('aria-expanded', String(opening));
+    button.setAttribute('aria-label', opening ? 'Закрыть меню' : 'Открыть меню');
+  });
+
+  nav.addEventListener('click', (event) => {
+    if (event.target.closest('a')) close();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
+  });
+  document.addEventListener('click', (event) => {
+    if (!header.contains(event.target)) close();
+  });
+}
+
+function markCurrentNavigationItem() {
+  const current = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.site-nav a').forEach((link) => {
+    if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'page');
+  });
+}
+
+function setupProjectForm() {
+  const form = document.querySelector('#project-form');
+  const status = document.querySelector('#form-status');
+  if (!form) return;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const directions = data.getAll('dir').join(', ');
+    const lines = [
+      'Заявка для ПРОТОТИП LAB',
+      `Имя: ${data.get('name')}`,
+      `Контакт: ${data.get('contact')}`,
+      directions ? `Направление: ${directions}` : '',
+      `Проект: ${data.get('project')}`,
+    ].filter(Boolean);
+    const brief = lines.join('\n');
+
+    try {
+      await navigator.clipboard.writeText(brief);
+    } catch (_) {
+      // The mail draft below remains a complete no-permission fallback.
+    }
+
+    if (status) {
+      status.hidden = false;
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    const subject = encodeURIComponent('Заявка с сайта ПРОТОТИП LAB');
+    const body = encodeURIComponent(brief);
+    window.location.href = `mailto:hello@prototip-lab.ru?subject=${subject}&body=${body}`;
+  });
+}
