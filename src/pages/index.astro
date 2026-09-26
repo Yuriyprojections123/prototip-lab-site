@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import ServicesIndex from '../components/ServicesIndex.astro';
+import ProcessScroll from '../components/ProcessScroll.astro';
+import Compare from '../components/Compare.astro';
+import CaseCard from '../components/CaseCard.astro';
+import CtaChapter from '../components/CtaChapter.astro';
+import { cases } from '../data/cases';
+import { audiences } from '../data/site';
+
+const principles = [
+  { t: 'Полный цикл', d: 'От концепта и промышленного дизайна до покраски, сборки и доставки готового изделия.' },
+  { t: 'Инженерная точность', d: 'Реверс-инжиниринг, CAD-реконструкция и контроль геометрии на каждом этапе.' },
+  { t: 'Дизайн-мышление', d: 'Продумываем форму, конструкцию и материал так, чтобы вещь хотелось взять в руки.' },
+  { t: 'Один экземпляр или серия', d: 'Единичные объекты и малые тиражи. Готовая цифровая модель ускоряет повторный запуск.' },
+];
+const [c1, c2, c3] = cases;
+---
+<Base
+  title="ПРОТОТИП LAB — 3D-моделирование, сканирование и производство изделий в Москве"
+  description="Студия полного цикла в Москве: 3D-моделирование, 3D-сканирование и реверс-инжиниринг, печать FDM и SLA, покраска и сборка. Фигурки, мерч, косплей, прототипы.">
+  <div class="loader" data-loader aria-hidden="true">
+    <p class="t-label">ПРОТОТИП LAB · калибровка</p>
+    <p class="loader__n t-num" data-loader-count>000</p>
+  </div>
+
+  <Hero />
+
+  <section class="chapter chapter--deep stmt" aria-labelledby="stmt-title">
+    <div class="wrap grid-12">
+      <p class="t-label muted stmt__label">Почему мы</p>
+      <h2 id="stmt-title" class="t-lead stmt__lead balance" data-reveal="lines">Большинство проектов начинается с фотографии, рисунка или слов. Дизайнеры, инженеры и мастера производства работают как одна команда — поэтому объект выглядит убедительно и работает так, как задумано.</h2>
+      <ol class="stmt__list" data-reveal="rise">
+        {principles.map((p, i) => (
+          <li class="stmt__item">
+            <span class="t-label t-num stmt__n">0{i + 1}</span>
+            <h3 class="t-h3">{p.t}</h3>
+            <p class="muted">{p.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <ServicesIndex />
+
+  <ProcessScroll />
+
+  <Compare />
+
+  <section class="chapter works" aria-labelledby="works-title">
+    <div class="wrap">
+      <div class="grid-12 works__head">
+        <p class="t-label muted works__label">Избранные проекты</p>
+        <h2 id="works-title" class="t-h2 works__title balance" data-reveal="lines">Идеи, ставшие объектами</h2>
+        <a href="/portfolio/" class="t-label link-u works__all">Всё портфолио →</a>
+      </div>
+      <div class="grid-12 works__grid">
+        <div class="works__a"><CaseCard size="l" href={`/portfolio/${c1.slug}/`} image={c1.hero} alt={c1.heroAlt} cat={c1.catLabel} title={c1.title} note={c1.short} sizes="(max-width: 1023px) 100vw, 58vw" /></div>
+        <div class="works__b"><CaseCard href={`/portfolio/${c2.slug}/`} image={c2.hero} alt={c2.heroAlt} cat={c2.catLabel} title={c2.title} note={c2.short} sizes="(max-width: 1023px) 100vw, 40vw" /></div>
+        <div class="works__c"><CaseCard href={`/portfolio/${c3.slug}/`} image={c3.hero} alt={c3.heroAlt} cat={c3.catLabel} title={c3.title} note={c3.short} sizes="(max-width: 1023px) 100vw, 40vw" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter--deep aud" aria-labelledby="aud-title">
+    <div class="wrap grid-12">
+      <p class="t-label muted aud__label">Для кого</p>
+      <h2 id="aud-title" class="t-h2 aud__title balance" data-reveal="lines">Одна студия. Разные масштабы.</h2>
+      <p class="t-body-l muted aud__text">Работаем с компаниями и частными клиентами — от единичного подарка до серийного мерча и инженерных задач.</p>
+      <ul class="aud__list t-lead" aria-label="Клиенты студии">
+        {audiences.map((a) => <li>{a}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaChapter />
+</Base>
+
+<style>
+  .loader { display: none; }
+  :global(html.js:not(.seen)) .loader {
+    position: fixed; inset: 0; z-index: 300; background: var(--c-graphite); color: var(--c-primer);
+    display: flex; flex-direction: column; justify-content: space-between; padding: 24px var(--margin);
+    transition: clip-path .9s var(--ease-out); clip-path: inset(0 0 0 0);
+  }
+  .loader.is-done { clip-path: inset(0 0 100% 0) !important; }
+  .loader__n { font-size: clamp(96px, 22vw, 320px); line-height: .8; letter-spacing: -.04em; align-self: flex-end; }
+
+  .stmt__label { grid-column: 1 / span 3; }
+  .stmt__lead { grid-column: 4 / span 9; }
+  .stmt__list { grid-column: 4 / span 9; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 40px; margin-top: clamp(24px, 4vw, 64px); }
+  .stmt__item { display: grid; gap: 10px; align-content: start; border-top: 1px solid var(--c-line-strong); padding-top: 18px; }
+  .stmt__item:nth-child(1) { grid-column: 1 / span 4; }
+  .stmt__item:nth-child(2) { grid-column: 6 / span 4; }
+  .stmt__item:nth-child(3) { grid-column: 1 / span 4; }
+  .stmt__item:nth-child(4) { grid-column: 6 / span 4; }
+  .stmt__n { color: var(--c-ink-muted); }
+
+  .works__head { align-items: end; margin-bottom: clamp(32px, 4vw, 64px); }
+  .works__label { grid-column: 1 / span 3; }
+  .works__title { grid-column: 4 / span 6; }
+  .works__all { grid-column: 11 / span 2; justify-self: end; padding: 12px 0; }
+  .works__grid { row-gap: clamp(40px, 5vw, 80px); }
+  .works__a { grid-column: 1 / span 7; grid-row: 1 / span 2; }
+  .works__b { grid-column: 9 / span 4; }
+  .works__c { grid-column: 9 / span 4; }
+
+  .aud__label { grid-column: 1 / span 3; }
+  .aud__title { grid-column: 4 / span 7; }
+  .aud__text { grid-column: 4 / span 6; }
+  .aud__list { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: clamp(24px, 4vw, 56px); }
+  .aud__list li { display: inline-flex; align-items: center; }
+  .aud__list li:not(:last-child)::after { content: "/"; color: var(--c-amber); margin: 0 .5em; font-weight: 300; }
+
+  @media (max-width: 1023px) {
+    .stmt__label, .stmt__lead, .stmt__list, .works__label, .works__title, .aud__label, .aud__title, .aud__text { grid-column: 1 / -1; }
+    .works__all { grid-column: 1 / -1; justify-self: start; }
+    .works__a, .works__b, .works__c { grid-column: 1 / -1; grid-row: auto; }
+  }
+  @media (max-width: 767px) {
+    .stmt__list { grid-template-columns: 1fr; }
+    .stmt__item:nth-child(n) { grid-column: 1 / -1; }
+  }
+</style>

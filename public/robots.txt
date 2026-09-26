@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Host: prototiplab.ru
+Sitemap: https://prototiplab.ru/sitemap-index.xml

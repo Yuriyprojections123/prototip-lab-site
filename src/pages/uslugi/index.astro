@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ServicesIndex from '../../components/ServicesIndex.astro';
+import ProcessList from '../../components/ProcessList.astro';
+import CtaChapter from '../../components/CtaChapter.astro';
+import ObjectSvg from '../../components/ObjectSvg.astro';
+---
+<Base title="Услуги: 3D-моделирование, сканирование, печать и покраска" description="3D-моделирование, 3D-сканирование и реверс-инжиниринг, фигурки, корпоративный мерч, косплей и функциональные прототипы — полный цикл в одной студии в Москве.">
+  <PageHead label="Услуги" title="Весь путь — от идеи до готового изделия" lead="Концепт, промышленный дизайн, 3D-моделирование, сканирование, прототипирование, производство, покраска и сборка — в одной студии.">
+    <a slot="actions" href="/raschet/" class="btn btn--signal" style="justify-self:start">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+    <div class="u-obj crop-marks tech-grid" aria-hidden="true"><ObjectSvg state={2} /></div>
+  </PageHead>
+  <ServicesIndex title="Шесть направлений" label="Выберите задачу" showAll={false} />
+  <ProcessList />
+  <CtaChapter />
+</Base>
+
+<style>
+  .u-obj { padding: 8% 22%; border: 1px solid var(--c-line); }
+</style>

@@ -1,0 +1,66 @@
+---
+import type { Service } from '../data/services';
+interface Props { block: Service['blocks'][number]; index: number; dark?: boolean }
+const { block, index, dark = false } = Astro.props;
+const id = `blk-${index}`;
+const style = block.style ?? 'list';
+---
+<section class:list={['chapter', 'blk', `blk--${style}`, { 'chapter--dark': dark, 'chapter--notch': dark }]} aria-labelledby={id}>
+  <div class="wrap grid-12">
+    <p class="t-label muted blk__label">{block.label}</p>
+    <div class="blk__head">
+      <h2 id={id} class="t-h2 balance" data-reveal="lines">{block.title}</h2>
+      {block.intro && <p class="t-body-l muted blk__intro">{block.intro}</p>}
+    </div>
+    <ol class="blk__items" data-reveal="rise">
+      {block.items.map((it, i) => (
+        <li class="blk__item">
+          <span class="t-label t-num blk__n">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="t-h3 blk__t">{it.title}</h3>
+          <p class="muted blk__d">{it.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .blk__label { grid-column: 1 / span 3; padding-top: 10px; }
+  .blk__head { grid-column: 4 / span 8; display: grid; gap: 20px; }
+  .blk__intro { max-width: 56ch; }
+  .blk__items { grid-column: 4 / span 9; margin-top: clamp(24px, 3vw, 48px); }
+  .chapter--dark .blk__d, .chapter--dark .blk__intro { color: var(--c-primer-muted); }
+
+  /* list: numbered rows with hairlines */
+  .blk--list .blk__item { display: grid; grid-template-columns: 60px minmax(0, 4fr) minmax(0, 5fr); gap: var(--gap); padding: 22px 0; border-top: 1px solid var(--c-line-strong); align-items: baseline; }
+  .chapter--dark.blk--list .blk__item { border-top-color: var(--c-line-dark); }
+  .blk--list .blk__n { color: var(--c-ink-muted); }
+  .chapter--dark .blk__n { color: var(--c-amber); }
+
+  /* steps: horizontal rail with ticks */
+  .blk--steps .blk__items { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; counter-reset: s; }
+  .blk--steps .blk__item { position: relative; display: grid; gap: 10px; align-content: start; padding: 28px 20px 0 0; border-top: 2px solid var(--c-graphite); }
+  .chapter--dark.blk--steps .blk__item { border-top-color: var(--c-primer); }
+  .blk--steps .blk__item::before { content: ""; position: absolute; top: -7px; left: 0; width: 12px; height: 12px; background: var(--c-amber); }
+  .blk--steps .blk__n { color: var(--c-ink-muted); }
+
+  /* chain: object → scan → mesh → CAD → part */
+  .blk--chain .blk__items { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+  .blk--chain .blk__item { display: grid; gap: 10px; align-content: start; padding: 20px; border: 1px solid var(--c-line-strong); margin-left: -1px; position: relative; }
+  .blk--chain .blk__item:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 18px; width: 28px; text-align: center; background: var(--c-primer); z-index: 1; font-family: var(--f-mono); }
+  .blk--chain .blk__item:last-child { background: var(--c-graphite); color: var(--c-primer); }
+  .blk--chain .blk__item:last-child .blk__d { color: var(--c-primer-muted); }
+
+  @media (max-width: 1023px) {
+    .blk__label, .blk__head, .blk__items { grid-column: 1 / -1; }
+    .blk--chain .blk__items { grid-template-columns: 1fr; }
+    .blk--chain .blk__item { margin: -1px 0 0; }
+    .blk--chain .blk__item:not(:last-child)::after { content: "↓"; right: auto; left: 20px; top: auto; bottom: -14px; }
+  }
+  @media (max-width: 767px) {
+    .blk--list .blk__item { grid-template-columns: 40px 1fr; }
+    .blk--list .blk__d { grid-column: 2; }
+    .blk--steps .blk__items { grid-template-columns: 1fr; }
+    .blk--steps .blk__item { padding-bottom: 24px; }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import { site } from '../data/site';
+interface Props { title?: string; text?: string }
+const { title = 'Есть идея? Давайте придадим ей форму.', text = 'Расскажите о задаче в нескольких словах. На первом этапе достаточно идеи, фотографии или эскиза — оценку пришлём в течение рабочего дня.' } = Astro.props;
+---
+<section class="chapter chapter--dark chapter--notch-l cta" aria-labelledby="cta-title">
+  <div class="wrap grid-12">
+    <p class="t-label muted cta__label">Следующий шаг</p>
+    <h2 id="cta-title" class="t-mega cta__title balance" data-reveal="lines">{title}</h2>
+    <p class="t-body-l muted cta__text">{text}</p>
+    <div class="cta__actions">
+      <a href="/raschet/" class="btn btn--signal">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+      <a href={site.telegram.url} class="btn btn--ghost" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { border-bottom: 1px solid var(--c-line-dark); }
+  .cta__label { grid-column: 1 / span 3; }
+  .cta__title { grid-column: 1 / span 10; }
+  .cta__text { grid-column: 1 / span 5; color: var(--c-primer-muted); }
+  .cta__actions { grid-column: 7 / span 6; display: flex; flex-wrap: wrap; gap: 12px; align-self: end; justify-content: flex-end; }
+  @media (max-width: 1023px) {
+    .cta__title, .cta__text, .cta__actions { grid-column: 1 / -1; }
+    .cta__actions { justify-content: flex-start; }
+  }
+</style>

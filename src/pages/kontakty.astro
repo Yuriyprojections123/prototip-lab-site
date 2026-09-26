@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+const channels = [
+  { k: 'Telegram', v: site.telegram.handle, note: 'Быстрее всего', href: site.telegram.url, ext: true },
+  ...(site.email ? [{ k: 'Почта', v: site.email, note: 'Для документов и больших файлов', href: `mailto:${site.email}`, ext: false }] : []),
+  ...(site.whatsapp ? [{ k: 'WhatsApp', v: site.whatsapp, note: '', href: `https://wa.me/${site.whatsapp}`, ext: true }] : []),
+  { k: 'Бриф на сайте', v: 'Рассчитать проект', note: 'Шесть шагов, файлы и фото', href: '/raschet/', ext: false },
+];
+---
+<Base title="Контакты" description="Как связаться с ПРОТОТИП LAB: Telegram @prototiplab или бриф на сайте. Москва, приём объектов на сканирование по записи.">
+  <PageHead label="Контакты" title="Расскажите, что хотите создать" lead="На первом этапе достаточно идеи, фотографии или эскиза. Ответим в течение рабочего дня с предварительной оценкой." />
+  <section class="chapter ct" aria-label="Каналы связи">
+    <div class="wrap grid-12">
+      <ul class="ct__list">
+        {channels.map((c, i) => (
+          <li>
+            <a href={c.href} class="ct__row" {...(c.ext ? { target: '_blank', rel: 'noopener' } : {})}>
+              <span class="t-label t-num muted">0{i + 1}</span>
+              <span class="t-label ct__k">{c.k}</span>
+              <span class="t-display ct__v">{c.v}</span>
+              <span class="muted ct__note">{c.note}</span>
+              <span class="ct__arr" aria-hidden="true">{c.ext ? '↗' : '→'}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="ct__place">
+        <p class="t-label muted">Студия</p>
+        <p class="t-h3">{site.city}{site.address && `, ${site.address}`}</p>
+        <p class="muted">{site.scanIntake}. Адрес пришлём после записи.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ct { padding-top: 0; }
+  .ct__list { grid-column: 1 / -1; border-top: 1px solid var(--c-line-strong); }
+  .ct__row { display: grid; grid-template-columns: 60px 140px minmax(0, 1fr) minmax(0, 260px) 40px; gap: var(--gap); align-items: baseline; padding: clamp(20px, 2.5vw, 36px) 0; border-bottom: 1px solid var(--c-line-strong); position: relative; isolation: isolate; transition: color .4s var(--ease-out); }
+  .ct__row::before { content: ""; position: absolute; inset: 0 calc(var(--margin) * -1); background: var(--c-graphite); z-index: -1; transform: scaleY(0); transform-origin: 50% 100%; transition: transform .5s var(--ease-out); }
+  .ct__row:hover::before { transform: scaleY(1); }
+  .ct__row:hover { color: var(--c-primer); }
+  .ct__row:hover .muted { color: var(--c-primer-muted); }
+  .ct__v { font-size: clamp(28px, 3.333vw, 56px); letter-spacing: -0.03em; overflow-wrap: anywhere; }
+  .ct__arr { font-size: 24px; justify-self: end; transition: transform var(--d-fast) var(--ease-hover); }
+  .ct__row:hover .ct__arr { color: var(--c-amber); transform: translate(4px, -4px); }
+  .ct__place { grid-column: 1 / span 5; margin-top: clamp(40px, 5vw, 80px); display: grid; gap: 10px; }
+  @media (max-width: 1023px) {
+    .ct__row { grid-template-columns: 40px 1fr 32px; }
+    .ct__k { grid-column: 2; } .ct__v { grid-column: 2; } .ct__note { grid-column: 2; } .ct__arr { grid-column: 3; grid-row: 1; }
+    .ct__place { grid-column: 1 / -1; }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ServiceBlock from '../../components/ServiceBlock.astro';
+import Compare from '../../components/Compare.astro';
+import CtaChapter from '../../components/CtaChapter.astro';
+import { services, type Service } from '../../data/services';
+import { caseBySlug } from '../../data/cases';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const others = services.filter((x) => x.slug !== s.slug);
+const kase = s.caseSlug ? caseBySlug[s.caseSlug] : null;
+const url = `${site.url}/uslugi/${s.slug}/`;
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.description, url,
+    provider: { '@id': `${site.url}/#studio` }, areaServed: { '@type': 'City', name: 'Москва' } },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Услуги', item: `${site.url}/uslugi/` },
+    { '@type': 'ListItem', position: 3, name: s.name, item: url } ] },
+];
+---
+<Base title={`${s.name} в Москве`} description={s.description} jsonLd={jsonLd}>
+  <PageHead label={s.name} title={s.title} lead={s.lead} crumbs={[{ href: '/uslugi/', label: 'Услуги' }]}>
+    <a slot="actions" href={`/raschet/?task=${s.quoteTask}`} class="btn btn--signal svc-cta">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+    <figure class="svc-hero">
+      <div class="frame crop-marks svc-hero__img" data-reveal="clip">
+        <Image src={s.image} alt={s.imageAlt} widths={[480, 800, 1200]} sizes="(max-width: 1023px) 100vw, 40vw" loading="eager" fetchpriority="high" quality={76} />
+      </div>
+      <figcaption class="caption svc-hero__cap"><span class="t-num">{s.n}</span> · {s.area} · {s.tags.join(' · ')}</figcaption>
+    </figure>
+  </PageHead>
+
+  {s.blocks.map((b, i) => <ServiceBlock block={b} index={i} dark={i % 2 === 1} />)}
+
+  {s.slug === 'prototipirovanie' && <Compare />}
+
+  {s.extraImage && (
+    <section class="chapter extra" aria-label="Пример">
+      <div class="wrap grid-12">
+        <figure class="extra__fig">
+          <div class="frame" data-reveal="clip"><Image src={s.extraImage.src} alt={s.extraImage.alt} widths={[640, 1000, 1400]} sizes="(max-width: 1023px) 100vw, 66vw" loading="lazy" quality={74} /></div>
+          <figcaption class="caption">{s.extraImage.caption}</figcaption>
+        </figure>
+        {kase && (
+          <div class="extra__case">
+            <p class="t-label muted">Кейс · {kase.catLabel}</p>
+            <h2 class="t-h3">{kase.title}</h2>
+            <p class="muted">{kase.short}</p>
+            <a href={`/portfolio/${kase.slug}/`} class="btn btn--ghost btn--sm">Читать кейс <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class="chapter chapter--deep more" aria-labelledby="more-title">
+    <div class="wrap">
+      <h2 id="more-title" class="t-label muted more__t">Другие направления</h2>
+      <ul class="more__list">
+        {others.map((o) => (
+          <li><a href={`/uslugi/${o.slug}/`} class="more__link"><span class="t-label t-num">{o.n}</span><span class="t-h3">{o.name}</span><span aria-hidden="true" class="more__arr">→</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaChapter />
+</Base>
+
+<style>
+  .svc-cta { justify-self: start; }
+  .svc-hero { display: grid; gap: 0; }
+  .svc-hero__img { aspect-ratio: 4 / 3; }
+  .extra__fig { grid-column: 1 / span 8; }
+  .extra__fig .frame { aspect-ratio: 16 / 10; }
+  .extra__case { grid-column: 10 / span 3; align-self: end; display: grid; gap: 14px; justify-items: start; border-top: 2px solid var(--c-graphite); padding-top: 18px; }
+  .more__t { margin-bottom: 24px; }
+  .more__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--c-line-strong); }
+  .more__link { display: grid; gap: 10px; align-content: start; min-height: 150px; padding: 20px 16px 20px 0; border-right: 1px solid var(--c-line); position: relative; transition: color var(--d-fast) var(--ease-hover); }
+  .more__link .t-h3 { font-size: 20px; }
+  .more__arr { position: absolute; right: 16px; bottom: 16px; transition: transform var(--d-fast) var(--ease-hover); }
+  .more__link:hover .more__arr { transform: translateX(6px); color: var(--c-amber); }
+  @media (max-width: 1023px) {
+    .extra__fig, .extra__case { grid-column: 1 / -1; }
+    .more__list { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 767px) { .more__list { grid-template-columns: 1fr; } .more__link { min-height: 0; border-right: 0; border-bottom: 1px solid var(--c-line); } }
+</style>

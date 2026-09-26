@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+---
+<Base title="Рассчитать проект" description="Бриф на 3D-моделирование, сканирование, печать и покраску: шесть коротких шагов, файлы и фото. Оценку пришлём в течение рабочего дня.">
+  <PageHead label="Рассчитать проект" title="Расскажите, что хотите создать" lead="Шесть коротких шагов — около двух минут. На первом этапе достаточно идеи, фотографии или эскиза. Ответим в течение рабочего дня с предварительной оценкой." />
+  <section class="chapter quote-ch" aria-label="Бриф на проект">
+    <div class="wrap"><QuoteForm /></div>
+  </section>
+</Base>
+
+<style>
+  .quote-ch { padding-top: 0; }
+</style>

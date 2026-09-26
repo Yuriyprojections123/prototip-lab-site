@@ -1,0 +1,86 @@
+---
+import Logo from './Logo.astro';
+import { nav, site } from '../data/site';
+import { services } from '../data/services';
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="site-header" data-header>
+  <div class="wrap site-header__in">
+    <a href="/" class="site-header__logo"><Logo /><span class="sr-only"> — на главную</span></a>
+    <nav class="site-header__nav" aria-label="Основная навигация">
+      {nav.map((n) => (
+        <a href={n.href} class="t-nav site-header__link" aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+    <div class="site-header__actions">
+      <a href={site.telegram.url} class="t-nav site-header__tg" rel="noopener" target="_blank">Telegram ↗</a>
+      <a href="/raschet/" class="btn btn--signal btn--sm site-header__cta">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+      <button class="site-header__burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+        <span class="sr-only">Открыть меню</span>
+        <span class="burger" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Меню" hidden data-menu>
+  <div class="wrap menu__in">
+    <div class="menu__top">
+      <Logo tone="light" />
+      <button type="button" class="menu__close t-label" data-menu-close>Закрыть <span aria-hidden="true">×</span></button>
+    </div>
+    <nav class="menu__nav" aria-label="Мобильная навигация">
+      <a href="/" class="menu__link">Главная</a>
+      {nav.map((n, i) => <a href={n.href} class="menu__link" style={`--i:${i + 1}`}>{n.label}</a>)}
+    </nav>
+    <ul class="menu__services">
+      {services.map((s) => <li><a href={`/uslugi/${s.slug}/`} class="t-label">{s.n} · {s.name}</a></li>)}
+    </ul>
+    <div class="menu__foot">
+      <a href="/raschet/" class="btn btn--signal">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+      <a href={site.telegram.url} class="t-label link-u" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--header-h);
+    color: var(--c-graphite); background: transparent; box-shadow: none; backdrop-filter: none;
+    transition: color var(--d-morph) var(--ease-ui), transform var(--d-morph) var(--ease-out), background-color var(--d-morph) var(--ease-ui);
+  }
+  .site-header.is-solid { background: var(--c-primer); border-bottom: 1px solid var(--c-line); }
+  .site-header.is-dark { color: var(--c-primer); }
+  .site-header.is-dark.is-solid { background: var(--c-graphite); border-bottom-color: var(--c-line-dark); }
+  .site-header.is-hidden { transform: translateY(-100%); }
+  .site-header__in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .site-header__logo :global(.logo) { color: inherit; }
+  .site-header__nav { display: flex; gap: 32px; }
+  .site-header__link { position: relative; padding: 10px 0; }
+  .site-header__link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: 100% 50%; transition: transform var(--d-fast) var(--ease-hover); }
+  .site-header__link:hover::after, .site-header__link[aria-current="page"]::after { transform: scaleX(1); transform-origin: 0 50%; }
+  .site-header__link[aria-current="page"]::after { background: var(--c-amber); height: 2px; }
+  .site-header__actions { display: flex; align-items: center; gap: 24px; }
+  .site-header__burger { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; }
+  .burger { display: grid; gap: 7px; width: 24px; }
+  .burger i { display: block; height: 1.5px; background: currentColor; }
+  @media (max-width: 1023px) {
+    .site-header__nav, .site-header__tg { display: none; }
+    .site-header__burger { display: inline-flex; }
+    .site-header__actions { gap: 8px; }
+  }
+  @media (max-width: 560px) { .site-header__cta { display: none; } }
+
+  .menu { position: fixed; inset: 0; z-index: 100; background: var(--c-graphite); color: var(--c-primer); overflow-y: auto; }
+  .menu[hidden] { display: none; }
+  .menu__in { min-height: 100%; display: flex; flex-direction: column; gap: 40px; padding-block: 20px 32px; }
+  .menu__top { display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
+  .menu__close { min-height: 44px; padding: 0 4px; color: var(--c-primer); }
+  .menu__nav { display: grid; gap: 4px; }
+  .menu__link { font-size: clamp(40px, 11vw, 64px); line-height: 1.05; letter-spacing: -0.04em; opacity: 0; transform: translateY(20px); animation: menu-in 0.8s var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 0.05s + 0.05s); }
+  .menu__services { display: grid; gap: 14px; color: var(--c-primer-muted); }
+  .menu__services a { display: inline-block; padding: 4px 0; }
+  .menu__foot { margin-top: auto; display: grid; gap: 20px; justify-items: start; }
+  @keyframes menu-in { to { opacity: 1; transform: none; } }
+</style>

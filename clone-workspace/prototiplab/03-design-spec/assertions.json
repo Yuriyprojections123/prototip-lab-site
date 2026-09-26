@@ -1,0 +1,452 @@
+[
+ {
+  "selector": "/ body",
+  "prop": "backgroundColor",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "/ body",
+  "prop": "color",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ body",
+  "prop": "fontFamily",
+  "expected": "\"Geologica Variable\", Geologica, system-ui, sans-serif"
+ },
+ {
+  "selector": "/ body",
+  "prop": "fontSize",
+  "expected": "16px"
+ },
+ {
+  "selector": "/ body",
+  "prop": "lineHeight",
+  "expected": "24px"
+ },
+ {
+  "selector": "/ h1.t-display",
+  "prop": "fontSize",
+  "expected": "70px"
+ },
+ {
+  "selector": "/ h1.t-display",
+  "prop": "fontWeight",
+  "expected": "400"
+ },
+ {
+  "selector": "/ h1.t-display",
+  "prop": "lineHeight",
+  "expected": "66.5px"
+ },
+ {
+  "selector": "/ h1.t-display",
+  "prop": "letterSpacing",
+  "expected": "-3.5px"
+ },
+ {
+  "selector": "/ h1.t-display",
+  "prop": "color",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ .t-h2",
+  "prop": "fontSize",
+  "expected": "48px"
+ },
+ {
+  "selector": "/ .t-h2",
+  "prop": "fontWeight",
+  "expected": "400"
+ },
+ {
+  "selector": "/ .t-h2",
+  "prop": "lineHeight",
+  "expected": "50.4px"
+ },
+ {
+  "selector": "/ .t-h2",
+  "prop": "letterSpacing",
+  "expected": "-0.96px"
+ },
+ {
+  "selector": "/ .t-lead",
+  "prop": "fontSize",
+  "expected": "34.56px"
+ },
+ {
+  "selector": "/ .t-lead",
+  "prop": "fontWeight",
+  "expected": "450"
+ },
+ {
+  "selector": "/ .t-label",
+  "prop": "fontFamily",
+  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
+ },
+ {
+  "selector": "/ .t-label",
+  "prop": "fontSize",
+  "expected": "12px"
+ },
+ {
+  "selector": "/ .t-label",
+  "prop": "fontWeight",
+  "expected": "600"
+ },
+ {
+  "selector": "/ .t-label",
+  "prop": "textTransform",
+  "expected": "uppercase"
+ },
+ {
+  "selector": "/ .t-label",
+  "prop": "letterSpacing",
+  "expected": "1.92px"
+ },
+ {
+  "selector": "/ .site-header .t-nav",
+  "prop": "fontSize",
+  "expected": "14px"
+ },
+ {
+  "selector": "/ .site-header .t-nav",
+  "prop": "fontWeight",
+  "expected": "450"
+ },
+ {
+  "selector": "/ .site-header .t-nav",
+  "prop": "letterSpacing",
+  "expected": "0.42px"
+ },
+ {
+  "selector": "/ .site-header",
+  "prop": "backdropFilter",
+  "expected": "none"
+ },
+ {
+  "selector": "/ .site-header",
+  "prop": "boxShadow",
+  "expected": "none"
+ },
+ {
+  "selector": "/ .wrap",
+  "prop": "paddingLeft",
+  "expected": "70px"
+ },
+ {
+  "selector": "/ .wrap",
+  "prop": "paddingRight",
+  "expected": "70px"
+ },
+ {
+  "selector": "/ .grid-12",
+  "prop": "columnGap",
+  "expected": "15px"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "backgroundColor",
+  "expected": "rgb(255, 90, 31)"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "color",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "boxShadow",
+  "expected": "none"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "fontFamily",
+  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "fontSize",
+  "expected": "13px"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "fontWeight",
+  "expected": "600"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "letterSpacing",
+  "expected": "1.82px"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "textTransform",
+  "expected": "uppercase"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "transitionTimingFunction",
+  "expected": "cubic-bezier(0.39, 0.575, 0.565, 1)"
+ },
+ {
+  "selector": "/ .btn--signal",
+  "prop": "transitionDuration",
+  "expected": "0.3s"
+ },
+ {
+  "selector": "/404.html .btn--ghost",
+  "prop": "color",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/404.html .btn--ghost",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/404.html .btn--ghost",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "/ .chapter--dark .btn--ghost",
+  "prop": "color",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "/ .chapter--dark .btn--ghost",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/ .chapter--dark",
+  "prop": "backgroundColor",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ .chapter--dark",
+  "prop": "color",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "/ .chapter.svc",
+  "prop": "paddingTop",
+  "expected": "120px"
+ },
+ {
+  "selector": "/ .chapter.svc",
+  "prop": "paddingBottom",
+  "expected": "120px"
+ },
+ {
+  "selector": "/ .reveal-line > span",
+  "prop": "transitionTimingFunction",
+  "expected": "cubic-bezier(0.19, 1, 0.22, 1)"
+ },
+ {
+  "selector": "/ .reveal-line > span",
+  "prop": "transitionDuration",
+  "expected": "1s"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "backgroundColor",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "color",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/ .compare",
+  "prop": "borderRadius",
+  "expected": "0px"
+ },
+ {
+  "selector": "/ .site-footer",
+  "prop": "backgroundColor",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/ .site-footer",
+  "prop": "color",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "!focus / .btn--signal",
+  "prop": "outlineColor",
+  "expected": "rgb(255, 90, 31)"
+ },
+ {
+  "selector": "!focus / .btn--signal",
+  "prop": "outlineWidth",
+  "expected": "2px"
+ },
+ {
+  "selector": "!focus / .btn--signal",
+  "prop": "outlineOffset",
+  "expected": "3px"
+ },
+ {
+  "selector": "/uslugi/ h1.t-display",
+  "prop": "fontSize",
+  "expected": "70px"
+ },
+ {
+  "selector": "/uslugi/ h1.t-display",
+  "prop": "letterSpacing",
+  "expected": "-3.5px"
+ },
+ {
+  "selector": "/uslugi/ .service-row",
+  "prop": "borderRadius",
+  "expected": "0px"
+ },
+ {
+  "selector": "/uslugi/ .service-row",
+  "prop": "boxShadow",
+  "expected": "none"
+ },
+ {
+  "selector": "/uslugi/skanirovanie/ h1.t-display",
+  "prop": "fontSize",
+  "expected": "70px"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip",
+  "prop": "fontFamily",
+  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip[aria-pressed=\"true\"]",
+  "prop": "backgroundColor",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip[aria-pressed=\"true\"]",
+  "prop": "color",
+  "expected": "rgb(228, 227, 222)"
+ },
+ {
+  "selector": "/portfolio/ .case-card",
+  "prop": "borderRadius",
+  "expected": "0px"
+ },
+ {
+  "selector": "/portfolio/ .case-card",
+  "prop": "boxShadow",
+  "expected": "none"
+ },
+ {
+  "selector": "/portfolio/shlem-po-skanu/ h1.t-display",
+  "prop": "fontSize",
+  "expected": "70px"
+ },
+ {
+  "selector": "/raschet/ .q-input",
+  "prop": "backgroundColor",
+  "expected": "rgb(211, 210, 204)"
+ },
+ {
+  "selector": "/raschet/ .q-input",
+  "prop": "borderRadius",
+  "expected": "0px"
+ },
+ {
+  "selector": "/raschet/ .q-input",
+  "prop": "fontSize",
+  "expected": "18px"
+ },
+ {
+  "selector": "/raschet/ .q-option",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "/raschet/ .q-option",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "/raschet/ .q-consent a",
+  "prop": "color",
+  "expected": "rgb(20, 20, 19)"
+ },
+ {
+  "selector": "/raschet/ .q-consent a",
+  "prop": "textDecorationLine",
+  "expected": "underline"
+ },
+ {
+  "selector": "/politika-konfidencialnosti/ h1.t-display",
+  "prop": "fontSize",
+  "expected": "70px"
+ },
+ {
+  "selector": "@390 / h1.t-display",
+  "prop": "fontSize",
+  "expected": "40px"
+ },
+ {
+  "selector": "@390 / h1.t-display",
+  "prop": "lineHeight",
+  "expected": "38px"
+ },
+ {
+  "selector": "@390 / h1.t-display",
+  "prop": "letterSpacing",
+  "expected": "-2px"
+ },
+ {
+  "selector": "@390 / .wrap",
+  "prop": "paddingLeft",
+  "expected": "20px"
+ },
+ {
+  "selector": "@390 / .t-h2",
+  "prop": "fontSize",
+  "expected": "32px"
+ },
+ {
+  "selector": "@390 / .btn--signal",
+  "prop": "fontSize",
+  "expected": "13px"
+ },
+ {
+  "selector": "@390 / .btn--signal",
+  "prop": "borderRadius",
+  "expected": "2px"
+ },
+ {
+  "selector": "@390 /raschet/ .q-input",
+  "prop": "fontSize",
+  "expected": "18px"
+ }
+]

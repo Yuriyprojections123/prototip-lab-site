@@ -1,0 +1,39 @@
+---
+// Static version of the process for inner pages: five frames of the same object, one per stage.
+import ObjectSvg from './ObjectSvg.astro';
+import { process } from '../data/site';
+---
+<section class="chapter chapter--dark chapter--notch plist" aria-labelledby="plist-title">
+  <div class="wrap">
+    <div class="grid-12 plist__head">
+      <p class="t-label muted plist__label">Как мы работаем</p>
+      <h2 id="plist-title" class="t-h2 balance plist__title" data-reveal="lines">Один процесс. Предсказуемый результат.</h2>
+    </div>
+    <ol class="plist__list" data-reveal="rise">
+      {process.map((st, i) => (
+        <li class="plist__item">
+          <div class="plist__frame" aria-hidden="true"><ObjectSvg state={i as 0 | 1 | 2 | 3 | 4} /></div>
+          <p class="t-label t-num plist__n">{st.n} · {st.title}</p>
+          <h3 class="t-h3">{st.lead}</h3>
+          <p class="plist__text">{st.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .plist__head { margin-bottom: clamp(32px, 4vw, 64px); }
+  .plist__label { grid-column: 1 / span 3; }
+  .plist__title { grid-column: 4 / span 8; }
+  .plist__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); }
+  .plist__item { display: grid; gap: 12px; align-content: start; }
+  .plist__frame { background: var(--c-primer); padding: 14% 18%; aspect-ratio: 1; display: grid; align-items: end; }
+  .plist__n { color: var(--c-amber); }
+  .plist__text { color: var(--c-primer-muted); }
+  @media (max-width: 1023px) {
+    .plist__label, .plist__title { grid-column: 1 / -1; }
+    .plist__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+  }
+  @media (max-width: 480px) { .plist__list { grid-template-columns: 1fr; } .plist__frame { max-width: 240px; } }
+</style>

@@ -1,0 +1,90 @@
+---
+import ObjectSvg from './ObjectSvg.astro';
+import { site } from '../data/site';
+const states = ['Каркас', 'Печать', 'Грунт', 'Покраска'];
+---
+<section class="hero chapter" aria-labelledby="hero-title">
+  <div class="wrap grid-12 hero__grid">
+    <div class="hero__copy">
+      <p class="t-label hero__kicker"><span class="dot" aria-hidden="true"></span>{site.city} · студия полного цикла</p>
+      <h1 id="hero-title" class="t-display hero__title balance" data-reveal="lines">Мы не печатаем файлы. Мы создаём изделия.</h1>
+      <p class="t-body-l hero__lead measure-body pretty" data-reveal="rise"><span>Моделирование, 3D-сканирование, печать FDM и SLA, шлифовка, грунт, покраска и сборка — в одной студии. На старте достаточно идеи, фотографии или эскиза.</span></p>
+      <div class="hero__actions">
+        <a href="/raschet/" class="btn btn--signal">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+        <a href={site.telegram.url} class="t-label link-u hero__tg" rel="noopener" target="_blank">или написать в Telegram</a>
+      </div>
+    </div>
+
+    <div class="hero__stage" data-hero-object>
+      <div class="hero__viewport crop-marks tech-grid">
+        <canvas class="hero__canvas" tabindex="0" aria-label="Образец — объёмная модель. Перетащите или используйте стрелки, чтобы повернуть"></canvas>
+        <div class="hero__fallback" data-fallback data-show="4" aria-hidden="true">
+          <ObjectSvg state={1} class="f f1" />
+          <ObjectSvg state={2} class="f f2" />
+          <ObjectSvg state={3} class="f f3" />
+          <ObjectSvg state={4} class="f f4" />
+        </div>
+        <p class="hero__readout t-label t-num" aria-live="polite"><span data-layer>Покраска · сатин + янтарная вставка</span></p>
+        <p class="hero__hint t-label" aria-hidden="true">Потяните, чтобы повернуть</p>
+        <p class="hero__spec t-label" aria-hidden="true">Образец · Ø 192 · H 240</p>
+      </div>
+      <div class="hero__states" role="group" aria-label="Состояние объекта">
+        {states.map((s, i) => (
+          <button type="button" class="hero-state t-label" data-state={i} aria-pressed={i === 3 ? 'true' : 'false'}>
+            <span class="t-num">0{i + 1}</span> {s}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-top: calc(var(--header-h) + clamp(24px, 4vw, 64px)); padding-bottom: clamp(48px, 6vw, 96px); min-height: min(100svh, 1100px); display: flex; align-items: center; }
+  .hero__grid { align-items: center; width: 100%; }
+  .hero__copy { grid-column: 1 / span 6; display: grid; gap: 32px; align-content: center; }
+  .hero__kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--c-ink-muted); }
+  .dot { width: 8px; height: 8px; background: var(--c-amber); border-radius: 50%; animation: blink 2.4s steps(2, jump-none) infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .hero__title { max-width: 11ch; }
+  .hero__lead { color: var(--c-ink-muted); max-width: 44ch; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+  .hero__tg { color: var(--c-graphite); padding: 12px 0; }
+
+  .hero__stage { grid-column: 7 / span 6; display: grid; gap: 14px; }
+  .hero__viewport { container: hero-stage / inline-size; position: relative; aspect-ratio: 1 / 1.02; color: var(--c-graphite); border: 1px solid var(--c-line); background-color: rgba(211, 210, 204, .35); }
+  .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; outline-offset: -4px; }
+  :global(.is-dragging) .hero__canvas { cursor: grabbing; }
+  .hero__fallback { position: absolute; inset: 8% 14% 6%; display: grid; }
+  .hero__fallback :global(.f) { grid-area: 1 / 1; opacity: 0; transition: opacity .6s var(--ease-out); }
+  .hero__fallback[data-show="1"] :global(.f1), .hero__fallback[data-show="2"] :global(.f2),
+  .hero__fallback[data-show="3"] :global(.f3), .hero__fallback[data-show="4"] :global(.f4) { opacity: 1; }
+  :global(.is-live) .hero__fallback { display: none; }
+  .hero__stage:not(.is-live):not(.is-static) .hero__canvas { opacity: 0; }
+  :global(.is-static) .hero__canvas, :global(.is-static) .hero__hint { display: none; }
+  .hero__readout, .hero__hint, .hero__spec { position: absolute; margin: 0; pointer-events: none; }
+  .hero__readout { left: 16px; top: 16px; background: var(--c-primer); padding: 6px 8px; }
+  .hero__spec { right: 16px; bottom: 16px; color: var(--c-ink-muted); }
+  @container hero-stage (max-width: 520px) { .hero__spec { display: none; } }
+  .hero__hint { left: 16px; bottom: 16px; color: var(--c-ink-muted); }
+  .hero__states { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .hero-state {
+    min-height: 44px; padding: 0 10px; display: flex; align-items: center; gap: 8px; justify-content: flex-start;
+    border: 1px solid var(--c-line-strong); border-radius: var(--r-ctl); color: var(--c-graphite); background: transparent;
+    transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover), border-color var(--d-fast) var(--ease-hover);
+  }
+  .hero-state .t-num { color: var(--c-ink-muted); transition: color var(--d-fast) var(--ease-hover); }
+  .hero-state:hover { border-color: var(--c-graphite); }
+  .hero-state[aria-pressed="true"] { background: var(--c-graphite); color: var(--c-primer); border-color: var(--c-graphite); }
+  .hero-state[aria-pressed="true"] .t-num { color: var(--c-amber); }
+
+  @media (max-width: 1023px) {
+    .hero { min-height: 0; }
+    .hero__copy, .hero__stage { grid-column: 1 / -1; }
+    .hero__stage { max-width: 640px; }
+  }
+  @media (max-width: 560px) {
+    .hero__states { grid-template-columns: repeat(2, 1fr); }
+    .hero__spec { display: none; }
+  }
+</style>

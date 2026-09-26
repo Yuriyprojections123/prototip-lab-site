@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import CtaChapter from '../../components/CtaChapter.astro';
+import { cases, tiles, categories } from '../../data/cases';
+const all = [
+  ...cases.map((c) => ({ key: c.slug, cat: c.cat, catLabel: c.catLabel, title: c.title, note: c.short, image: c.hero, alt: c.heroAlt, href: `/portfolio/${c.slug}/`, isCase: true })),
+  ...tiles.map((t) => ({ key: t.title, cat: t.cat, catLabel: t.catLabel, title: t.title, note: undefined, image: t.image, alt: t.alt, href: `/uslugi/${t.service}/`, isCase: false })),
+];
+// asymmetric rhythm: spans cycle so no two neighbouring rows repeat
+const spans = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
+---
+<Base title="Портфолио" description="Проекты ПРОТОТИП LAB: шлем по скану головы, серия из 120 наград для IT-конференции, восстановление снятой с производства детали — и направления студии.">
+  <PageHead label="Портфолио" title="Идеи, ставшие объектами" lead="Каждый проект — путь от фотографии или эскиза до готового изделия. Три кейса разобраны подробно, остальное — примеры направлений." />
+
+  <section class="chapter pf" data-portfolio aria-labelledby="pf-title">
+    <div class="wrap">
+      <h2 id="pf-title" class="sr-only">Работы</h2>
+      <div class="pf__bar">
+        <div class="pf__chips" role="group" aria-label="Фильтр по направлению">
+          {categories.map((c) => <button type="button" class="filter-chip" data-filter={c.key} aria-pressed={c.key === 'all' ? 'true' : 'false'}>{c.label}</button>)}
+        </div>
+        <p class="t-label t-num pf__count" aria-live="polite"><span data-count>{String(all.length).padStart(2, '0')}</span> работ</p>
+      </div>
+      <div class="pf__grid">
+        {all.map((it, i) => (
+          <div class={`pf__item pf__item--${spans[i % spans.length]}`} data-cat={it.cat}>
+            <CaseCard href={it.href} image={it.image} alt={it.alt} cat={it.catLabel} title={it.title} note={it.note} isCase={it.isCase} size={it.isCase ? 'l' : 'm'} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 45vw" />
+          </div>
+        ))}
+      </div>
+      <p class="pf__empty t-body-l muted" data-empty hidden>В этой категории пока нет опубликованных работ.</p>
+    </div>
+  </section>
+
+  <CtaChapter title="Хотите такой же — или совсем другой?" />
+</Base>
+
+<style>
+  .pf { padding-top: 0; }
+  .pf__bar { position: sticky; top: calc(var(--header-h) - 1px); z-index: 5; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 0; background: var(--c-primer); border-bottom: 1px solid var(--c-line); margin-bottom: clamp(32px, 4vw, 64px); }
+  .pf__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pf__count { color: var(--c-ink-muted); }
+  .pf__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: clamp(48px, 6vw, 96px); align-items: start; }
+  .pf__item[hidden] { display: none; }
+  .pf__item--a { grid-column: 1 / span 7; }
+  .pf__item--b { grid-column: 9 / span 4; margin-top: 18vw; }
+  .pf__item--c { grid-column: 2 / span 6; }
+  .pf__item--d { grid-column: 8 / span 5; }
+  .pf__item--e { grid-column: 1 / span 4; }
+  .pf__item--f { grid-column: 6 / span 7; }
+  .pf__item--g { grid-column: 1 / span 5; }
+  .pf__item--h { grid-column: 7 / span 5; margin-top: 8vw; }
+  .pf__item--i { grid-column: 3 / span 6; }
+  @media (max-width: 1023px) {
+    .pf__grid { grid-template-columns: 1fr 1fr; }
+    .pf__item[class*="pf__item--"] { grid-column: auto; margin-top: 0; }
+  }
+  @media (max-width: 767px) {
+    .pf__grid { grid-template-columns: 1fr; }
+    .pf__bar { margin-inline: calc(var(--margin) * -1); padding-inline: var(--margin); }
+    .pf__chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .pf__chips .filter-chip { flex: none; }
+  }
+</style>

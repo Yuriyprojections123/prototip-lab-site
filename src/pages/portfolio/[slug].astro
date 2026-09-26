@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import CtaChapter from '../../components/CtaChapter.astro';
+import { cases, type Case } from '../../data/cases';
+import { serviceBySlug } from '../../data/services';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return cases.map((c, i) => ({
+    params: { slug: c.slug },
+    props: { c, prev: cases[(i - 1 + cases.length) % cases.length], next: cases[(i + 1) % cases.length] },
+  }));
+}
+const { c, prev, next } = Astro.props as { c: Case; prev: Case; next: Case };
+const svc = serviceBySlug[c.service];
+const url = `${site.url}/portfolio/${c.slug}/`;
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'CreativeWork', name: c.title, description: c.description, url, creator: { '@id': `${site.url}/#studio` }, genre: c.catLabel },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Портфолио', item: `${site.url}/portfolio/` },
+    { '@type': 'ListItem', position: 3, name: c.title, item: url } ] },
+];
+---
+<Base title={`Кейс: ${c.title}`} description={c.description} jsonLd={jsonLd}>
+  <article class="case">
+    <header class="chapter case__head">
+      <div class="wrap grid-12">
+        <nav aria-label="Навигационная цепочка" class="case__crumbs t-label">
+          <a href="/" class="link-u">Главная</a><span aria-hidden="true">/</span><a href="/portfolio/" class="link-u">Портфолио</a><span aria-hidden="true">/</span><span class="muted" aria-current="page">{c.catLabel}</span>
+        </nav>
+        <p class="t-label case__cat"><span class="case__tag">Кейс</span> {c.catLabel}</p>
+        <h1 class="t-display case__title balance" data-reveal="lines">{c.title}</h1>
+        <dl class="case__facts">
+          {c.facts.map((f) => <div><dt class="t-label muted">{f.k}</dt><dd>{f.v}</dd></div>)}
+        </dl>
+      </div>
+      <figure class="wrap case__hero">
+        <div class="frame" data-reveal="clip"><Image src={c.hero} alt={c.heroAlt} widths={[640, 1000, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} /></div>
+        <figcaption class="caption">Изображения в кейсе — иллюстрации, опубликованные студией.</figcaption>
+      </figure>
+    </header>
+
+    <div class="chapter case__body">
+      <div class="wrap grid-12">
+        <aside class="case__rail" aria-label="Разделы кейса">
+          <ol class="case__toc t-label">
+            {c.chapters.map((ch, i) => <li><a href={`#ch-${i + 1}`}><span class="t-num">{String(i + 1).padStart(2, '0')}</span> {ch.title}</a></li>)}
+          </ol>
+          <a href={`/uslugi/${svc.slug}/`} class="t-label link-u">Услуга: {svc.name}</a>
+        </aside>
+        <div class="case__chapters">
+          {c.chapters.map((ch, i) => (
+            <section id={`ch-${i + 1}`} class="case__ch" aria-labelledby={`ch-t-${i + 1}`}>
+              <p class="t-label t-num case__n">{String(i + 1).padStart(2, '0')} / {String(c.chapters.length).padStart(2, '0')}</p>
+              <h2 id={`ch-t-${i + 1}`} class="t-h2">{ch.title}</h2>
+              <p class={i === c.chapters.length - 1 ? 't-lead case__txt' : 't-body-l case__txt'}>{ch.text}</p>
+              {ch.image && (
+                <figure class="case__fig">
+                  <div class="frame" data-reveal="clip"><Image src={ch.image} alt={ch.alt ?? ''} widths={[640, 1000, 1400]} sizes="(max-width: 1023px) 100vw, 60vw" loading="lazy" quality={74} /></div>
+                </figure>
+              )}
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <nav class="chapter chapter--deep case__pn" aria-label="Другие кейсы">
+      <div class="wrap grid-12">
+        <a href={`/portfolio/${prev.slug}/`} class="case__pn-link case__pn-link--prev"><span class="t-label muted">← Предыдущий кейс</span><span class="t-h3">{prev.title}</span></a>
+        <a href={`/portfolio/${next.slug}/`} class="case__pn-link case__pn-link--next"><span class="t-label muted">Следующий кейс →</span><span class="t-h3">{next.title}</span></a>
+      </div>
+    </nav>
+  </article>
+  <CtaChapter />
+</Base>
+
+<style>
+  .case__head { padding-top: calc(var(--header-h) + clamp(32px, 5vw, 80px)); padding-bottom: 0; }
+  .case__head .grid-12 { row-gap: 24px; }
+  .case__crumbs { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+  .case__cat { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; }
+  .case__tag { background: var(--c-amber); padding: 5px 8px; }
+  .case__title { grid-column: 1 / span 9; }
+  .case__facts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); border-top: 1px solid var(--c-line-strong); padding-top: 20px; margin-top: 16px; }
+  .case__facts div { display: grid; gap: 8px; }
+  .case__facts dd { font-size: 18px; }
+  .case__hero { margin-top: clamp(32px, 4vw, 64px); }
+  .case__hero .frame { aspect-ratio: 16 / 8; }
+
+  .case__rail { grid-column: 1 / span 3; position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: grid; gap: 32px; }
+  .case__toc { display: grid; gap: 4px; }
+  .case__toc a { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--c-line); transition: color var(--d-fast) var(--ease-hover); }
+  .case__toc a:hover { color: var(--c-ink-muted); }
+  .case__toc .t-num { color: var(--c-amber); background: var(--c-graphite); padding: 0 4px; }
+  .case__chapters { grid-column: 5 / span 8; display: grid; gap: clamp(64px, 8vw, 128px); }
+  .case__ch { display: grid; gap: 20px; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .case__n { color: var(--c-ink-muted); }
+  .case__txt { max-width: 60ch; }
+  .case__fig { margin-top: 12px; }
+  .case__fig .frame { aspect-ratio: 4 / 3; }
+
+  .case__pn-link { grid-column: span 6; display: grid; gap: 10px; padding: 28px 0; border-top: 2px solid var(--c-graphite); transition: color var(--d-fast) var(--ease-hover); }
+  .case__pn-link--next { text-align: right; }
+  .case__pn-link:hover .t-h3 { text-decoration: underline; text-decoration-color: var(--c-amber); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+  @media (max-width: 1023px) {
+    .case__title { grid-column: 1 / -1; }
+    .case__rail { position: static; grid-column: 1 / -1; }
+    .case__chapters { grid-column: 1 / -1; }
+    .case__hero .frame { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 767px) {
+    .case__facts { grid-template-columns: 1fr; }
+    .case__pn-link { grid-column: 1 / -1; }
+    .case__pn-link--next { text-align: left; }
+  }
+</style>

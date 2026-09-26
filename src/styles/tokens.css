@@ -1,0 +1,53 @@
+/* Design tokens — the single source of truth. Provenance: clone-workspace/prototiplab/03-design-spec/DESIGN.md
+   brand = Stage 1 decisions · reference = Terminal Industries system · derived = computed from the two. */
+:root {
+  /* colour — brand */
+  --c-primer: #e4e3de;
+  --c-primer-deep: #d3d2cc;
+  --c-graphite: #141413;
+  --c-graphite-2: #232321;
+  --c-ink-muted: #55544f;
+  --c-primer-muted: #9a9993;
+  --c-amber: #ff5a1f;
+  /* colour — derived */
+  --c-line: rgba(20, 20, 19, 0.14);
+  --c-line-strong: rgba(20, 20, 19, 0.32);
+  --c-line-dark: rgba(228, 227, 222, 0.16);
+  --c-error: #b3261e;
+
+  /* type — brand families */
+  --f-sans: "Geologica Variable", Geologica, system-ui, sans-serif;
+  --f-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+
+  /* type scale — reference proportions (px values at 1440 / 390) */
+  --fs-mega: clamp(56px, 5.73vw, 120px);      /* 82.5 / 56 */
+  --fs-display: clamp(40px, 4.861vw, 96px);   /* 70 / 40 */
+  --fs-h2: clamp(32px, 3.333vw, 64px);        /* 48 / 32 */
+  --fs-lead: clamp(22px, 2.4vw, 40px);        /* 34.56 / 22 */
+  --fs-h3: clamp(22px, 1.875vw, 30px);        /* 27 / 22 */
+  --fs-body-l: clamp(18px, 1.389vw, 22px);    /* 20 / 18 */
+
+  /* space — reference */
+  --margin: clamp(20px, 4.861vw, 96px);       /* 70 @1440, 20 @390 */
+  --gap: clamp(10px, 1.042vw, 20px);          /* 15 @1440 */
+  --section-y: clamp(72px, 8.333vw, 160px);   /* 120 @1440 */
+  --header-h: 72px;                            /* derived: 44px target + 2×14 */
+  /* space — derived 4px base */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+
+  /* radius */
+  --r-0: 0;           /* reference */
+  --r-ctl: 2px;       /* brand (banned.md #10) */
+
+  /* motion — reference */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-hover: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+  --d-fast: 0.3s;
+  --d-base: 0.6s;     /* derived */
+  --d-slow: 1s;
+  --d-morph: 0.5s;
+  --stagger: 0.08s;   /* derived */
+
+  --notch: 64px;      /* derived */
+}
