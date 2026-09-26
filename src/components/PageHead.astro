@@ -1,15 +1,15 @@
 ---
-// Inner-page opening: breadcrumb label, display title, lead, optional right-hand slot.
-interface Props { label: string; title: string; lead?: string; crumbs?: { href: string; label: string }[]; dark?: boolean }
-const { label, title, lead, crumbs = [], dark = false } = Astro.props;
+// Inner-page opening: breadcrumb pills, display title, lead, optional right-hand slot (a rounded card).
+interface Props { label: string; title: string; lead?: string; crumbs?: { href: string; label: string }[]; color?: string }
+const { label, title, lead, crumbs = [], color = 'lime' } = Astro.props;
 ---
-<section class:list={['chapter', 'phead', { 'chapter--dark': dark }]} aria-labelledby="page-title">
+<section class="chapter phead" aria-labelledby="page-title" data-color={color}>
   <div class="wrap grid-12 phead__grid">
     <div class="phead__main">
-      <nav aria-label="Навигационная цепочка" class="phead__crumbs t-label">
-        <a href="/" class="link-u">Главная</a>
-        {crumbs.map((c) => <><span aria-hidden="true">/</span><a href={c.href} class="link-u">{c.label}</a></>)}
-        <span aria-hidden="true">/</span><span aria-current="page" class="muted">{label}</span>
+      <nav aria-label="Навигационная цепочка" class="phead__crumbs">
+        <a href="/" class="phead__crumb">Главная</a>
+        {crumbs.map((c) => <a href={c.href} class="phead__crumb">{c.label}</a>)}
+        <span aria-current="page" class="phead__crumb phead__crumb--cur"><i aria-hidden="true"></i>{label}</span>
       </nav>
       <h1 id="page-title" class="t-display balance phead__title" data-reveal="lines">{title}</h1>
       {lead && <p class="t-body-l muted phead__lead pretty">{lead}</p>}
@@ -20,11 +20,14 @@ const { label, title, lead, crumbs = [], dark = false } = Astro.props;
 </section>
 
 <style>
-  .phead { padding-top: calc(var(--header-h) + clamp(32px, 5vw, 80px)); }
+  .phead { padding-top: calc(var(--header-h) + clamp(32px, 5vw, 88px)); }
   .phead__grid { align-items: end; }
-  .phead__main { grid-column: 1 / span 7; display: grid; gap: 28px; align-content: start; }
-  .phead__crumbs { display: flex; flex-wrap: wrap; gap: 8px; color: inherit; }
-  .phead__crumbs a { padding: 4px 0; }
+  .phead__main { grid-column: 1 / span 7; display: grid; gap: 28px; align-content: start; justify-items: start; }
+  .phead__crumbs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .phead__crumb { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px; border-radius: var(--r-pill); background: var(--c-paper); font-size: 14px; transition: background-color var(--d-fast) var(--ease-hover); }
+  a.phead__crumb:hover { background: var(--c-fog-2); }
+  .phead__crumb--cur { background: var(--c-ink); color: var(--c-fog); }
+  .phead__crumb--cur i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
   .phead__title { max-width: 16ch; }
   .phead__lead { max-width: 52ch; }
   .phead__aside { grid-column: 8 / span 5; }

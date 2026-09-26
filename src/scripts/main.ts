@@ -75,29 +75,41 @@ function initReveals() {
   });
 }
 
-/* ---------- header: solid after scroll, hides on scroll down, morphs colour over dark chapters ---------- */
+/* ---------- header: floating pills; hides on scroll down, returns on scroll up ---------- */
 function initHeader() {
   const header = document.querySelector<HTMLElement>('[data-header]');
   if (!header) return;
-  const darkEls = () => [...document.querySelectorAll<HTMLElement>('.chapter--dark, [data-dark]')];
-  let darks = darkEls();
   let lastY = scrollY;
   let ticking = false;
-  const mid = 36;
   const update = () => {
     ticking = false;
     const y = scrollY;
-    header.classList.toggle('is-solid', y > 40);
     const hide = y > 480 && y > lastY + 2 && !document.body.classList.contains('menu-open');
     if (hide) header.classList.add('is-hidden');
     else if (y < lastY - 2 || y < 480) header.classList.remove('is-hidden');
     lastY = y;
-    const onDark = darks.some((d) => { const r = d.getBoundingClientRect(); return r.top <= mid && r.bottom >= mid; });
-    header.classList.toggle('is-dark', onDark);
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  addEventListener('resize', () => { darks = darkEls(); update(); });
   update();
+}
+
+/* ---------- pointer flood: cards fill with their filament colour from the cursor position ---------- */
+function initFlood() {
+  if (!finePointer) return;
+  document.addEventListener('pointerover', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-flood]');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    card.style.setProperty('--my', `${e.clientY - r.top}px`);
+  });
+  document.addEventListener('pointerout', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('[data-flood]');
+    if (!card || card.contains(e.relatedTarget as Node)) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    card.style.setProperty('--my', `${e.clientY - r.top}px`);
+  });
 }
 
 /* ---------- mobile menu: dialog semantics, focus trap, Esc ---------- */
@@ -148,6 +160,7 @@ function initLoader() {
   const el = document.querySelector<HTMLElement>('[data-loader]');
   if (!el) return;
   const out = el.querySelector('[data-loader-count]');
+  const bar = el.querySelector<HTMLElement>('[data-loader-bar]');
   const start = performance.now();
   let done = false;
   document.fonts.ready.then(() => { done = true; });
@@ -156,6 +169,7 @@ function initLoader() {
     const p = Math.min(1, (t - start) / max);
     const shown = done ? p : Math.min(p, 0.8);
     if (out) out.textContent = String(Math.round(shown * 100)).padStart(3, '0');
+    if (bar) bar.style.transform = `scaleX(${shown})`;
     if (shown >= 1 || t - start > 1600) {
       el.classList.add('is-done');
       sessionStorage.setItem('pl-seen', '1');
@@ -185,10 +199,12 @@ initLoader();
 initReveals();
 initHeader();
 initMenu();
+initFlood();
 initLenis();
 lazy('[data-hero-object]', () => import('./hero'), '0px');
 lazy('[data-process]', () => import('./process'), '400px');
 lazy('[data-compare]', () => import('./compare'));
-lazy('[data-index-hover]', () => import('./index-hover'));
 lazy('[data-portfolio]', () => import('./portfolio'), '0px');
 lazy('[data-quote]', () => import('./quote'), '0px');
+const fil = document.querySelector<SVGSVGElement>('[data-filament]');
+if (fil) addEventListener('load', () => import('./filament').then((m) => m.default(fil)), { once: true });

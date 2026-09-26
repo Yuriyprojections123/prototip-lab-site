@@ -2,82 +2,97 @@
  {
   "selector": "/ body",
   "prop": "backgroundColor",
-  "expected": "rgb(228, 227, 222)"
+  "expected": "rgb(237, 239, 244)"
  },
  {
   "selector": "/ body",
   "prop": "color",
-  "expected": "rgb(20, 20, 19)"
+  "expected": "rgb(11, 12, 16)"
  },
  {
   "selector": "/ body",
   "prop": "fontFamily",
-  "expected": "\"Geologica Variable\", Geologica, system-ui, sans-serif"
+  "expected": "\"Onest Variable\", Onest, system-ui, sans-serif"
  },
  {
   "selector": "/ body",
   "prop": "fontSize",
-  "expected": "16px"
+  "expected": "17px"
  },
  {
   "selector": "/ body",
   "prop": "lineHeight",
-  "expected": "24px"
+  "expected": "25.5px"
  },
  {
-  "selector": "/ h1.t-display",
+  "selector": "/ .hero__title",
   "prop": "fontSize",
-  "expected": "70px"
+  "expected": "92.16px"
  },
  {
-  "selector": "/ h1.t-display",
+  "selector": "/ .hero__title",
   "prop": "fontWeight",
-  "expected": "400"
+  "expected": "350"
  },
  {
-  "selector": "/ h1.t-display",
-  "prop": "lineHeight",
-  "expected": "66.5px"
- },
- {
-  "selector": "/ h1.t-display",
-  "prop": "letterSpacing",
-  "expected": "-3.5px"
- },
- {
-  "selector": "/ h1.t-display",
+  "selector": "/ .hero__title",
   "prop": "color",
-  "expected": "rgb(20, 20, 19)"
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .hero__stage",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .hero__stage",
+  "prop": "color",
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .hero__stage",
+  "prop": "overflow",
+  "expected": "hidden"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "backgroundColor",
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "color",
+  "expected": "rgb(11, 12, 16)"
+ },
+ {
+  "selector": "/ .hero-state[aria-pressed=\"true\"]",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .hero__states",
+  "prop": "borderRadius",
+  "expected": "999px"
  },
  {
   "selector": "/ .t-h2",
   "prop": "fontSize",
-  "expected": "48px"
+  "expected": "59.04px"
  },
  {
   "selector": "/ .t-h2",
   "prop": "fontWeight",
-  "expected": "400"
+  "expected": "380"
  },
  {
   "selector": "/ .t-h2",
   "prop": "lineHeight",
-  "expected": "50.4px"
+  "expected": "59.04px"
  },
  {
   "selector": "/ .t-h2",
   "prop": "letterSpacing",
-  "expected": "-0.96px"
- },
- {
-  "selector": "/ .t-lead",
-  "prop": "fontSize",
-  "expected": "34.56px"
- },
- {
-  "selector": "/ .t-lead",
-  "prop": "fontWeight",
-  "expected": "450"
+  "expected": "-2.36px"
  },
  {
   "selector": "/ .t-label",
@@ -92,7 +107,7 @@
  {
   "selector": "/ .t-label",
   "prop": "fontWeight",
-  "expected": "600"
+  "expected": "500"
  },
  {
   "selector": "/ .t-label",
@@ -102,22 +117,42 @@
  {
   "selector": "/ .t-label",
   "prop": "letterSpacing",
-  "expected": "1.92px"
+  "expected": "0.96px"
+ },
+ {
+  "selector": "/ .chip",
+  "prop": "fontFamily",
+  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
+ },
+ {
+  "selector": "/ .chip",
+  "prop": "fontSize",
+  "expected": "11px"
+ },
+ {
+  "selector": "/ .chip",
+  "prop": "borderRadius",
+  "expected": "999px"
  },
  {
   "selector": "/ .site-header .t-nav",
   "prop": "fontSize",
-  "expected": "14px"
+  "expected": "15px"
  },
  {
   "selector": "/ .site-header .t-nav",
   "prop": "fontWeight",
-  "expected": "450"
+  "expected": "500"
  },
  {
-  "selector": "/ .site-header .t-nav",
-  "prop": "letterSpacing",
-  "expected": "0.42px"
+  "selector": "/ .site-header__nav",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/ .site-header__nav",
+  "prop": "borderRadius",
+  "expected": "999px"
  },
  {
   "selector": "/ .site-header",
@@ -125,219 +160,304 @@
   "expected": "none"
  },
  {
-  "selector": "/ .site-header",
-  "prop": "boxShadow",
-  "expected": "none"
- },
- {
   "selector": "/ .wrap",
   "prop": "paddingLeft",
-  "expected": "70px"
+  "expected": "31.68px"
  },
  {
   "selector": "/ .wrap",
   "prop": "paddingRight",
-  "expected": "70px"
+  "expected": "31.68px"
  },
  {
   "selector": "/ .grid-12",
   "prop": "columnGap",
+  "expected": "15.84px"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "backgroundColor",
+  "expected": "rgb(11, 12, 16)"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "color",
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "fontFamily",
+  "expected": "\"Onest Variable\", Onest, system-ui, sans-serif"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "fontSize",
+  "expected": "14px"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "fontWeight",
+  "expected": "500"
+ },
+ {
+  "selector": "/ .site-header__cta",
+  "prop": "minHeight",
+  "expected": "44px"
+ },
+ {
+  "selector": "/ .hero__actions .btn",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .hero__actions .btn",
+  "prop": "minHeight",
+  "expected": "52px"
+ },
+ {
+  "selector": "/ .hero__actions .btn",
+  "prop": "fontSize",
   "expected": "15px"
  },
  {
-  "selector": "/ .btn--signal",
+  "selector": "/ .hero__actions .btn--ghost",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .hero__actions .btn--ghost",
+  "prop": "color",
+  "expected": "rgb(11, 12, 16)"
+ },
+ {
+  "selector": "/ .hero__actions .btn--ghost",
   "prop": "backgroundColor",
-  "expected": "rgb(255, 90, 31)"
+  "expected": "rgba(0, 0, 0, 0)"
  },
  {
-  "selector": "/ .btn--signal",
-  "prop": "color",
-  "expected": "rgb(20, 20, 19)"
- },
- {
-  "selector": "/ .btn--signal",
+  "selector": "/ .svc-card",
   "prop": "borderRadius",
-  "expected": "2px"
+  "expected": "28.8px"
  },
  {
-  "selector": "/ .btn--signal",
-  "prop": "cursor",
-  "expected": "pointer"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "boxShadow",
-  "expected": "none"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "fontFamily",
-  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "fontSize",
-  "expected": "13px"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "fontWeight",
-  "expected": "600"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "letterSpacing",
-  "expected": "1.82px"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "textTransform",
-  "expected": "uppercase"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "transitionTimingFunction",
-  "expected": "cubic-bezier(0.39, 0.575, 0.565, 1)"
- },
- {
-  "selector": "/ .btn--signal",
-  "prop": "transitionDuration",
-  "expected": "0.3s"
- },
- {
-  "selector": "/404.html .btn--ghost",
-  "prop": "color",
-  "expected": "rgb(20, 20, 19)"
- },
- {
-  "selector": "/404.html .btn--ghost",
-  "prop": "borderRadius",
-  "expected": "2px"
- },
- {
-  "selector": "/404.html .btn--ghost",
-  "prop": "cursor",
-  "expected": "pointer"
- },
- {
-  "selector": "/ .chapter--dark .btn--ghost",
-  "prop": "color",
-  "expected": "rgb(228, 227, 222)"
- },
- {
-  "selector": "/ .chapter--dark .btn--ghost",
-  "prop": "borderRadius",
-  "expected": "2px"
- },
- {
-  "selector": "/ .chapter--dark",
+  "selector": "/ .svc-card",
   "prop": "backgroundColor",
-  "expected": "rgb(20, 20, 19)"
+  "expected": "rgb(248, 249, 252)"
  },
  {
-  "selector": "/ .chapter--dark",
-  "prop": "color",
-  "expected": "rgb(228, 227, 222)"
+  "selector": "/ .svc-card__media",
+  "prop": "borderRadius",
+  "expected": "20.16px"
+ },
+ {
+  "selector": "/ .stmt__item",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .stmt__item",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
  },
  {
   "selector": "/ .chapter.svc",
   "prop": "paddingTop",
-  "expected": "120px"
+  "expected": "122.4px"
  },
  {
   "selector": "/ .chapter.svc",
   "prop": "paddingBottom",
-  "expected": "120px"
+  "expected": "122.4px"
+ },
+ {
+  "selector": "/ .chapter--deep",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/ .chapter--deep",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .chapter--deep",
+  "prop": "marginLeft",
+  "expected": "12.1px"
+ },
+ {
+  "selector": "/ .compare__view",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .compare__grip",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .compare__grip",
+  "prop": "backgroundColor",
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .compare__table",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .compare__table",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/ .case-card__media",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .cta__card",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/ .cta__card",
+  "prop": "overflow",
+  "expected": "hidden"
+ },
+ {
+  "selector": "/ .aud__pill",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/ .aud__pill",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/ .site-footer",
+  "prop": "backgroundColor",
+  "expected": "rgb(11, 12, 16)"
+ },
+ {
+  "selector": "/ .site-footer",
+  "prop": "color",
+  "expected": "rgb(237, 239, 244)"
+ },
+ {
+  "selector": "/ .site-footer",
+  "prop": "borderRadius",
+  "expected": "28.8px"
  },
  {
   "selector": "/ .reveal-line > span",
   "prop": "transitionTimingFunction",
-  "expected": "cubic-bezier(0.19, 1, 0.22, 1)"
+  "expected": "cubic-bezier(0.16, 1, 0.3, 1)"
  },
  {
   "selector": "/ .reveal-line > span",
   "prop": "transitionDuration",
-  "expected": "1s"
+  "expected": "1.1s"
  },
  {
-  "selector": "/ .hero-state[aria-pressed=\"true\"]",
-  "prop": "backgroundColor",
-  "expected": "rgb(20, 20, 19)"
- },
- {
-  "selector": "/ .hero-state[aria-pressed=\"true\"]",
-  "prop": "color",
-  "expected": "rgb(228, 227, 222)"
- },
- {
-  "selector": "/ .hero-state[aria-pressed=\"true\"]",
-  "prop": "borderRadius",
-  "expected": "2px"
- },
- {
-  "selector": "/ .compare",
-  "prop": "borderRadius",
-  "expected": "0px"
- },
- {
-  "selector": "/ .site-footer",
-  "prop": "backgroundColor",
-  "expected": "rgb(20, 20, 19)"
- },
- {
-  "selector": "/ .site-footer",
-  "prop": "color",
-  "expected": "rgb(228, 227, 222)"
- },
- {
-  "selector": "!focus / .btn--signal",
+  "selector": "!focus / .site-header__cta",
   "prop": "outlineColor",
-  "expected": "rgb(255, 90, 31)"
+  "expected": "rgb(47, 91, 255)"
  },
  {
-  "selector": "!focus / .btn--signal",
+  "selector": "!focus / .site-header__cta",
   "prop": "outlineWidth",
   "expected": "2px"
  },
  {
-  "selector": "!focus / .btn--signal",
+  "selector": "!focus / .site-header__cta",
   "prop": "outlineOffset",
   "expected": "3px"
  },
  {
   "selector": "/uslugi/ h1.t-display",
   "prop": "fontSize",
-  "expected": "70px"
+  "expected": "80.64px"
+ },
+ {
+  "selector": "/uslugi/ h1.t-display",
+  "prop": "fontWeight",
+  "expected": "350"
+ },
+ {
+  "selector": "/uslugi/ h1.t-display",
+  "prop": "lineHeight",
+  "expected": "75.8px"
  },
  {
   "selector": "/uslugi/ h1.t-display",
   "prop": "letterSpacing",
-  "expected": "-3.5px"
+  "expected": "-4.03px"
  },
  {
-  "selector": "/uslugi/ .service-row",
+  "selector": "/uslugi/ .phead__crumb",
   "prop": "borderRadius",
-  "expected": "0px"
+  "expected": "999px"
  },
  {
-  "selector": "/uslugi/ .service-row",
-  "prop": "boxShadow",
-  "expected": "none"
+  "selector": "/uslugi/ .phead__crumb",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/uslugi/ .plist__item",
+  "prop": "borderRadius",
+  "expected": "28.8px"
  },
  {
   "selector": "/uslugi/skanirovanie/ h1.t-display",
   "prop": "fontSize",
-  "expected": "70px"
+  "expected": "80.64px"
+ },
+ {
+  "selector": "/uslugi/skanirovanie/ .blk__item",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/uslugi/skanirovanie/ .blk__item",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/uslugi/skanirovanie/ .svc-hero__img",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/uslugi/skanirovanie/ .more__link",
+  "prop": "borderRadius",
+  "expected": "28.8px"
  },
  {
   "selector": "/portfolio/ .filter-chip",
   "prop": "borderRadius",
-  "expected": "2px"
+  "expected": "999px"
  },
  {
   "selector": "/portfolio/ .filter-chip",
   "prop": "fontFamily",
-  "expected": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace"
+  "expected": "\"Onest Variable\", Onest, system-ui, sans-serif"
+ },
+ {
+  "selector": "/portfolio/ .filter-chip",
+  "prop": "fontSize",
+  "expected": "14px"
  },
  {
   "selector": "/portfolio/ .filter-chip",
@@ -347,37 +467,77 @@
  {
   "selector": "/portfolio/ .filter-chip[aria-pressed=\"true\"]",
   "prop": "backgroundColor",
-  "expected": "rgb(20, 20, 19)"
+  "expected": "rgb(11, 12, 16)"
  },
  {
   "selector": "/portfolio/ .filter-chip[aria-pressed=\"true\"]",
   "prop": "color",
-  "expected": "rgb(228, 227, 222)"
+  "expected": "rgb(237, 239, 244)"
  },
  {
-  "selector": "/portfolio/ .case-card",
+  "selector": "/portfolio/ .pf__bar",
   "prop": "borderRadius",
-  "expected": "0px"
+  "expected": "999px"
  },
  {
-  "selector": "/portfolio/ .case-card",
-  "prop": "boxShadow",
-  "expected": "none"
+  "selector": "/portfolio/ .pf__bar",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/portfolio/ .case-card__media",
+  "prop": "borderRadius",
+  "expected": "28.8px"
  },
  {
   "selector": "/portfolio/shlem-po-skanu/ h1.t-display",
   "prop": "fontSize",
-  "expected": "70px"
+  "expected": "80.64px"
+ },
+ {
+  "selector": "/portfolio/shlem-po-skanu/ .case__facts div",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/studiya/ .story__body .t-lead",
+  "prop": "fontSize",
+  "expected": "30.96px"
+ },
+ {
+  "selector": "/studiya/ .story__body .t-lead",
+  "prop": "fontWeight",
+  "expected": "400"
+ },
+ {
+  "selector": "/kontakty/ .ct__card",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/kontakty/ .ct__card",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/raschet/ .q-form",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/raschet/ .q-form",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
  },
  {
   "selector": "/raschet/ .q-input",
   "prop": "backgroundColor",
-  "expected": "rgb(211, 210, 204)"
+  "expected": "rgb(237, 239, 244)"
  },
  {
   "selector": "/raschet/ .q-input",
   "prop": "borderRadius",
-  "expected": "0px"
+  "expected": "18px"
  },
  {
   "selector": "/raschet/ .q-input",
@@ -387,7 +547,7 @@
  {
   "selector": "/raschet/ .q-option",
   "prop": "borderRadius",
-  "expected": "2px"
+  "expected": "20px"
  },
  {
   "selector": "/raschet/ .q-option",
@@ -395,9 +555,14 @@
   "expected": "pointer"
  },
  {
+  "selector": "/raschet/ .q-tick",
+  "prop": "borderRadius",
+  "expected": "8px"
+ },
+ {
   "selector": "/raschet/ .q-consent a",
   "prop": "color",
-  "expected": "rgb(20, 20, 19)"
+  "expected": "rgb(11, 12, 16)"
  },
  {
   "selector": "/raschet/ .q-consent a",
@@ -407,42 +572,87 @@
  {
   "selector": "/politika-konfidencialnosti/ h1.t-display",
   "prop": "fontSize",
-  "expected": "70px"
+  "expected": "80.64px"
  },
  {
-  "selector": "@390 / h1.t-display",
+  "selector": "/politika-konfidencialnosti/ .pol__sec",
+  "prop": "borderRadius",
+  "expected": "28.8px"
+ },
+ {
+  "selector": "/politika-konfidencialnosti/ .pol__sec",
+  "prop": "backgroundColor",
+  "expected": "rgb(248, 249, 252)"
+ },
+ {
+  "selector": "/404.html .nf__actions .btn--ghost",
+  "prop": "color",
+  "expected": "rgb(11, 12, 16)"
+ },
+ {
+  "selector": "/404.html .nf__actions .btn--ghost",
+  "prop": "borderRadius",
+  "expected": "999px"
+ },
+ {
+  "selector": "/404.html .nf__actions .btn--ghost",
+  "prop": "cursor",
+  "expected": "pointer"
+ },
+ {
+  "selector": "@390 / .hero__title",
+  "prop": "fontSize",
+  "expected": "44.85px"
+ },
+ {
+  "selector": "@390 /uslugi/ h1.t-display",
   "prop": "fontSize",
   "expected": "40px"
  },
  {
-  "selector": "@390 / h1.t-display",
+  "selector": "@390 /uslugi/ h1.t-display",
   "prop": "lineHeight",
-  "expected": "38px"
+  "expected": "37.6px"
  },
  {
-  "selector": "@390 / h1.t-display",
+  "selector": "@390 /uslugi/ h1.t-display",
   "prop": "letterSpacing",
   "expected": "-2px"
  },
  {
   "selector": "@390 / .wrap",
   "prop": "paddingLeft",
-  "expected": "20px"
+  "expected": "16px"
  },
  {
   "selector": "@390 / .t-h2",
   "prop": "fontSize",
-  "expected": "32px"
+  "expected": "34px"
  },
  {
-  "selector": "@390 / .btn--signal",
+  "selector": "@390 / .hero__actions .btn",
   "prop": "fontSize",
-  "expected": "13px"
+  "expected": "15px"
  },
  {
-  "selector": "@390 / .btn--signal",
+  "selector": "@390 / .hero__actions .btn",
   "prop": "borderRadius",
-  "expected": "2px"
+  "expected": "999px"
+ },
+ {
+  "selector": "@390 / .hero__actions .btn",
+  "prop": "minHeight",
+  "expected": "52px"
+ },
+ {
+  "selector": "@390 / .hero-state",
+  "prop": "minHeight",
+  "expected": "40px"
+ },
+ {
+  "selector": "@390 / .hero-state",
+  "prop": "borderRadius",
+  "expected": "999px"
  },
  {
   "selector": "@390 /raschet/ .q-input",

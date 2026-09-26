@@ -1,0 +1,62 @@
+---
+// One object drawn five ways — the studio's process in a single silhouette (brand.md → Иллюстрации).
+// 0 sketch outline · 1 wireframe contours · 2 printing (bars up to 60 % + nozzle) · 3 primer · 4 finished.
+interface Props { stage: 0 | 1 | 2 | 3 | 4; class?: string }
+const { stage, class: cls = '' } = Astro.props;
+const N = 22, W = 200, H = 240, base = 226, top = 26;
+const lh = (base - top) / N;
+// vase-like profile: half-width at height t (0 bottom → 1 top)
+const hw = (t: number) => 34 + 40 * Math.sin(Math.PI * (0.15 + t * 0.85)) - 18 * t * t;
+const rows = Array.from({ length: N }, (_, i) => { const t = (i + 0.5) / N; return { y: base - (i + 1) * lh, w: hw(t) }; });
+const outline = (() => {
+  const pts = Array.from({ length: 41 }, (_, i) => { const t = i / 40; return [hw(t), base - t * (base - top)]; });
+  const right = pts.map(([w, y]) => `${(W / 2 + w).toFixed(1)} ${y.toFixed(1)}`).join(' L ');
+  const left = [...pts].reverse().map(([w, y]) => `${(W / 2 - w).toFixed(1)} ${y.toFixed(1)}`).join(' L ');
+  return `M ${right} L ${left} Z`;
+})();
+const printed = Math.round(N * 0.6);
+const id = `la-${stage}-${Math.random().toString(36).slice(2, 7)}`;
+---
+<svg class={`layer-art ${cls}`} viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".55" />
+      <stop offset=".45" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y={base + 2} width={W - 40} height="8" rx="4" class="la-bed" />
+  {stage === 0 && <path d={outline} class="la-sketch" />}
+  {stage === 1 && <>
+    <path d={outline} class="la-wire" />
+    {rows.filter((_, i) => i % 2 === 0).map((r) => <line x1={W / 2 - r.w} x2={W / 2 + r.w} y1={r.y + lh / 2} y2={r.y + lh / 2} class="la-wire la-wire--thin" />)}
+    <line x1={W / 2} x2={W / 2} y1={top} y2={base} class="la-wire la-wire--thin" />
+  </>}
+  {stage === 2 && <>
+    <path d={outline} class="la-ghost" />
+    {rows.slice(0, printed).map((r) => <rect x={W / 2 - r.w} y={r.y + 0.6} width={r.w * 2} height={lh - 1.2} rx={(lh - 1.2) / 2} class="la-bar" />)}
+    <g transform={`translate(${W / 2 + rows[printed - 1].w - 6} ${rows[printed - 1].y - 30})`}>
+      <rect x="-14" y="0" width="28" height="18" rx="6" class="la-nozzle" />
+      <path d="M -6 18 L 6 18 L 0 27 Z" class="la-nozzle" />
+    </g>
+  </>}
+  {stage === 3 && <>
+    {rows.map((r) => <rect x={W / 2 - r.w} y={r.y + 0.2} width={r.w * 2} height={lh - 0.4} rx={(lh - 0.4) / 2} class="la-primer" />)}
+  </>}
+  {stage === 4 && <>
+    <path d={outline} class="la-done" />
+    <path d={outline} fill={`url(#${id})`} />
+  </>}
+</svg>
+
+<style>
+  .layer-art { width: 100%; height: auto; overflow: visible; }
+  .la-bed { fill: currentColor; opacity: 0.25; }
+  .la-sketch { fill: none; stroke: currentColor; stroke-width: 2; stroke-dasharray: 6 7; stroke-linecap: round; }
+  .la-wire { fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .la-wire--thin { stroke-width: 1; opacity: 0.6; }
+  .la-ghost { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 3 5; opacity: 0.45; }
+  .la-bar { fill: currentColor; }
+  .la-nozzle { fill: currentColor; }
+  .la-primer { fill: currentColor; opacity: 0.82; }
+  .la-done { fill: currentColor; }
+</style>

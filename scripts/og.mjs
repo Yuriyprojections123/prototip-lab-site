@@ -1,4 +1,4 @@
-// Open Graph card = the real home hero at 1200×630 in static-render mode (no WebGL needed).
+// Open Graph card = the real home hero at 1200×630 in static-render mode (the pre-rendered 3D still, no WebGL needed).
 // usage: node scripts/og.mjs   (needs the built site served at BASE, default http://127.0.0.1:4321)
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -11,9 +11,9 @@ const pg = await ctx.newPage();
 await pg.goto(BASE + '/', { waitUntil: 'load' });
 await pg.evaluate(() => document.fonts.ready);
 await pg.addStyleTag({ content: `
-  .site-header__nav, .site-header__tg, .hero__actions .hero__tg, .hero__lead, .hero__states, .hero__hint { display: none !important; }
-  .hero { min-height: 630px !important; padding-top: 96px !important; padding-bottom: 40px !important; }
-  .hero__stage { grid-column: 8 / span 5 !important; }
+  .site-header__nav, .hero__states, .hero__readout, .filament { display: none !important; }
+  .hero__stage { height: 540px !important; min-height: 0 !important; }
+  .hero__title { bottom: 40px !important; font-size: 84px !important; }
 ` });
 await pg.waitForTimeout(500);
 await pg.screenshot({ path: 'public/og.png', clip: { x: 0, y: 0, width: 1200, height: 630 } });

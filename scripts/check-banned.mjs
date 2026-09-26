@@ -19,11 +19,12 @@ grep(src, /lucide|heroicons|fontawesome|font-awesome/i, '#5 icon pack');
 grep(src, /lorem ipsum/i, '#13 lorem');
 grep(src, /backdrop-filter:\s*(?!none)[a-z]/i, '#2 glassmorphism');
 grep(src, /radial-gradient/i, '#3 glow blob');
-grep(src, /\bInter\b|Manrope|Unbounded/, '#4 generic font');
+grep(src, /\bInter\b|Manrope|Unbounded|Aeonik/, '#4 generic or reference font');
 grep(dist.filter((f) => f.endsWith('.html') || f.endsWith('.css')), /fonts\.googleapis|fonts\.gstatic|cdnjs|unpkg\.com|jsdelivr/i, '#12 external CDN');
 grep(src, /79000000000|prototip-lab\.ru|1000\+|5\+ лет|50 мкм/, '#6 unverified fact');
 grep(src, /мандалор|mandalor|star wars|звёздн[а-я]+ войн/i, '#11 franchise');
 grep(src, /#6D4DFF|#8A63FF|#5A3BEC/i, '#1 old violet');
+grep(src, /#0016EC/i, '#14 reference colour');
 
 // --- 2. computed styles
 const pages = ['/', '/uslugi/', ...fs.readdirSync('dist/uslugi', { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => `/uslugi/${d.name}/`),
@@ -51,16 +52,28 @@ for (const r of pages) {
       if (el.closest('svg')) continue;
       const s = getComputedStyle(el);
       for (const p of ['color', 'backgroundColor', 'borderTopColor']) {
-        const x = hue(s[p]); if (x && x.h >= 230 && x.h <= 290 && x.s > 0.25) out.push(`#1 violet/blue ${p} ${s[p]} on ${el.tagName}.${el.className}`);
+        const x = hue(s[p]); if (x && x.h >= 245 && x.h <= 290 && x.s > 0.5) out.push(`#1 violet ${p} ${s[p]} on ${el.tagName}.${el.className}`);
       }
       if (s.backdropFilter !== 'none') out.push(`#2 backdrop-filter on ${el.tagName}.${el.className}`);
       if (/radial-gradient/.test(s.backgroundImage)) out.push(`#3 radial-gradient on ${el.tagName}.${el.className}`);
-      if (/gradient/.test(s.backgroundImage) && !el.classList.contains('tech-grid')) out.push(`#1 gradient on ${el.tagName}.${el.className}: ${s.backgroundImage.slice(0, 60)}`);
-      if (s.boxShadow !== 'none' && !/inset/.test(s.boxShadow)) out.push(`#3/#7 box-shadow on ${el.tagName}.${el.className}: ${s.boxShadow}`);
-      if (['A', 'BUTTON'].includes(el.tagName) && parseFloat(s.borderTopLeftRadius) > 2 && !el.closest('svg')) out.push(`#10 radius ${s.borderTopLeftRadius} on ${el.tagName}.${el.className}`);
+      // shadows: rings (0 blur) and insets only — no soft drop shadows or glows
+      if (s.boxShadow !== 'none') for (const sh of s.boxShadow.split(/,(?![^(]*\))/)) {
+        const lens = sh.replace(/rgba?\([^)]*\)/, '').match(/-?[\d.]+px/g) ?? [];
+        if (!/inset/.test(sh) && parseFloat(lens[2] ?? '0') > 0) out.push(`#3 blurred shadow on ${el.tagName}.${el.className}: ${sh.trim()}`);
+      }
+      // v2 #7: no boxy controls — visible buttons, pills and chips are rounded
+      if (el.matches('button, .btn, .chip, .filter-chip')) {
+        const r = el.getBoundingClientRect();
+        const surface = s.backgroundColor !== 'rgba(0, 0, 0, 0)' || s.boxShadow !== 'none' || parseFloat(s.borderTopWidth) > 0;
+        if (r.width && r.height && surface && parseFloat(s.borderTopLeftRadius) + 0.5 < Math.min(r.height / 2, 12)) out.push(`#7 boxy control r=${s.borderTopLeftRadius} on ${el.tagName}.${el.className}`);
+      }
+      if (el.matches('.frame, .svc-card, .stmt__item, .blk__item, .plist__item, .ct__card, .q-form, .q-summary, .compare__view, .compare__table, .hero__stage, .process__step, .more__link, .case__pn-link, .pol__sec, .caps__item, .cta__card, .chapter--dark, .chapter--deep')) {
+        const r = el.getBoundingClientRect();
+        if (r.width > 120 && parseFloat(s.borderTopLeftRadius) < 12) out.push(`#7 boxy surface r=${s.borderTopLeftRadius} on ${el.tagName}.${el.className}`);
+      }
       if (el.childNodes.length && [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) fonts.add(s.fontFamily.split(',')[0].replace(/"/g, ''));
     }
-    for (const f of fonts) if (!/Geologica|JetBrains Mono/.test(f)) out.push(`#4 font ${f}`);
+    for (const f of fonts) if (!/Onest|JetBrains Mono/.test(f)) out.push(`#4 font ${f}`);
     return [...new Set(out)];
   });
   for (const f of found) problems.push(`${r}: ${f}`);

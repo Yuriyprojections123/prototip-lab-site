@@ -41,7 +41,7 @@ const ld = [business, ...jsonLd];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex,follow" />}
-    <meta name="theme-color" content="#e4e3de" />
+    <meta name="theme-color" content="#edeff4" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -72,6 +72,7 @@ const ld = [business, ...jsonLd];
     <a class="skip-link" href="#main">К содержанию</a>
     <Header />
     <main id="main" tabindex="-1">
+      <svg class="filament" data-filament aria-hidden="true" focusable="false"></svg>
       <slot />
     </main>
     <Footer />

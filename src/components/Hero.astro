@@ -1,90 +1,98 @@
 ---
-import ObjectSvg from './ObjectSvg.astro';
+import { getImage } from 'astro:assets';
+import still from '../assets/hero-still.webp';
+import stillM from '../assets/hero-still-m.webp';
 import { site } from '../data/site';
-const states = ['Каркас', 'Печать', 'Грунт', 'Покраска'];
+const states = ['Каркас', 'Печать', 'Шёлк PLA', 'Смола SLA'];
+// static render of the same scene (scripts: hero3d still) — shown when 3D is not run
+const d = await Promise.all([1000, 1600, 2400].map((w) => getImage({ src: still, width: w, format: 'webp', quality: 78 })));
+const m = await Promise.all([420, 748].map((w) => getImage({ src: stillM, width: w, format: 'webp', quality: 78 })));
+const srcset = (a: { src: string; attributes: Record<string, any> }[], ws: number[]) => a.map((x, i) => `${x.src} ${ws[i]}w`).join(', ');
 ---
-<section class="hero chapter" aria-labelledby="hero-title">
-  <div class="wrap grid-12 hero__grid">
-    <div class="hero__copy">
-      <p class="t-label hero__kicker"><span class="dot" aria-hidden="true"></span>{site.city} · студия полного цикла</p>
-      <h1 id="hero-title" class="t-display hero__title balance" data-reveal="lines">Мы не печатаем файлы. Мы создаём изделия.</h1>
-      <p class="t-body-l hero__lead measure-body pretty" data-reveal="rise"><span>Моделирование, 3D-сканирование, печать FDM и SLA, шлифовка, грунт, покраска и сборка — в одной студии. На старте достаточно идеи, фотографии или эскиза.</span></p>
-      <div class="hero__actions">
-        <a href="/raschet/" class="btn btn--signal">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
-        <a href={site.telegram.url} class="t-label link-u hero__tg" rel="noopener" target="_blank">или написать в Telegram</a>
-      </div>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__stage on-dark" data-hero-object>
+    <canvas class="hero__canvas" aria-hidden="true"></canvas>
+    <div class="hero__still" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px)" srcset={srcset(m, [420, 748])} sizes="100vw" />
+        <img src={d[1].src} srcset={srcset(d, [1000, 1600, 2400])} sizes="100vw" alt="" width="2832" height="1520" decoding="async" />
+      </picture>
     </div>
-
-    <div class="hero__stage" data-hero-object>
-      <div class="hero__viewport crop-marks tech-grid">
-        <canvas class="hero__canvas" tabindex="0" aria-label="Образец — объёмная модель. Перетащите или используйте стрелки, чтобы повернуть"></canvas>
-        <div class="hero__fallback" data-fallback data-show="4" aria-hidden="true">
-          <ObjectSvg state={1} class="f f1" />
-          <ObjectSvg state={2} class="f f2" />
-          <ObjectSvg state={3} class="f f3" />
-          <ObjectSvg state={4} class="f f4" />
-        </div>
-        <p class="hero__readout t-label t-num" aria-live="polite"><span data-layer>Покраска · сатин + янтарная вставка</span></p>
-        <p class="hero__hint t-label" aria-hidden="true">Потяните, чтобы повернуть</p>
-        <p class="hero__spec t-label" aria-hidden="true">Образец · Ø 192 · H 240</p>
-      </div>
-      <div class="hero__states" role="group" aria-label="Состояние объекта">
-        {states.map((s, i) => (
-          <button type="button" class="hero-state t-label" data-state={i} aria-pressed={i === 3 ? 'true' : 'false'}>
-            <span class="t-num">0{i + 1}</span> {s}
-          </button>
-        ))}
-      </div>
+    <div class="hero__top">
+      <p class="chip hero__kicker"><i style="--c: var(--f-lime)"></i>{site.city} · студия полного цикла</p>
+      <p class="chip hero__readout t-num" aria-live="polite"><span data-layer>Шёлк PLA · слой 0,2 мм</span></p>
     </div>
+    <h1 id="hero-title" class="hero__title balance" data-reveal="lines">Мы не печатаем файлы. <span class="grad-text">Мы создаём изделия.</span></h1>
+    <div class="hero__states" role="group" aria-label="Материал и технология">
+      {states.map((s, i) => (
+        <button type="button" class="hero-state" data-state={i} aria-pressed={i === 2 ? 'true' : 'false'}>{s}</button>
+      ))}
+    </div>
+  </div>
+  <div class="cross-rule hero__rule" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span><span>+</span></div>
+  <div class="wrap grid-12 hero__below">
+    <p class="t-body-l hero__lead pretty">Моделирование, 3D-сканирование, печать FDM и SLA, шлифовка, грунт, покраска и сборка — в одной студии. На старте достаточно идеи, фотографии или эскиза.</p>
+    <div class="hero__actions">
+      <a href="/raschet/" class="btn"><span class="dot" aria-hidden="true"></span>Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+      <a href={site.telegram.url} class="btn btn--ghost" rel="noopener" target="_blank">Написать в Telegram</a>
+    </div>
+    <p class="t-label muted hero__scroll" aria-hidden="true">Листайте — нить уже печатается</p>
   </div>
 </section>
 
 <style>
-  .hero { padding-top: calc(var(--header-h) + clamp(24px, 4vw, 64px)); padding-bottom: clamp(48px, 6vw, 96px); min-height: min(100svh, 1100px); display: flex; align-items: center; }
-  .hero__grid { align-items: center; width: 100%; }
-  .hero__copy { grid-column: 1 / span 6; display: grid; gap: 32px; align-content: center; }
-  .hero__kicker { display: inline-flex; align-items: center; gap: 10px; color: var(--c-ink-muted); }
-  .dot { width: 8px; height: 8px; background: var(--c-amber); border-radius: 50%; animation: blink 2.4s steps(2, jump-none) infinite; }
-  @keyframes blink { 50% { opacity: .25; } }
-  .hero__title { max-width: 11ch; }
-  .hero__lead { color: var(--c-ink-muted); max-width: 44ch; }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
-  .hero__tg { color: var(--c-graphite); padding: 12px 0; }
+  .hero { position: relative; z-index: 1; padding-top: var(--header-h); }
+  .hero__stage {
+    container: stage / size;
+    position: relative; overflow: hidden; isolation: isolate;
+    margin-inline: var(--inset); height: calc(100svh - var(--header-h) - 64px); min-height: 560px; max-height: 1100px;
+    border-radius: var(--r-card); background: linear-gradient(180deg, var(--c-ink-2), var(--c-ink) 70%); color: var(--c-fog);
+  }
+  .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .hero__still { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 0.8s var(--ease-out); }
+  .hero__still :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+  :global(.is-static) .hero__still { opacity: 1; }
+  :global(.is-static) .hero__canvas { display: none; }
+  .hero__stage:not(.is-live) .hero__canvas { opacity: 0; }
+  .hero__canvas { transition: opacity 0.8s var(--ease-out); }
 
-  .hero__stage { grid-column: 7 / span 6; display: grid; gap: 14px; }
-  .hero__viewport { container: hero-stage / inline-size; position: relative; aspect-ratio: 1 / 1.02; color: var(--c-graphite); border: 1px solid var(--c-line); background-color: rgba(211, 210, 204, .35); }
-  .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; outline-offset: -4px; }
-  :global(.is-dragging) .hero__canvas { cursor: grabbing; }
-  .hero__fallback { position: absolute; inset: 8% 14% 6%; display: grid; }
-  .hero__fallback :global(.f) { grid-area: 1 / 1; opacity: 0; transition: opacity .6s var(--ease-out); }
-  .hero__fallback[data-show="1"] :global(.f1), .hero__fallback[data-show="2"] :global(.f2),
-  .hero__fallback[data-show="3"] :global(.f3), .hero__fallback[data-show="4"] :global(.f4) { opacity: 1; }
-  :global(.is-live) .hero__fallback { display: none; }
-  .hero__stage:not(.is-live):not(.is-static) .hero__canvas { opacity: 0; }
-  :global(.is-static) .hero__canvas, :global(.is-static) .hero__hint { display: none; }
-  .hero__readout, .hero__hint, .hero__spec { position: absolute; margin: 0; pointer-events: none; }
-  .hero__readout { left: 16px; top: 16px; background: var(--c-primer); padding: 6px 8px; }
-  .hero__spec { right: 16px; bottom: 16px; color: var(--c-ink-muted); }
-  @container hero-stage (max-width: 520px) { .hero__spec { display: none; } }
-  .hero__hint { left: 16px; bottom: 16px; color: var(--c-ink-muted); }
-  .hero__states { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .hero__top { position: absolute; inset: 16px 16px auto 16px; z-index: 2; display: flex; justify-content: space-between; gap: 8px; pointer-events: none; }
+  .hero__kicker, .hero__readout { background: rgba(37, 40, 51, 0.8); color: var(--c-fog); min-height: 34px; }
+  .hero__title {
+    position: absolute; left: clamp(20px, 3vw, 48px); bottom: clamp(88px, 11cqh, 120px); z-index: 2; margin: 0;
+    max-width: 11.5ch; font-size: clamp(44px, 6.4vw, 128px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 350;
+    pointer-events: none; hyphens: manual;
+  }
+  .hero__states {
+    position: absolute; left: clamp(20px, 3vw, 48px); bottom: clamp(20px, 3vw, 40px); z-index: 2;
+    display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: rgba(37, 40, 51, 0.8);
+  }
   .hero-state {
-    min-height: 44px; padding: 0 10px; display: flex; align-items: center; gap: 8px; justify-content: flex-start;
-    border: 1px solid var(--c-line-strong); border-radius: var(--r-ctl); color: var(--c-graphite); background: transparent;
-    transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover), border-color var(--d-fast) var(--ease-hover);
+    min-height: 40px; padding: 0 16px; border-radius: var(--r-pill); color: var(--c-muted-dark); font-size: 14px; font-weight: 500; white-space: nowrap;
+    transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover);
   }
-  .hero-state .t-num { color: var(--c-ink-muted); transition: color var(--d-fast) var(--ease-hover); }
-  .hero-state:hover { border-color: var(--c-graphite); }
-  .hero-state[aria-pressed="true"] { background: var(--c-graphite); color: var(--c-primer); border-color: var(--c-graphite); }
-  .hero-state[aria-pressed="true"] .t-num { color: var(--c-amber); }
+  .hero-state:hover { color: var(--c-fog); }
+  .hero-state[aria-pressed="true"] { background: var(--c-fog); color: var(--c-ink); }
 
-  @media (max-width: 1023px) {
-    .hero { min-height: 0; }
-    .hero__copy, .hero__stage { grid-column: 1 / -1; }
-    .hero__stage { max-width: 640px; }
+  .hero__rule { margin-top: 18px; }
+  .hero__below { padding-block: clamp(28px, 4vw, 64px) clamp(40px, 5vw, 96px); align-items: end; }
+  .hero__lead { grid-column: 1 / span 5; max-width: 46ch; }
+  .hero__actions { grid-column: 7 / span 4; display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero__scroll { grid-column: 11 / span 2; justify-self: end; text-align: right; max-width: 18ch; }
+
+  @container stage (max-aspect-ratio: 6/5) {
+    .hero__title { bottom: 88px; right: 20px; max-width: 12ch; }
   }
-  @media (max-width: 560px) {
-    .hero__states { grid-template-columns: repeat(2, 1fr); }
-    .hero__spec { display: none; }
+  @media (max-width: 1023px) {
+    .hero__lead, .hero__actions { grid-column: 1 / -1; }
+    .hero__scroll { display: none; }
+  }
+  @media (max-width: 767px) {
+    .hero__stage { height: calc(100svh - var(--header-h) - 40px); min-height: 520px; }
+    .hero__title { font-size: clamp(40px, 11.5vw, 64px); left: 16px; bottom: 84px; }
+    .hero__states { left: 12px; right: 12px; bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+    .hero-state { padding: 0 13px; font-size: 13px; flex: 1 0 auto; }
+    .hero__readout { display: none; }
+    .hero__top { inset: 12px 12px auto 12px; }
   }
 </style>

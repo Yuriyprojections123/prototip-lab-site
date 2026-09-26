@@ -1,84 +1,62 @@
-# Stage 1 — Brand direction: «Грунт и графит»
+# Brand — «Спектр» (v2, 27.09.2026)
 
-## Point of view
+v1 «Грунт и графит» (primer grey, graphite, one amber accent, 2 px corners) was rejected by the owner on
+27.09.2026: *"no boxy buttons and designs. this must be super high tech, colorfull and design savy site. This is
+3d printing technologies, it must fit this feel."* v1 stays in git history (commit 16868ad).
 
-ПРОТОТИП LAB — не «3D-печать на заказ», а цех, где цифровая модель становится вещью. Самое честное, что
-можно показать, — сам путь материала: каркас модели → слои печати → серый грунт → покраска. Этот путь и
-становится фирменным языком. Всё, что сайт показывает, либо проходит этот путь на глазах у посетителя
-(объект, отрисованный кодом), либо описано точно, как в техкарте.
+## Idea
 
-Рассмотрены три направления:
+Rainbow silk PLA — the filament every maker knows: one continuous strand that shifts through the spectrum as it
+is extruded. The site *is* that strand: a spectrum line extrudes down every page with a nozzle at its head; each
+service owns one colour of the strand; the first screen is a build chamber where parts print layer by layer.
 
-1. **Инженерная точность** — чертёж, миллиметровка, моно-шрифт. Сильно для сканирования и реверса, холодно для фигурок и мерча.
-2. **Материал мастерской** — слои филамента, смола, грунт, краска. Тёпло и осязаемо, но легко скатиться в «крафт».
-3. **Галерея объектов** — предмет на пьедестале, много воздуха. Красиво, но ничего не говорит о производстве.
+## Colour
 
-**Выбрано: 2, собранное дисциплиной 1.** Палитра и фактуры берутся из материалов мастерской; сетка,
-подписи и цифры — из технической документации. Объект всегда главный, интерфейс — как разметка на верстаке.
-
-## Позиционирование
-
-> Мы не печатаем файлы. Мы создаём изделия.
-
-Студия полного цикла в Москве: берём идею, фотографию, эскиз или сломанную деталь — и отдаём готовую вещь.
-Моделирование, сканирование, печать FDM и SLA, шлифовка, грунт, покраска, сборка — в одних руках.
-
-## Тон голоса (RU)
-
-- **Как мастер у верстака, а не как лендинг.** Коротко, по делу, глаголы действия: «сканируем», «шлифуем», «собираем».
-- **Конкретика вместо превосходных степеней.** Не «высочайшее качество», а «слой 0,05 мм на SLA — лицо фигурки без ступенек».
-- **На «вы», без канцелярита и без панибратства.** Никаких «уникальных решений» и «индивидуального подхода».
-- **Не обещаем того, что не можем доказать.** Никаких цифр без источника (см. `needs-confirmation.md`).
-- Подписи-метки — как в техкарте: `01 / Модель`, `Слой 0,2 мм`, `Этап 3 из 5`.
-
-Примеры:
-- Было: «Создаём то, чего ещё нет». Стало: «Из фотографии, эскиза или обломка — в готовую вещь».
-- Было: «Точность в деталях». Стало: «FDM или SLA — выбираем по задаче, а не по привычке».
-
-## Палитра
-
-Цвета — буквально материалы процесса. Каждый проверен на контраст (WCAG 2.2).
-
-| Токен | Hex | Материал | Роль | Доля |
-|---|---|---|---|---|
-| `--c-primer` | `#E4E3DE` | светлый грунт | основной фон | ~58% |
-| `--c-primer-deep` | `#D3D2CC` | грунт после второго слоя | подложки, плашки, линии сетки | ~10% |
-| `--c-graphite` | `#141413` | чёрный PLA / сталь инструмента | текст, тёмные главы, кнопка | ~24% |
-| `--c-graphite-2` | `#232321` | графит, полутон | поверхности на тёмном | ~3% |
-| `--c-ink-muted` | `#55544F` | карандаш по грунту | вторичный текст на светлом (5,9:1 на грунте, 5,0:1 на глубоком грунте) | ~2% |
-| `--c-primer-muted` | `#9A9993` | грунт в тени | вторичный текст на тёмном (6,5:1) | ~1% |
-| `--c-amber` | `#FF5A1F` | янтарный УФ-фильтр SLA-принтера | сигнал: основное действие, активный этап, «сопло» печати | ~2% |
-
-Правила:
-- Янтарь — только заливка с графитовым текстом (контраст 5,9:1) или тонкая линия/точка. Никогда — текст на светлом фоне (2,8:1).
-- Один акцент. Никаких градиентов между цветами. Допустима только «плотность» одного цвета (линии сетки = графит 12–16%).
-- Тёмные главы (графит) чередуются со светлыми, как свет и тень в цеху; не больше двух тёмных подряд.
-
-## Типографика
-
-Шрифты открытые (SIL OFL 1.1), с полной кириллицей, собираются в бандл из npm-пакетов `@fontsource-variable/*`
-и отдаются с того же домена. Никаких внешних CDN.
-
-| Роль | Шрифт | Почему |
+| Token | Hex | Role |
 |---|---|---|
-| Заголовки и текст | **Geologica** (variable, wght 100–900; Cyrillic, Cyrillic-ext, Latin) | Гротеск с широкой апертурой и крупным x-height (≈0,53 em) — держит русские длинные слова на крупных кеглях при weight 400, как требует система референса (заголовки 400, трекинг −0,03 em). Квадратные округления «с», «е» перекликаются с фаской печатной детали. Разборчив в 16–18 px на мобильном |
-| Метки, цифры, кнопки | **JetBrains Mono** (variable, wght 100–800; Cyrillic) | Моноширинная цифра для техкарты: слои, миллиметры, номера этапов. Референс использует моно-метки 11–13 px uppercase с трекингом 0,18 em — JetBrains Mono при этих размерах держит кириллицу без слипания |
+| fog | `#EDEFF4` | page base — cool, light, "lab" |
+| paper | `#F8F9FC` | cards on fog |
+| fog-2 | `#E1E4EC` | pressed/hover surfaces, media placeholders |
+| ink | `#0B0C10` | text, stage cards, primary pills |
+| muted | `#4C5060` | secondary text on fog (7.0:1) |
+| muted-dark | `#A3A8B8` | secondary text on ink (8.1:1) |
+| cyan | `#00C2FF` | 3D-сканирование и реверс-инжиниринг |
+| blue | `#2F5BFF` | 3D-моделирование (white text on it) |
+| magenta | `#FF2E8E` | Фигурки |
+| orange | `#FF6A1A` | Корпоративный мерч; FDM in the comparison |
+| yellow | `#FFC61A` | Прототипирование |
+| lime | `#B6F500` | Косплей; focus on dark; "ready" states |
+| spectrum | cyan → blue → magenta → orange → yellow → lime | the filament line, hero accent words, CTA, footer wordmark, progress |
 
-Метрики, по которым выбирали: x-height/cap-height Geologica 0,53/0,72 em против Inter 0,55/0,73 — близкая плотность,
-но характер другой; у JetBrains Mono ширина знака 0,6 em — 13 px uppercase с трекингом 0,18 em даёт ~10,1 px на знак,
-кнопка «РАССЧИТАТЬ ПРОЕКТ» укладывается в 200 px.
+Ink text on every filament colour except blue (white). The old site's violet (#6D4DFF family) stays banned.
 
-## Арт-дирекция изображений
+## Type
 
-- **Главный визуальный материал — объекты, отрисованные кодом** (three.js): освещение «мастерская» — один тёплый ключевой свет сверху-слева 45°, мягкий заполняющий с противоположной стороны, контровой сзади; фон — грунт `#E4E3DE` или графит `#141413`, без градиентов; камера на 15–25° выше центра предмета, лёгкая перспектива (fov 30°), как у предметной съёмки.
-- **Материалы по этапам:** каркас (графитовые линии 1 px) → печать (видимые слои, янтарная линия сопла) → грунт (матовый серый, roughness 0,9) → покраска (графит сатин + янтарная деталь или металлик).
-- **Фото студии со старого сайта** используются только внутри услуг и кейсов, перекрашены: фиолетовый свет убран в нейтральный серый, общая тональность подтянута к грунту. Подписываются как иллюстрации, пока владелец не даст реальные фото.
-- **Чего не делаем:** люди-модели, «студийные интерьеры» из стока, персонажи франшиз, неон, фиолетовый свет, боке-блобы.
+- **Onest Variable** (OFL, native Cyrillic) — display at weight 350 with −0.05 em tracking (huge and light),
+  UI and body at 400–500.
+- **JetBrains Mono Variable** — labels, counters, layer numbers.
 
-## Логотип
+## Form
 
-Название остаётся: **ПРОТОТИП LAB**. Словесный знак перерисован в коде (SVG):
-- `ПРОТОТИП` — Geologica 600, трекинг −0,02 em;
-- `LAB` — JetBrains Mono 500 в рамке 1 px, как бирка на детали;
-- знак — квадрат с одним «напечатанным» углом: три горизонтальные линии-слоя в правом нижнем углу, янтарная точка сопла. Работает от 16 px (фавикон) до 400 px.
-Старая изометрическая иконка с фиолетовой гранью не используется.
+- Every control is a pill (999 px). Every surface is a soft card: 20–32 px (2 vw), media 14–22 px.
+- Dark and deep chapters are cards inset from the viewport edge, never full-bleed boxes.
+- Pills carry a spinning spectrum dot; on hover the dot floods the pill with the spectrum.
+- Cards flood with their service colour from the point where the cursor entered.
+- Crosshair "+" rules between hero and content.
+
+## Imagery
+
+1. **Code first**: the hero cluster (three.js, 14 procedural printed parts), the process silhouette (SVG, five
+   stages), the FDM/SLA cross-section (canvas).
+2. **Studio images**: the 20 published renders from the old site, violet light re-lit in the colour of each
+   image's service. Labelled as illustrations.
+3. Generation: none needed (budget untouched).
+
+## Logo
+
+Rounded ink tile with three printed layers (cyan, magenta, and a lime layer still being laid with its nozzle
+dot) + ПРОТОТИП in Onest 600 + LAB as an ink pill. Drawn in code (`src/components/Logo.astro`, `public/favicon.svg`).
+
+## Voice
+
+Unchanged from v1 — the studio's own copy, tightened; no invented numbers (see `needs-confirmation.md`).

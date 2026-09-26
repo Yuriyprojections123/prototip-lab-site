@@ -1,160 +1,252 @@
 {
  "/ body": {
-  "backgroundColor": "rgb(228, 227, 222)",
-  "color": "rgb(20, 20, 19)",
-  "fontFamily": "\"Geologica Variable\", Geologica, system-ui, sans-serif",
-  "fontSize": "16px",
-  "lineHeight": "24px"
+  "backgroundColor": "rgb(237, 239, 244)",
+  "color": "rgb(11, 12, 16)",
+  "fontFamily": "\"Onest Variable\", Onest, system-ui, sans-serif",
+  "fontSize": "17px",
+  "lineHeight": "25.5px"
  },
- "/ h1.t-display": {
-  "fontSize": "69.9984px",
-  "fontWeight": "400",
-  "lineHeight": "66.4985px",
-  "letterSpacing": "-3.49992px",
-  "color": "rgb(20, 20, 19)"
+ "/ .hero__title": {
+  "fontSize": "92.16px",
+  "fontWeight": "350",
+  "color": "rgb(237, 239, 244)"
+ },
+ "/ .hero__stage": {
+  "borderRadius": "28.8px",
+  "color": "rgb(237, 239, 244)",
+  "overflow": "hidden"
+ },
+ "/ .hero-state[aria-pressed=\"true\"]": {
+  "backgroundColor": "rgb(237, 239, 244)",
+  "color": "rgb(11, 12, 16)",
+  "borderRadius": "999px"
+ },
+ "/ .hero__states": {
+  "borderRadius": "999px"
  },
  "/ .t-h2": {
-  "fontSize": "47.9952px",
-  "fontWeight": "400",
-  "lineHeight": "50.395px",
-  "letterSpacing": "-0.959904px"
- },
- "/ .t-lead": {
-  "fontSize": "34.56px",
-  "fontWeight": "450"
+  "fontSize": "59.04px",
+  "fontWeight": "380",
+  "lineHeight": "59.04px",
+  "letterSpacing": "-2.3616px"
  },
  "/ .t-label": {
   "fontFamily": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace",
   "fontSize": "12px",
-  "fontWeight": "600",
+  "fontWeight": "500",
   "textTransform": "uppercase",
-  "letterSpacing": "1.92px"
+  "letterSpacing": "0.96px"
+ },
+ "/ .chip": {
+  "fontFamily": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace",
+  "fontSize": "11px",
+  "borderRadius": "999px"
  },
  "/ .site-header .t-nav": {
-  "fontSize": "14px",
-  "fontWeight": "450",
-  "letterSpacing": "0.42px"
+  "fontSize": "15px",
+  "fontWeight": "500"
+ },
+ "/ .site-header__nav": {
+  "backgroundColor": "rgb(248, 249, 252)",
+  "borderRadius": "999px"
  },
  "/ .site-header": {
-  "backdropFilter": "none",
-  "boxShadow": "none"
+  "backdropFilter": "none"
  },
  "/ .wrap": {
-  "paddingLeft": "69.9984px",
-  "paddingRight": "69.9984px"
+  "paddingLeft": "31.68px",
+  "paddingRight": "31.68px"
  },
  "/ .grid-12": {
-  "columnGap": "15.0048px"
+  "columnGap": "15.84px"
  },
- "/ .btn--signal": {
-  "backgroundColor": "rgb(255, 90, 31)",
-  "color": "rgb(20, 20, 19)",
-  "borderRadius": "2px",
+ "/ .site-header__cta": {
+  "backgroundColor": "rgb(11, 12, 16)",
+  "color": "rgb(237, 239, 244)",
+  "borderRadius": "999px",
   "cursor": "pointer",
-  "boxShadow": "none",
-  "fontFamily": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace",
-  "fontSize": "13px",
-  "fontWeight": "600",
-  "letterSpacing": "1.82px",
-  "textTransform": "uppercase",
-  "transitionTimingFunction": "cubic-bezier(0.39, 0.575, 0.565, 1)",
-  "transitionDuration": "0.3s"
+  "fontFamily": "\"Onest Variable\", Onest, system-ui, sans-serif",
+  "fontSize": "14px",
+  "fontWeight": "500",
+  "minHeight": "44px"
  },
- "/ .chapter--dark .btn--ghost": {
-  "color": "rgb(228, 227, 222)",
-  "borderRadius": "2px"
+ "/ .hero__actions .btn": {
+  "borderRadius": "999px",
+  "minHeight": "52px",
+  "fontSize": "15px"
  },
- "/ .chapter--dark": {
-  "backgroundColor": "rgb(20, 20, 19)",
-  "color": "rgb(228, 227, 222)"
+ "/ .hero__actions .btn--ghost": {
+  "borderRadius": "999px",
+  "color": "rgb(11, 12, 16)",
+  "backgroundColor": "rgba(0, 0, 0, 0)"
+ },
+ "/ .svc-card": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/ .svc-card__media": {
+  "borderRadius": "20.16px"
+ },
+ "/ .stmt__item": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
  },
  "/ .chapter.svc": {
-  "paddingTop": "119.995px",
-  "paddingBottom": "119.995px"
+  "paddingTop": "122.4px",
+  "paddingBottom": "122.4px"
  },
- "/ .reveal-line > span": {
-  "transitionTimingFunction": "cubic-bezier(0.19, 1, 0.22, 1)",
-  "transitionDuration": "1s"
+ "/ .chapter--deep": {
+  "backgroundColor": "rgb(248, 249, 252)",
+  "borderRadius": "28.8px",
+  "marginLeft": "12.096px"
  },
- "/ .hero-state[aria-pressed=\"true\"]": {
-  "backgroundColor": "rgb(20, 20, 19)",
-  "color": "rgb(228, 227, 222)",
-  "borderRadius": "2px"
+ "/ .compare__view": {
+  "borderRadius": "28.8px"
  },
- "/ .compare": {
-  "borderRadius": "0px"
+ "/ .compare__grip": {
+  "borderRadius": "999px",
+  "backgroundColor": "rgb(237, 239, 244)"
+ },
+ "/ .compare__table": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/ .case-card__media": {
+  "borderRadius": "28.8px"
+ },
+ "/ .cta__card": {
+  "borderRadius": "28.8px",
+  "overflow": "hidden"
+ },
+ "/ .aud__pill": {
+  "borderRadius": "999px",
+  "backgroundColor": "rgb(248, 249, 252)"
  },
  "/ .site-footer": {
-  "backgroundColor": "rgb(20, 20, 19)",
-  "color": "rgb(228, 227, 222)"
+  "backgroundColor": "rgb(11, 12, 16)",
+  "color": "rgb(237, 239, 244)",
+  "borderRadius": "28.8px"
  },
- "!focus / .btn--signal": {
-  "outlineColor": "rgb(255, 90, 31)",
+ "/ .reveal-line > span": {
+  "transitionTimingFunction": "cubic-bezier(0.16, 1, 0.3, 1)",
+  "transitionDuration": "1.1s"
+ },
+ "!focus / .site-header__cta": {
+  "outlineColor": "rgb(47, 91, 255)",
   "outlineWidth": "2px",
   "outlineOffset": "3px"
  },
- "/404.html .btn--ghost": {
-  "color": "rgb(20, 20, 19)",
-  "borderRadius": "2px",
-  "cursor": "pointer"
- },
  "/uslugi/ h1.t-display": {
-  "fontSize": "69.9984px",
-  "letterSpacing": "-3.49992px"
+  "fontSize": "80.64px",
+  "fontWeight": "350",
+  "lineHeight": "75.8016px",
+  "letterSpacing": "-4.032px"
  },
- "/uslugi/ .service-row": {
-  "borderRadius": "0px",
-  "boxShadow": "none"
+ "/uslugi/ .phead__crumb": {
+  "borderRadius": "999px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/uslugi/ .plist__item": {
+  "borderRadius": "28.8px"
  },
  "/uslugi/skanirovanie/ h1.t-display": {
-  "fontSize": "69.9984px"
+  "fontSize": "80.64px"
+ },
+ "/uslugi/skanirovanie/ .blk__item": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/uslugi/skanirovanie/ .svc-hero__img": {
+  "borderRadius": "28.8px"
+ },
+ "/uslugi/skanirovanie/ .more__link": {
+  "borderRadius": "28.8px"
  },
  "/portfolio/ .filter-chip": {
-  "borderRadius": "2px",
-  "fontFamily": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, monospace",
+  "borderRadius": "999px",
+  "fontFamily": "\"Onest Variable\", Onest, system-ui, sans-serif",
+  "fontSize": "14px",
   "cursor": "pointer"
  },
  "/portfolio/ .filter-chip[aria-pressed=\"true\"]": {
-  "backgroundColor": "rgb(20, 20, 19)",
-  "color": "rgb(228, 227, 222)"
+  "backgroundColor": "rgb(11, 12, 16)",
+  "color": "rgb(237, 239, 244)"
  },
- "/portfolio/ .case-card": {
-  "borderRadius": "0px",
-  "boxShadow": "none"
+ "/portfolio/ .pf__bar": {
+  "borderRadius": "999px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/portfolio/ .case-card__media": {
+  "borderRadius": "28.8px"
  },
  "/portfolio/shlem-po-skanu/ h1.t-display": {
-  "fontSize": "69.9984px"
+  "fontSize": "80.64px"
+ },
+ "/portfolio/shlem-po-skanu/ .case__facts div": {
+  "borderRadius": "28.8px"
+ },
+ "/studiya/ .story__body .t-lead": {
+  "fontSize": "30.96px",
+  "fontWeight": "400"
+ },
+ "/kontakty/ .ct__card": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/raschet/ .q-form": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
  },
  "/raschet/ .q-input": {
-  "backgroundColor": "rgb(211, 210, 204)",
-  "borderRadius": "0px",
+  "backgroundColor": "rgb(237, 239, 244)",
+  "borderRadius": "18px",
   "fontSize": "18px"
  },
  "/raschet/ .q-option": {
-  "borderRadius": "2px",
+  "borderRadius": "20px",
   "cursor": "pointer"
  },
+ "/raschet/ .q-tick": {
+  "borderRadius": "8px"
+ },
  "/raschet/ .q-consent a": {
-  "color": "rgb(20, 20, 19)",
+  "color": "rgb(11, 12, 16)",
   "textDecorationLine": "underline"
  },
  "/politika-konfidencialnosti/ h1.t-display": {
-  "fontSize": "69.9984px"
+  "fontSize": "80.64px"
  },
- "@390 / h1.t-display": {
-  "fontSize": "40px",
-  "lineHeight": "38px",
-  "letterSpacing": "-2px"
+ "/politika-konfidencialnosti/ .pol__sec": {
+  "borderRadius": "28.8px",
+  "backgroundColor": "rgb(248, 249, 252)"
+ },
+ "/404.html .nf__actions .btn--ghost": {
+  "color": "rgb(11, 12, 16)",
+  "borderRadius": "999px",
+  "cursor": "pointer"
+ },
+ "@390 / .hero__title": {
+  "fontSize": "44.85px"
  },
  "@390 / .wrap": {
-  "paddingLeft": "20px"
+  "paddingLeft": "16px"
  },
  "@390 / .t-h2": {
-  "fontSize": "32px"
+  "fontSize": "34px"
  },
- "@390 / .btn--signal": {
-  "fontSize": "13px",
-  "borderRadius": "2px"
+ "@390 / .hero__actions .btn": {
+  "fontSize": "15px",
+  "borderRadius": "999px",
+  "minHeight": "52px"
+ },
+ "@390 / .hero-state": {
+  "minHeight": "40px",
+  "borderRadius": "999px"
+ },
+ "@390 /uslugi/ h1.t-display": {
+  "fontSize": "40px",
+  "lineHeight": "37.6px",
+  "letterSpacing": "-2px"
  },
  "@390 /raschet/ .q-input": {
   "fontSize": "18px"

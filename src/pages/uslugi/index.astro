@@ -4,12 +4,16 @@ import PageHead from '../../components/PageHead.astro';
 import ServicesIndex from '../../components/ServicesIndex.astro';
 import ProcessList from '../../components/ProcessList.astro';
 import CtaChapter from '../../components/CtaChapter.astro';
-import ObjectSvg from '../../components/ObjectSvg.astro';
+import LayerArt from '../../components/LayerArt.astro';
 ---
 <Base title="Услуги: 3D-моделирование, сканирование, печать и покраска" description="3D-моделирование, 3D-сканирование и реверс-инжиниринг, фигурки, корпоративный мерч, косплей и функциональные прототипы — полный цикл в одной студии в Москве.">
-  <PageHead label="Услуги" title="Весь путь — от идеи до готового изделия" lead="Концепт, промышленный дизайн, 3D-моделирование, сканирование, прототипирование, производство, покраска и сборка — в одной студии.">
-    <a slot="actions" href="/raschet/" class="btn btn--signal" style="justify-self:start">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
-    <div class="u-obj crop-marks tech-grid" aria-hidden="true"><ObjectSvg state={2} /></div>
+  <PageHead label="Услуги" title="Весь путь — от идеи до готового изделия" lead="Концепт, промышленный дизайн, 3D-моделирование, сканирование, прототипирование, производство, покраска и сборка — в одной студии." color="cyan">
+    <a slot="actions" href="/raschet/" class="btn"><span class="dot" aria-hidden="true"></span>Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+    <div class="u-stage" aria-hidden="true">
+      <span data-color="cyan"><LayerArt stage={1} /></span>
+      <span data-color="magenta"><LayerArt stage={2} /></span>
+      <span data-color="lime"><LayerArt stage={4} /></span>
+    </div>
   </PageHead>
   <ServicesIndex title="Шесть направлений" label="Выберите задачу" showAll={false} />
   <ProcessList />
@@ -17,5 +21,6 @@ import ObjectSvg from '../../components/ObjectSvg.astro';
 </Base>
 
 <style>
-  .u-obj { padding: 8% 22%; border: 1px solid var(--c-line); }
+  .u-stage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 28px 22px 22px; border-radius: var(--r-card); background: var(--c-ink); }
+  .u-stage span { color: var(--c); }
 </style>

@@ -1,18 +1,19 @@
 ---
-// Static version of the process for inner pages: five frames of the same object, one per stage.
-import ObjectSvg from './ObjectSvg.astro';
+// Static version of the process for inner pages: five coloured cards, one silhouette drawn five ways.
+import LayerArt from './LayerArt.astro';
 import { process } from '../data/site';
+const colors = ['cyan', 'blue', 'magenta', 'orange', 'lime'];
 ---
-<section class="chapter chapter--dark chapter--notch plist" aria-labelledby="plist-title">
+<section class="chapter chapter--dark plist" aria-labelledby="plist-title">
   <div class="wrap">
     <div class="grid-12 plist__head">
-      <p class="t-label muted plist__label">Как мы работаем</p>
+      <p class="chip plist__label"><i style="--c: var(--f-magenta)"></i>Как мы работаем</p>
       <h2 id="plist-title" class="t-h2 balance plist__title" data-reveal="lines">Один процесс. Предсказуемый результат.</h2>
     </div>
     <ol class="plist__list" data-reveal="rise">
       {process.map((st, i) => (
-        <li class="plist__item">
-          <div class="plist__frame" aria-hidden="true"><ObjectSvg state={i as 0 | 1 | 2 | 3 | 4} /></div>
+        <li class="plist__item" data-color={colors[i]}>
+          <div class="plist__art"><LayerArt stage={i as 0 | 1 | 2 | 3 | 4} /></div>
           <p class="t-label t-num plist__n">{st.n} · {st.title}</p>
           <h3 class="t-h3">{st.lead}</h3>
           <p class="plist__text">{st.text}</p>
@@ -23,17 +24,16 @@ import { process } from '../data/site';
 </section>
 
 <style>
-  .plist__head { margin-bottom: clamp(32px, 4vw, 64px); }
-  .plist__label { grid-column: 1 / span 3; }
+  .plist__head { margin-bottom: clamp(32px, 4vw, 64px); align-items: end; }
+  .plist__label { grid-column: 1 / span 3; align-self: start; justify-self: start; }
   .plist__title { grid-column: 4 / span 8; }
   .plist__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); }
-  .plist__item { display: grid; gap: 12px; align-content: start; }
-  .plist__frame { background: var(--c-primer); padding: 14% 18%; aspect-ratio: 1; display: grid; align-items: end; }
-  .plist__n { color: var(--c-amber); }
-  .plist__text { color: var(--c-primer-muted); }
+  .plist__item { display: grid; gap: 12px; align-content: start; padding: 18px 18px 24px; border-radius: var(--r-card); background: var(--c); color: var(--c-on); }
+  .plist__art { width: 70%; justify-self: center; margin: 8px 0 12px; }
+  .plist__text { font-size: 15px; }
   @media (max-width: 1023px) {
     .plist__label, .plist__title { grid-column: 1 / -1; }
-    .plist__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+    .plist__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  @media (max-width: 480px) { .plist__list { grid-template-columns: 1fr; } .plist__frame { max-width: 240px; } }
+  @media (max-width: 480px) { .plist__list { grid-template-columns: 1fr; } .plist__art { width: 50%; } }
 </style>

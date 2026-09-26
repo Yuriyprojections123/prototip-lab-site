@@ -1,74 +1,78 @@
 ---
-import { getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import { services } from '../data/services';
-interface Props { title?: string; label?: string; level?: 'h2' | 'h1'; showAll?: boolean }
+interface Props { title?: string; label?: string; showAll?: boolean }
 const { title = 'Шесть направлений. Одна мастерская.', label = 'Направления', showAll = true } = Astro.props;
-const previews = await Promise.all(services.map((s) => getImage({ src: s.image, width: 520, format: 'webp', quality: 72 })));
 ---
 <section class="chapter svc" aria-labelledby="svc-title">
   <div class="wrap">
     <div class="svc__head grid-12">
-      <p class="t-label muted svc__label">{label}</p>
+      <p class="chip svc__label"><i style="--c: var(--f-cyan)"></i>{label}</p>
       <h2 id="svc-title" class="t-h2 balance svc__title" data-reveal="lines">{title}</h2>
-      {showAll && <a href="/uslugi/" class="t-label link-u svc__all">Все услуги →</a>}
+      {showAll && <a href="/uslugi/" class="btn btn--ghost btn--sm svc__all">Все услуги <span class="arr" aria-hidden="true">→</span></a>}
     </div>
-    <ol class="svc__list" data-index-hover>
-      {services.map((s, i) => (
+    <ol class="svc__grid" data-reveal="rise">
+      {services.map((s) => (
         <li>
-          <a href={`/uslugi/${s.slug}/`} class="service-row" data-preview={previews[i].src}>
-            <span class="t-label t-num service-row__n">{s.n}</span>
-            <span class="service-row__name t-h3">{s.name}</span>
-            <span class="service-row__short muted">{s.short}</span>
-            <span class="service-row__area t-label muted">{s.area}</span>
-            <span class="service-row__arr" aria-hidden="true">→</span>
+          <a href={`/uslugi/${s.slug}/`} class="svc-card" data-color={s.color} data-flood>
+            <span class="svc-card__top">
+              <span class="svc-card__n t-num">{s.n}</span>
+              <span class="chip svc-card__area"><i></i>{s.area}</span>
+            </span>
+            <span class="svc-card__media">
+              <Image src={s.image} alt="" widths={[360, 560, 800]} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 46vw, 31vw" loading="lazy" decoding="async" quality={72} />
+            </span>
+            <span class="svc-card__name t-h3">{s.name}</span>
+            <span class="svc-card__short">{s.short}</span>
+            <span class="svc-card__go" aria-hidden="true"><span>→</span></span>
           </a>
         </li>
       ))}
     </ol>
   </div>
-  <div class="svc__float" aria-hidden="true"><img alt="" width="260" height="195" decoding="async" /></div>
 </section>
 
 <style>
   .svc__head { align-items: end; margin-bottom: clamp(32px, 4vw, 64px); }
-  .svc__label { grid-column: 1 / span 3; }
+  .svc__label { grid-column: 1 / span 3; align-self: start; justify-self: start; }
   .svc__title { grid-column: 4 / span 7; }
-  .svc__all { grid-column: 11 / span 2; justify-self: end; padding: 12px 0; }
-  .svc__list { border-top: 1px solid var(--c-line-strong); }
-  .service-row {
-    position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: baseline;
-    padding: clamp(20px, 2.2vw, 32px) 0; border-bottom: 1px solid var(--c-line-strong); border-radius: 0; box-shadow: none; isolation: isolate;
+  .svc__all { grid-column: 11 / span 2; justify-self: end; }
+  .svc__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .svc-card {
+    position: relative; isolation: isolate; overflow: hidden; height: 100%;
+    display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; padding: 14px 14px 22px;
+    border-radius: var(--r-card); background: var(--c-paper); color: var(--c-ink);
+    transition: color 0.5s var(--ease-out);
   }
-  .service-row::before { content: ""; position: absolute; inset: 0 calc(var(--margin) * -1); background: var(--c-graphite); z-index: -1; transform: scaleY(0); transform-origin: 50% 100%; transition: transform .5s var(--ease-out); }
-  .service-row__n { grid-column: 1 / span 1; color: var(--c-ink-muted); transition: color var(--d-fast) var(--ease-hover); }
-  .service-row__name { grid-column: 2 / span 5; transition: transform .5s var(--ease-out), color var(--d-fast) var(--ease-hover); }
-  .service-row__short { grid-column: 7 / span 4; max-width: 42ch; transition: color var(--d-fast) var(--ease-hover); }
-  .service-row__area { grid-column: 11 / span 1; transition: color var(--d-fast) var(--ease-hover); }
-  .service-row__arr { grid-column: 12 / span 1; justify-self: end; font-size: 24px; transition: transform .5s var(--ease-out), color var(--d-fast) var(--ease-hover); }
-  .service-row:hover::before, .service-row:focus-visible::before { transform: scaleY(1); }
-  .service-row:hover, .service-row:focus-visible { color: var(--c-primer); }
-  .service-row:hover .service-row__short, .service-row:hover .service-row__area, .service-row:focus-visible .service-row__short { color: var(--c-primer-muted); }
-  .service-row:hover .service-row__n, .service-row:focus-visible .service-row__n { color: var(--c-amber); }
-  .service-row:hover .service-row__name { transform: translateX(12px); }
-  .service-row:hover .service-row__arr { transform: translateX(-6px) rotate(-45deg); color: var(--c-amber); }
-  .service-row:focus-visible { outline-offset: -2px; }
-
-  .svc__float { position: fixed; left: 0; top: 0; width: 260px; aspect-ratio: 4 / 3; pointer-events: none; z-index: 40; opacity: 0; clip-path: inset(50% 0 50% 0); transition: opacity .3s var(--ease-hover), clip-path .6s var(--ease-out); }
-  .svc__float img { width: 100%; height: 100%; object-fit: cover; }
-  .svc__float.is-on { opacity: 1; clip-path: inset(0 0 0 0); }
-
+  .svc-card::before {
+    content: ""; position: absolute; z-index: -1; left: var(--mx, 50%); top: var(--my, 100%); width: 10px; height: 10px; margin: -5px;
+    border-radius: 50%; background: var(--c); transform: scale(0); transition: transform 0.8s var(--ease-out);
+  }
+  .svc-card:hover::before, .svc-card:focus-visible::before { transform: scale(260); }
+  .svc-card:hover, .svc-card:focus-visible { color: var(--c-on); }
+  .svc-card__top { display: flex; justify-content: space-between; align-items: center; padding: 4px 4px 0 8px; }
+  .svc-card__n { font-size: 13px; }
+  .svc-card__area { background: var(--c-fog); }
+  .svc-card:hover .svc-card__area { background: var(--c-paper); color: var(--c-ink); }
+  .svc-card__media { display: block; aspect-ratio: 16 / 11; overflow: hidden; border-radius: var(--r-media); background: var(--c-fog-2); }
+  .svc-card__media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease-out), border-radius 1s var(--ease-out); }
+  .svc-card:hover .svc-card__media :global(img) { transform: scale(1.06) rotate(-1deg); }
+  .svc-card__name { padding: 8px 56px 0 8px; align-self: start; }
+  .svc-card__short { padding: 0 8px; font-size: 15px; opacity: 0.78; max-width: 40ch; }
+  .svc-card__go {
+    position: absolute; right: 18px; bottom: 18px; width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--c-ink); color: var(--c-fog); font-size: 18px;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .svc-card__go span { transition: transform 0.5s var(--ease-out); }
+  .svc-card:hover .svc-card__go { transform: scale(1.08); }
+  .svc-card:hover .svc-card__go span { transform: rotate(-45deg); }
+  .svc-card__name, .svc-card__short { position: relative; }
+  .svc-card:focus-visible { outline-offset: 4px; }
   @media (max-width: 1023px) {
     .svc__label, .svc__title { grid-column: 1 / -1; }
     .svc__all { grid-column: 1 / -1; justify-self: start; }
-    .service-row__n { grid-column: 1 / span 1; }
-    .service-row__name { grid-column: 2 / span 10; }
-    .service-row__short { grid-column: 2 / span 10; margin-top: 8px; }
-    .service-row__area { display: none; }
-    .service-row__arr { grid-column: 12; grid-row: 1; }
+    .svc__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-  @media (max-width: 767px) {
-    .service-row { grid-template-columns: 40px 1fr 24px; }
-    .service-row__n { grid-column: 1; } .service-row__name { grid-column: 2; } .service-row__short { grid-column: 2; } .service-row__arr { grid-column: 3; }
-    .svc__float { display: none; }
-  }
+  @media (max-width: 640px) { .svc__grid { grid-template-columns: 1fr; } .svc-card__short { padding-right: 56px; } }
 </style>

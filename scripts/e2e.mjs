@@ -34,11 +34,13 @@ const mk = async (opts = {}) => {
   const readout = await pg.textContent('[data-layer]');
   ok('print state shows layer counter', /Слой \d{3} \/ 412/.test(readout ?? ''), readout ?? '');
   await pg.locator('[data-compare]').scrollIntoViewIfNeeded();
-  await pg.waitForTimeout(800);
+  await pg.waitForSelector('[data-compare].is-ready', { state: 'attached', timeout: 8000 }).catch(async () => { await pg.mouse.wheel(0, 200); await pg.waitForSelector('[data-compare].is-ready', { state: 'attached', timeout: 8000 }); });
+  await pg.waitForTimeout(400);
   const h = pg.locator('[data-handle]');
   await h.focus();
   await pg.keyboard.press('ArrowRight'); await pg.keyboard.press('ArrowRight');
-  await pg.waitForTimeout(100);
+  // redraw runs on the next animation frame — slow under software GL, so wait for it rather than a fixed delay
+  await pg.waitForFunction(() => document.querySelector('[data-handle]')?.getAttribute('aria-valuenow') === '54', null, { timeout: 4000 }).catch(() => {});
   ok('compare slider responds to keyboard', (await h.getAttribute('aria-valuenow')) === '54', await h.getAttribute('aria-valuenow'));
   await pg.click('[data-col="sla"]');
   ok('compare table toggle', (await pg.getAttribute('.compare__table table', 'data-show')) === 'sla');
@@ -94,25 +96,25 @@ const mk = async (opts = {}) => {
   ok('?task= preselects the task', await pg.isChecked('input[name="task"][value="merch"]'));
   await pg.click('input[name="task"][value="figurine"]', { force: true });
   ok('summary reflects task', (await pg.textContent('[data-sum="task"]')) === 'Фигурка');
-  await pg.click('[data-next]');
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
   await pg.click('[data-preset="35"]');
   ok('size preset updates output', (await pg.textContent('[data-size-out]')) === '35 см');
-  await pg.click('[data-next]');
-  await pg.click('[data-next]'); // no quantity chosen → error
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
+  await pg.click('[data-next]'); await pg.waitForTimeout(700); // no quantity chosen → error
   ok('quantity required shows error', await pg.isVisible('[data-err="quantity"]'));
   ok('invalid group gets aria-invalid', (await pg.getAttribute('.q-step.is-cur [role="radiogroup"]', 'aria-invalid')) === 'true');
   await pg.click('input[name="quantity"][value="1"]', { force: true });
   ok('error clears after choosing', !(await pg.isVisible('[data-err="quantity"]')));
-  await pg.click('[data-next]');
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
   await pg.click('input[name="deadline"][value="2-4w"]', { force: true });
-  await pg.click('[data-next]');
-  await pg.click('[data-next]');
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
   ok('description required', await pg.isVisible('[data-err="description"]'));
   await pg.fill('#q-desc', 'Фигурка по фотографии, 35 см, покраска');
   await pg.setInputFiles('[data-files]', { name: 'ref.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64') });
   ok('file listed with remove button', (await pg.locator('.q-files li').count()) === 1);
   ok('summary counts files', (await pg.textContent('[data-sum="files"]')) === '1 шт');
-  await pg.click('[data-next]');
+  await pg.click('[data-next]'); await pg.waitForTimeout(700);
   await pg.fill('#q-name', 'Анна');
   await pg.fill('#q-contact', 'не контакт');
   await pg.click('[data-submit]');
@@ -141,11 +143,11 @@ const mk = async (opts = {}) => {
     await pg.addInitScript(() => { document.addEventListener('DOMContentLoaded', () => { const q = document.querySelector('[data-quote]'); if (q) q.dataset.endpoint = '/test-endpoint'; }); });
     await pg.reload({ waitUntil: 'load' });
     await pg.waitForTimeout(400);
-    await pg.click('input[name="task"][value="reverse"]', { force: true }); await pg.click('[data-next]');
-    await pg.click('[data-next]');
-    await pg.click('input[name="quantity"][value="2-10"]', { force: true }); await pg.click('[data-next]');
-    await pg.click('input[name="deadline"][value="urgent"]', { force: true }); await pg.click('[data-next]');
-    await pg.fill('#q-desc', 'Сломанная деталь насоса, нужен реверс'); await pg.click('[data-next]');
+    await pg.click('input[name="task"][value="reverse"]', { force: true }); await pg.click('[data-next]'); await pg.waitForTimeout(700);
+    await pg.click('[data-next]'); await pg.waitForTimeout(700);
+    await pg.click('input[name="quantity"][value="2-10"]', { force: true }); await pg.click('[data-next]'); await pg.waitForTimeout(700);
+    await pg.click('input[name="deadline"][value="urgent"]', { force: true }); await pg.click('[data-next]'); await pg.waitForTimeout(700);
+    await pg.fill('#q-desc', 'Сломанная деталь насоса, нужен реверс'); await pg.click('[data-next]'); await pg.waitForTimeout(700);
     await pg.fill('#q-name', 'Дмитрий'); await pg.fill('#q-contact', '+7 999 123-45-67'); await pg.check('input[name="consent"]');
     await pg.click('[data-submit]');
     await pg.waitForTimeout(800);
@@ -160,7 +162,7 @@ const mk = async (opts = {}) => {
 {
   const { ctx, pg } = await mk({ reducedMotion: 'reduce' });
   const got3 = [];
-  pg.on('request', (r) => { if (/sample\./.test(r.url())) got3.push(r.url()); });
+  pg.on('request', (r) => { if (/cluster\.|three/.test(r.url())) got3.push(r.url()); });
   await pg.goto(BASE + '/', { waitUntil: 'load' });
   await pg.waitForTimeout(1500);
   ok('reduced motion → static hero', /is-static/.test((await pg.locator('[data-hero-object]').getAttribute('class')) ?? ''));

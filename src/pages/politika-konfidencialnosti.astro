@@ -60,8 +60,10 @@ const sections = [
 <style>
   .pol { padding-top: 0; }
   .pol__body { grid-column: 4 / span 7; display: grid; gap: 48px; }
-  .pol__sec { display: grid; gap: 16px; border-top: 1px solid var(--c-line-strong); padding-top: 20px; }
-  .pol__sec h2 { display: flex; gap: 16px; align-items: baseline; }
+  .pol__body { gap: var(--gap) !important; }
+  .pol__sec { display: grid; gap: 16px; padding: 24px 26px 28px; border-radius: var(--r-card); background: var(--c-paper); }
+  .pol__sec h2 { display: flex; gap: 16px; align-items: center; }
+  .pol__sec h2 .t-num { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--c-ink); color: var(--c-fog); flex: none; letter-spacing: 0; }
   .pol__sec p { max-width: 64ch; }
   .pol__date { grid-column: 4 / span 7; margin-top: 48px; }
   @media (max-width: 1023px) { .pol__body, .pol__date { grid-column: 1 / -1; } }

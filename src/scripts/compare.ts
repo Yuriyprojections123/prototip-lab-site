@@ -1,7 +1,9 @@
 // FDM vs SLA: the same dome cross-section built from 0.2 mm beads (FDM) and 0.05 mm layers (SLA),
 // split by a draggable divider, with a loupe that follows the pointer.
 const FDM_LAYER = 0.2, SLA_LAYER = 0.05; // mm — typical for the technologies
-const GRAPHITE = '#141413', PRIMER = '#e4e3de', DEEP = '#d3d2cc', AMBER = '#ff5a1f', MUTED = '#55544f';
+// «Спектр»: ink stage, FDM in orange filament beads, SLA in cyan resin, white ideal-surface line
+const STAGE = '#16181f', PLATE = '#0b0c10', TICK = '#3a3e4b', IDEAL = '#ffffff', RING = '#ffffff';
+const FDM_COL = ['#ff6a1a', '#e2540c'], SLA_COL = ['#00c2ff', '#12b0e6'];
 
 export default function initCompare(root: HTMLElement) {
   const view = root.querySelector<HTMLElement>('.compare__view')!;
@@ -13,15 +15,15 @@ export default function initCompare(root: HTMLElement) {
   let W = 0, H = 0, dpr = 1, split = 0.5, loupe: { x: number; y: number } | null = null, raf = 0;
 
   // geometry: a dome 40 mm tall, 60 mm wide, drawn so 1 mm = k px
-  function paintPart(c: HTMLCanvasElement, layer: number, bead: boolean) {
+  function paintPart(c: HTMLCanvasElement, layer: number, bead: boolean, col: string[]) {
     const g = c.getContext('2d')!;
     g.setTransform(1, 0, 0, 1, 0, 0);
-    g.fillStyle = DEEP; g.fillRect(0, 0, c.width, c.height);
+    g.fillStyle = STAGE; g.fillRect(0, 0, c.width, c.height);
     const k = (c.height * 0.72) / 40;
     const cx = c.width / 2, base = c.height * 0.88, R = 30, Hh = 40;
     // build plate
-    g.fillStyle = GRAPHITE; g.fillRect(0, base, c.width, c.height - base);
-    g.fillStyle = MUTED;
+    g.fillStyle = PLATE; g.fillRect(0, base, c.width, c.height - base);
+    g.fillStyle = TICK;
     for (let x = 0; x < c.width; x += 18 * dpr) g.fillRect(x, base + 6 * dpr, 1 * dpr, 6 * dpr);
     // layers
     const n = Math.round(Hh / layer);
@@ -31,7 +33,7 @@ export default function initCompare(root: HTMLElement) {
       const half = R * Math.sqrt(Math.max(0, 1 - Math.pow(yMid / Hh, 2)));
       const w = half * 2 * k;
       const y = base - (i + 1) * lh;
-      g.fillStyle = i % 2 ? '#1f1f1d' : GRAPHITE;
+      g.fillStyle = col[i % 2];
       if (bead && lh > 3) {
         const r = lh / 2;
         g.beginPath();
@@ -41,8 +43,8 @@ export default function initCompare(root: HTMLElement) {
         g.fillRect(cx - w / 2, y, w, lh + 0.5);
       }
     }
-    // ideal surface — dashed amber reference line
-    g.strokeStyle = AMBER; g.lineWidth = 1.5 * dpr; g.setLineDash([6 * dpr, 5 * dpr]);
+    // ideal surface — dashed reference line
+    g.strokeStyle = IDEAL; g.lineWidth = 1.5 * dpr; g.setLineDash([6 * dpr, 5 * dpr]);
     g.beginPath();
     for (let a = 0; a <= Math.PI; a += Math.PI / 180) {
       const x = cx + Math.cos(a) * R * k, y = base - Math.sin(a) * Hh * k;
@@ -56,8 +58,8 @@ export default function initCompare(root: HTMLElement) {
     dpr = Math.min(devicePixelRatio, 2);
     W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
     for (const c of [canvas, fdm, sla]) { c.width = W; c.height = H; }
-    paintPart(fdm, FDM_LAYER, true);
-    paintPart(sla, SLA_LAYER, false);
+    paintPart(fdm, FDM_LAYER, true, FDM_COL);
+    paintPart(sla, SLA_LAYER, false, SLA_COL);
     draw();
   }
 
@@ -72,10 +74,10 @@ export default function initCompare(root: HTMLElement) {
       const src = lx < sx ? fdm : sla;
       ctx.save();
       ctx.beginPath(); ctx.arc(lx, ly, rad, 0, Math.PI * 2); ctx.clip();
-      ctx.fillStyle = PRIMER; ctx.fillRect(lx - rad, ly - rad, rad * 2, rad * 2);
+      ctx.fillStyle = STAGE; ctx.fillRect(lx - rad, ly - rad, rad * 2, rad * 2);
       ctx.drawImage(src, lx - rad / z, ly - rad / z, (rad * 2) / z, (rad * 2) / z, lx - rad, ly - rad, rad * 2, rad * 2);
       ctx.restore();
-      ctx.strokeStyle = GRAPHITE; ctx.lineWidth = 2 * dpr;
+      ctx.strokeStyle = RING; ctx.lineWidth = 2 * dpr;
       ctx.beginPath(); ctx.arc(lx, ly, rad, 0, Math.PI * 2); ctx.stroke();
     }
     handle.style.left = `${split * 100}%`;
@@ -126,4 +128,5 @@ export default function initCompare(root: HTMLElement) {
 
   new ResizeObserver(resize).observe(view);
   resize();
+  root.classList.add('is-ready');
 }

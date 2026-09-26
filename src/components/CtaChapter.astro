@@ -3,24 +3,34 @@ import { site } from '../data/site';
 interface Props { title?: string; text?: string }
 const { title = 'Есть идея? Давайте придадим ей форму.', text = 'Расскажите о задаче в нескольких словах. На первом этапе достаточно идеи, фотографии или эскиза — оценку пришлём в течение рабочего дня.' } = Astro.props;
 ---
-<section class="chapter chapter--dark chapter--notch-l cta" aria-labelledby="cta-title">
-  <div class="wrap grid-12">
-    <p class="t-label muted cta__label">Следующий шаг</p>
-    <h2 id="cta-title" class="t-mega cta__title balance" data-reveal="lines">{title}</h2>
-    <p class="t-body-l muted cta__text">{text}</p>
-    <div class="cta__actions">
-      <a href="/raschet/" class="btn btn--signal">Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
-      <a href={site.telegram.url} class="btn btn--ghost" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a>
+<section class="chapter cta" aria-labelledby="cta-title">
+  <div class="cta__card">
+    <div class="cta__spectrum" aria-hidden="true"></div>
+    <div class="wrap grid-12 cta__in">
+      <p class="chip chip--dark cta__label"><i style="--c: var(--f-lime)"></i>Следующий шаг</p>
+      <h2 id="cta-title" class="t-mega cta__title balance" data-reveal="lines">{title}</h2>
+      <p class="t-body-l cta__text">{text}</p>
+      <div class="cta__actions">
+        <a href="/raschet/" class="btn"><span class="dot" aria-hidden="true"></span>Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+        <a href={site.telegram.url} class="btn btn--light" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .cta { border-bottom: 1px solid var(--c-line-dark); }
-  .cta__label { grid-column: 1 / span 3; }
-  .cta__title { grid-column: 1 / span 10; }
-  .cta__text { grid-column: 1 / span 5; color: var(--c-primer-muted); }
-  .cta__actions { grid-column: 7 / span 6; display: flex; flex-wrap: wrap; gap: 12px; align-self: end; justify-content: flex-end; }
+  .cta { padding-block: var(--inset) 0; }
+  .cta__card { position: relative; isolation: isolate; overflow: hidden; margin-inline: var(--inset); border-radius: var(--r-card); padding-block: clamp(56px, 8vw, 150px); color: var(--c-ink); background: var(--c-fog-2); }
+  .cta__spectrum {
+    position: absolute; inset: -40%; z-index: -1; background: var(--spectrum-conic); filter: saturate(1.05);
+    animation: spin 24s linear infinite;
+  }
+  .cta__spectrum::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(248, 249, 252, 0.72), rgba(248, 249, 252, 0.35)); }
+  .cta__in { row-gap: 28px; }
+  .cta__label { grid-column: 1 / -1; justify-self: start; }
+  .cta__title { grid-column: 1 / span 11; }
+  .cta__text { grid-column: 1 / span 5; max-width: 46ch; }
+  .cta__actions { grid-column: 7 / span 6; display: flex; flex-wrap: wrap; gap: 10px; align-self: end; justify-content: flex-end; }
   @media (max-width: 1023px) {
     .cta__title, .cta__text, .cta__actions { grid-column: 1 / -1; }
     .cta__actions { justify-content: flex-start; }

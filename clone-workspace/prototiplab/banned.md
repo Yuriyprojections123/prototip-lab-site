@@ -1,20 +1,23 @@
-# Banned patterns
+# Banned patterns — v2 («Спектр»)
 
-Checked in Stage 7 by `scripts/check-banned.mjs` (grep over `src/` + computed-style scan of built pages) and by eye.
+v1 («Грунт и графит») banned colour, gradients and rounded controls. The owner rejected that direction on
+27.09.2026 ("no boxy buttons and designs … super high tech, colourful"), so v2 inverts rules 1, 7 and 10
+and keeps everything that protects quality and honesty. Machine checks: `npm run qa:banned`
+(`scripts/check-banned.mjs`).
 
-| # | Banned | Machine check |
+| # | Banned | Check |
 |---|---|---|
-| 1 | Violet / blue gradients, any hue 230°–290° as a brand colour | no computed `color`/`background*` with hue 230–290 and saturation > 25% |
+| 1 | The old site's violet as a brand colour (#6D4DFF family) | grep for the old hex values; no computed colour with hue 245°–290° and saturation > 50 % |
 | 2 | Glassmorphism | no `backdrop-filter` other than `none` |
-| 3 | Glowing blobs (large blurred radial gradients, coloured glow shadows) | no `radial-gradient` in `background-image` of section-level blocks; no coloured `box-shadow` |
-| 4 | Default Inter (or Manrope/Unbounded) as the identity | computed `font-family` first family ∈ brand fonts only |
-| 5 | Emoji or generic icon-pack icons (Lucide/Heroicons/FA), Unicode pseudo-icons `✎ ◉ ▦` | grep `src/` for emoji ranges, `lucide`, `heroicons`, `fontawesome` |
+| 3 | Glowing blobs (blurred radial gradients, coloured glow shadows) | no `radial-gradient`; no blurred `box-shadow` (rings and insets only) |
+| 4 | Generic identity fonts (Inter, Manrope, Unbounded) | computed first font family ∈ Onest / JetBrains Mono |
+| 5 | Emoji, icon packs (Lucide/Heroicons/FA), Unicode pseudo-icons | grep `src/` |
 | 6 | Fake stats, fake reviews | no stat row, no testimonial component; `needs-confirmation.md` items absent from copy |
-| 7 | Uniform card grids with identical radii and shadows | cards: radius 0–2px, no shadow; grids vary column spans |
-| 8 | Centered hero with two buttons over a collage | hero is left-weighted type + live 3D object; one primary action |
-| 9 | Fade-up-on-scroll as the only motion | motion vocabulary: masked line reveals, clip wipes, scrubbed 3D state, counters of *real* specs only, hover choreography |
-| 10 | Pill buttons with coloured glow shadow | button radius ≤ 2px |
-| 11 | Third-party characters/franchises as hero, brand or generated imagery | no franchise names; case imagery only on its case |
+| 7 | **Boxy controls and surfaces** (v2) — square buttons, square cards, hairline tables as the main surface | every visible `button`/`.btn`/`.chip`/`.filter-chip` has radius ≥ min(height/2, 12px); cards and media ≥ 12px |
+| 8 | Centered hero with two buttons over a collage | hero is a stage card with a live 3D cluster and a left-weighted headline |
+| 9 | Fade-up-on-scroll as the only motion | motion vocabulary: layer-by-layer print-in, pointer physics, filament extrusion on scroll, pinned horizontal process, pointer-origin colour floods, masked line reveals |
+| 10 | Monochrome UI (v2) — colour only in photos | every page carries the filament spectrum (line, chips, cards) |
+| 11 | Third-party characters/franchises as hero, brand or generated imagery | no franchise names; hero parts are generic engineering primitives |
 | 12 | Fonts or scripts from external CDNs | no `googleapis`, `gstatic`, `cdnjs`, `unpkg`, `jsdelivr` in `dist/` |
 | 13 | Lorem ipsum or invented facts | grep `lorem`; copy reviewed against `01-recon/content-dump.md` |
-| 14 | Anything from the Awwwards reference (assets, fonts, code, copy) | only the system is borrowed |
+| 14 | Anything from the Awwwards reference (Lusion v3): assets, fonts (Aeonik), code, copy, its cross-shaped hero parts, its blue #0016EC | only the system is borrowed — see `reference.md` |

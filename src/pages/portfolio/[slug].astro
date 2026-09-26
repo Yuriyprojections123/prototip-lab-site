@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import CtaChapter from '../../components/CtaChapter.astro';
-import { cases, type Case } from '../../data/cases';
+import { cases, catColor, type Case } from '../../data/cases';
 import { serviceBySlug } from '../../data/services';
 import { site } from '../../data/site';
 
@@ -14,6 +14,7 @@ export function getStaticPaths() {
 }
 const { c, prev, next } = Astro.props as { c: Case; prev: Case; next: Case };
 const svc = serviceBySlug[c.service];
+const color = catColor[c.cat];
 const url = `${site.url}/portfolio/${c.slug}/`;
 const jsonLd = [
   { '@context': 'https://schema.org', '@type': 'CreativeWork', name: c.title, description: c.description, url, creator: { '@id': `${site.url}/#studio` }, genre: c.catLabel },
@@ -24,36 +25,35 @@ const jsonLd = [
 ];
 ---
 <Base title={`Кейс: ${c.title}`} description={c.description} jsonLd={jsonLd}>
-  <article class="case">
+  <article class="case" data-color={color}>
     <header class="chapter case__head">
       <div class="wrap grid-12">
-        <nav aria-label="Навигационная цепочка" class="case__crumbs t-label">
-          <a href="/" class="link-u">Главная</a><span aria-hidden="true">/</span><a href="/portfolio/" class="link-u">Портфолио</a><span aria-hidden="true">/</span><span class="muted" aria-current="page">{c.catLabel}</span>
+        <nav aria-label="Навигационная цепочка" class="case__crumbs">
+          <a href="/" class="case__crumb">Главная</a><a href="/portfolio/" class="case__crumb">Портфолио</a><span class="case__crumb case__crumb--cur" aria-current="page"><i aria-hidden="true"></i>Кейс · {c.catLabel}</span>
         </nav>
-        <p class="t-label case__cat"><span class="case__tag">Кейс</span> {c.catLabel}</p>
         <h1 class="t-display case__title balance" data-reveal="lines">{c.title}</h1>
         <dl class="case__facts">
           {c.facts.map((f) => <div><dt class="t-label muted">{f.k}</dt><dd>{f.v}</dd></div>)}
         </dl>
       </div>
-      <figure class="wrap case__hero">
+      <figure class="case__hero">
         <div class="frame" data-reveal="clip"><Image src={c.hero} alt={c.heroAlt} widths={[640, 1000, 1400, 2000]} sizes="100vw" loading="eager" fetchpriority="high" quality={76} /></div>
-        <figcaption class="caption">Изображения в кейсе — иллюстрации, опубликованные студией.</figcaption>
+        <figcaption class="caption wrap">Изображения в кейсе — иллюстрации, опубликованные студией.</figcaption>
       </figure>
     </header>
 
     <div class="chapter case__body">
       <div class="wrap grid-12">
         <aside class="case__rail" aria-label="Разделы кейса">
-          <ol class="case__toc t-label">
-            {c.chapters.map((ch, i) => <li><a href={`#ch-${i + 1}`}><span class="t-num">{String(i + 1).padStart(2, '0')}</span> {ch.title}</a></li>)}
+          <ol class="case__toc">
+            {c.chapters.map((ch, i) => <li><a href={`#ch-${i + 1}`}><span class="t-num">{String(i + 1).padStart(2, '0')}</span>{ch.title}</a></li>)}
           </ol>
-          <a href={`/uslugi/${svc.slug}/`} class="t-label link-u">Услуга: {svc.name}</a>
+          <a href={`/uslugi/${svc.slug}/`} class="btn btn--ghost btn--sm case__svc">Услуга: {svc.name}</a>
         </aside>
         <div class="case__chapters">
           {c.chapters.map((ch, i) => (
             <section id={`ch-${i + 1}`} class="case__ch" aria-labelledby={`ch-t-${i + 1}`}>
-              <p class="t-label t-num case__n">{String(i + 1).padStart(2, '0')} / {String(c.chapters.length).padStart(2, '0')}</p>
+              <p class="case__n t-num">{String(i + 1).padStart(2, '0')} / {String(c.chapters.length).padStart(2, '0')}</p>
               <h2 id={`ch-t-${i + 1}`} class="t-h2">{ch.title}</h2>
               <p class={i === c.chapters.length - 1 ? 't-lead case__txt' : 't-body-l case__txt'}>{ch.text}</p>
               {ch.image && (
@@ -69,8 +69,8 @@ const jsonLd = [
 
     <nav class="chapter chapter--deep case__pn" aria-label="Другие кейсы">
       <div class="wrap grid-12">
-        <a href={`/portfolio/${prev.slug}/`} class="case__pn-link case__pn-link--prev"><span class="t-label muted">← Предыдущий кейс</span><span class="t-h3">{prev.title}</span></a>
-        <a href={`/portfolio/${next.slug}/`} class="case__pn-link case__pn-link--next"><span class="t-label muted">Следующий кейс →</span><span class="t-h3">{next.title}</span></a>
+        <a href={`/portfolio/${prev.slug}/`} class="case__pn-link" data-color={catColor[prev.cat]} data-flood><span class="t-label">← Предыдущий кейс</span><span class="t-h3">{prev.title}</span></a>
+        <a href={`/portfolio/${next.slug}/`} class="case__pn-link case__pn-link--next" data-color={catColor[next.cat]} data-flood><span class="t-label">Следующий кейс →</span><span class="t-h3">{next.title}</span></a>
       </div>
     </nav>
   </article>
@@ -78,34 +78,41 @@ const jsonLd = [
 </Base>
 
 <style>
-  .case__head { padding-top: calc(var(--header-h) + clamp(32px, 5vw, 80px)); padding-bottom: 0; }
-  .case__head .grid-12 { row-gap: 24px; }
-  .case__crumbs { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
-  .case__cat { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; }
-  .case__tag { background: var(--c-amber); padding: 5px 8px; }
-  .case__title { grid-column: 1 / span 9; }
-  .case__facts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); border-top: 1px solid var(--c-line-strong); padding-top: 20px; margin-top: 16px; }
-  .case__facts div { display: grid; gap: 8px; }
-  .case__facts dd { font-size: 18px; }
-  .case__hero { margin-top: clamp(32px, 4vw, 64px); }
-  .case__hero .frame { aspect-ratio: 16 / 8; }
-
-  .case__rail { grid-column: 1 / span 3; position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: grid; gap: 32px; }
-  .case__toc { display: grid; gap: 4px; }
-  .case__toc a { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--c-line); transition: color var(--d-fast) var(--ease-hover); }
-  .case__toc a:hover { color: var(--c-ink-muted); }
-  .case__toc .t-num { color: var(--c-amber); background: var(--c-graphite); padding: 0 4px; }
+  .case__head { padding-top: calc(var(--header-h) + clamp(32px, 5vw, 88px)); padding-bottom: 0; }
+  .case__head .grid-12 { row-gap: 28px; }
+  .case__crumbs { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+  .case__crumb { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px; border-radius: var(--r-pill); background: var(--c-paper); font-size: 14px; }
+  .case__crumb--cur { background: var(--c-ink); color: var(--c-fog); }
+  .case__crumb--cur i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+  .case__title { grid-column: 1 / span 10; }
+  .case__facts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .case__facts div { display: grid; gap: 8px; padding: 18px 22px; border-radius: var(--r-card); background: var(--c-paper); }
+  .case__facts div:first-child { background: var(--c); color: var(--c-on); }
+  .case__facts div:first-child dt { color: inherit; opacity: 0.75; }
+  .case__facts dd { font-size: 18px; font-weight: 500; }
+  .case__hero { margin: clamp(28px, 4vw, 56px) var(--inset) 0; }
+  .case__hero .frame { aspect-ratio: 16 / 8; border-radius: var(--r-card); }
+  .case__rail { grid-column: 1 / span 3; position: sticky; top: calc(var(--header-h) + 16px); align-self: start; display: grid; gap: 14px; justify-items: start; }
+  .case__toc { display: grid; gap: 2px; width: 100%; padding: 6px; border-radius: var(--r-card); background: var(--c-paper); }
+  .case__toc a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border-radius: var(--r-pill); font-size: 15px; transition: background-color var(--d-fast) var(--ease-hover); }
+  .case__toc a:hover { background: var(--c-fog); }
+  .case__toc .t-num { font-size: 11px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: var(--c-on); flex: none; }
+  .case__svc { white-space: normal; text-align: left; line-height: 1.2; }
   .case__chapters { grid-column: 5 / span 8; display: grid; gap: clamp(64px, 8vw, 128px); }
   .case__ch { display: grid; gap: 20px; scroll-margin-top: calc(var(--header-h) + 24px); }
-  .case__n { color: var(--c-ink-muted); }
+  .case__n { justify-self: start; display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border-radius: var(--r-pill); background: var(--c-ink); color: var(--c-fog); font-size: 12px; }
   .case__txt { max-width: 60ch; }
   .case__fig { margin-top: 12px; }
-  .case__fig .frame { aspect-ratio: 4 / 3; }
-
-  .case__pn-link { grid-column: span 6; display: grid; gap: 10px; padding: 28px 0; border-top: 2px solid var(--c-graphite); transition: color var(--d-fast) var(--ease-hover); }
+  .case__fig .frame { aspect-ratio: 4 / 3; border-radius: var(--r-card); }
+  .case__pn .grid-12 { row-gap: var(--gap); }
+  .case__pn-link {
+    grid-column: span 6; position: relative; isolation: isolate; overflow: hidden; display: grid; gap: 12px; padding: 24px 26px 30px;
+    border-radius: var(--r-card); background: var(--c-fog); transition: color 0.5s var(--ease-out);
+  }
+  .case__pn-link::before { content: ""; position: absolute; z-index: -1; left: var(--mx, 50%); top: var(--my, 100%); width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--c); transform: scale(0); transition: transform 0.8s var(--ease-out); }
+  .case__pn-link:hover::before, .case__pn-link:focus-visible::before { transform: scale(160); }
+  .case__pn-link:hover, .case__pn-link:focus-visible { color: var(--c-on); }
   .case__pn-link--next { text-align: right; }
-  .case__pn-link:hover .t-h3 { text-decoration: underline; text-decoration-color: var(--c-amber); text-decoration-thickness: 2px; text-underline-offset: 6px; }
-
   @media (max-width: 1023px) {
     .case__title { grid-column: 1 / -1; }
     .case__rail { position: static; grid-column: 1 / -1; }

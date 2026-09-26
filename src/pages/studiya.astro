@@ -7,23 +7,24 @@ import CtaChapter from '../components/CtaChapter.astro';
 import studio from '../assets/photos/studio.webp';
 import paint from '../assets/photos/helmet-paint.webp';
 import scanner from '../assets/photos/scanner.webp';
+
 const capabilities = [
-  { t: 'Парк FDM и SLA принтеров', d: 'Крупноформатная и высокодетальная печать, параллельные тиражи партиями.' },
-  { t: '3D-сканеры', d: 'Оцифровка объектов — от ювелирных изделий до крупных деталей. Приём объектов по записи.' },
-  { t: 'Покрасочный цех', d: 'Аэрография, ручная роспись, спецэффекты и защитные покрытия.' },
+  { t: 'Парк FDM и SLA принтеров', d: 'Крупноформатная и высокодетальная печать, параллельные тиражи партиями.', c: 'orange' },
+  { t: '3D-сканеры', d: 'Оцифровка объектов — от ювелирных изделий до крупных деталей. Приём объектов по записи.', c: 'cyan' },
+  { t: 'Покрасочный цех', d: 'Аэрография, ручная роспись, спецэффекты и защитные покрытия.', c: 'magenta' },
 ];
 ---
 <Base title="О студии" description="ПРОТОТИП LAB — студия дизайна и производства физических объектов полного цикла в Москве: дизайн, моделирование, сканирование, печать и покраска под одной крышей.">
-  <PageHead label="Студия" title="Мы переводим идеи в физическую форму" lead="ПРОТОТИП LAB — студия полного цикла: промышленный дизайн, 3D-моделирование, сканирование, производство и финишная отделка под одной крышей.">
+  <PageHead label="Студия" title="Мы переводим идеи в физическую форму" lead="ПРОТОТИП LAB — студия полного цикла: промышленный дизайн, 3D-моделирование, сканирование, производство и финишная отделка под одной крышей." color="blue">
     <figure>
-      <div class="frame crop-marks st-hero" data-reveal="clip"><Image src={studio} alt="Мастерская: рабочие места, стеллажи с изделиями, принтеры — иллюстрация" widths={[480, 800, 1200]} sizes="(max-width: 1023px) 100vw, 40vw" loading="eager" fetchpriority="high" quality={76} /></div>
+      <div class="frame st-hero" data-reveal="clip"><Image src={studio} alt="Мастерская: рабочие места, стеллажи с изделиями, принтеры — иллюстрация" widths={[480, 800, 1200]} sizes="(max-width: 1023px) 100vw, 40vw" loading="eager" fetchpriority="high" quality={76} /></div>
       <figcaption class="caption">Иллюстрация. Реальные фото мастерской — скоро.</figcaption>
     </figure>
   </PageHead>
 
   <section class="chapter chapter--deep story" aria-labelledby="story-title">
     <div class="wrap grid-12">
-      <p class="t-label muted story__label">История</p>
+      <p class="chip story__label"><i style="--c: var(--f-magenta)"></i>История</p>
       <div class="story__body">
         <h2 id="story-title" class="t-h2 balance" data-reveal="lines">Началось с одной фигурки</h2>
         <p class="t-lead">Первым заказом студии была портретная фигурка по единственной фотографии — без модели, без чертежей, без готового файла.</p>
@@ -34,25 +35,25 @@ const capabilities = [
 
   <section class="chapter caps" aria-labelledby="caps-title">
     <div class="wrap grid-12">
-      <p class="t-label muted caps__label">Оборудование и студия</p>
+      <p class="chip caps__label"><i style="--c: var(--f-orange)"></i>Оборудование и студия</p>
       <div class="caps__head">
         <h2 id="caps-title" class="t-h2 balance" data-reveal="lines">Всё производство — своё</h2>
         <p class="t-body-l muted">Не отдаём этапы на сторону — поэтому контролируем качество, сроки и конфиденциальность проектов.</p>
       </div>
-      <ol class="caps__list">
+      <ol class="caps__list" data-reveal="rise">
         {capabilities.map((c, i) => (
-          <li class="caps__item"><span class="t-label t-num muted">0{i + 1}</span><h3 class="t-h3">{c.t}</h3><p class="muted">{c.d}</p></li>
+          <li class="caps__item" data-color={c.c}><span class="caps__n t-num">0{i + 1}</span><h3 class="t-h3">{c.t}</h3><p class="muted">{c.d}</p></li>
         ))}
       </ol>
-      <figure class="caps__img caps__img--a"><div class="frame" data-reveal="clip"><Image src={scanner} alt="3D-сканирование бюста — иллюстрация" widths={[480, 800]} sizes="(max-width: 767px) 100vw, 33vw" loading="lazy" quality={74} /></div></figure>
-      <figure class="caps__img caps__img--b"><div class="frame" data-reveal="clip"><Image src={paint} alt="Покраска шлема аэрографом — иллюстрация" widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" quality={74} /></div></figure>
+      <figure class="caps__img caps__img--a"><div class="frame" data-reveal="clip"><Image src={scanner} alt="3D-сканирование бюста — иллюстрация" widths={[480, 800]} sizes="(max-width: 767px) 100vw, 40vw" loading="lazy" quality={74} /></div></figure>
+      <figure class="caps__img caps__img--b"><div class="frame" data-reveal="clip"><Image src={paint} alt="Покраска шлема аэрографом — иллюстрация" widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 55vw" loading="lazy" quality={74} /></div></figure>
     </div>
   </section>
 
-  <section class="chapter chapter--dark chapter--notch mission" aria-labelledby="mission-label">
+  <section class="chapter chapter--dark mission" aria-labelledby="mission-label">
     <div class="wrap grid-12">
-      <p class="t-label muted mission__label" id="mission-label">Миссия</p>
-      <blockquote class="t-mega mission__q balance" data-reveal="lines">«Если идею можно описать — мы найдём способ её произвести»</blockquote>
+      <p class="chip mission__label" id="mission-label"><i style="--c: var(--f-lime)"></i>Миссия</p>
+      <blockquote class="t-mega mission__q balance" data-reveal="lines">«Если идею можно описать — мы найдём способ её <span class="grad-text">произвести»</span></blockquote>
       <p class="t-body-l muted mission__t">Вы приносите референс. Мы предлагаем материал, технологию и конструкцию.</p>
     </div>
   </section>
@@ -62,20 +63,21 @@ const capabilities = [
 </Base>
 
 <style>
-  .st-hero { aspect-ratio: 4 / 3; }
-  .story__label, .caps__label, .mission__label { grid-column: 1 / span 3; padding-top: 10px; }
+  .st-hero { aspect-ratio: 4 / 3; border-radius: var(--r-card); }
+  .story__label, .caps__label, .mission__label { grid-column: 1 / span 3; align-self: start; justify-self: start; }
   .story__body { grid-column: 4 / span 8; display: grid; gap: 28px; }
   .caps__head { grid-column: 4 / span 7; display: grid; gap: 20px; }
-  .caps__list { grid-column: 4 / span 9; display: grid; margin-top: 24px; }
-  .caps__item { display: grid; grid-template-columns: 60px minmax(0, 4fr) minmax(0, 5fr); gap: var(--gap); align-items: baseline; padding: 22px 0; border-top: 1px solid var(--c-line-strong); }
-  .caps__img .frame { aspect-ratio: 4 / 3; }
-  .caps__img--a { grid-column: 2 / span 4; margin-top: 48px; }
-  .caps__img--b { grid-column: 7 / span 6; margin-top: 120px; }
-  .mission__q { grid-column: 1 / span 11; margin: 24px 0 0; }
-  .mission__t { grid-column: 1 / span 6; color: var(--c-primer-muted); }
+  .caps__list { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin-top: 16px; }
+  .caps__item { display: grid; gap: 12px; align-content: start; padding: 20px 22px 26px; border-radius: var(--r-card); background: var(--c-paper); }
+  .caps__n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; background: var(--c); color: var(--c-on); margin-bottom: 14px; }
+  .caps__img .frame { aspect-ratio: 4 / 3; border-radius: var(--r-card); }
+  .caps__img--a { grid-column: 1 / span 5; margin-top: 24px; }
+  .caps__img--b { grid-column: 6 / span 7; margin-top: 96px; }
+  .mission__q { grid-column: 1 / span 11; margin: 8px 0 0; }
+  .mission__t { grid-column: 1 / span 6; }
   @media (max-width: 1023px) {
-    .story__label, .story__body, .caps__label, .caps__head, .caps__list, .mission__q, .mission__t { grid-column: 1 / -1; }
-    .caps__img--a, .caps__img--b { grid-column: 1 / -1; margin-top: 24px; }
+    .story__label, .story__body, .caps__label, .caps__head, .mission__q, .mission__t { grid-column: 1 / -1; }
+    .caps__list { grid-template-columns: 1fr; }
+    .caps__img--a, .caps__img--b { grid-column: 1 / -1; margin-top: 16px; }
   }
-  @media (max-width: 767px) { .caps__item { grid-template-columns: 40px 1fr; } .caps__item p { grid-column: 2; } }
 </style>

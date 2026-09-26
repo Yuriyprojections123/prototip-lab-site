@@ -115,3 +115,8 @@ export const tiles: { title: string; cat: Category; catLabel: string; image: Ima
 ];
 
 export const caseBySlug = Object.fromEntries(cases.map((c) => [c.slug, c]));
+
+// filament colour per category — matches the colour of the service (services.ts → color)
+export const catColor: Record<Category, string> = {
+  all: 'lime', merch: 'orange', figurki: 'magenta', kosplej: 'lime', prototipy: 'yellow', revers: 'cyan',
+};
