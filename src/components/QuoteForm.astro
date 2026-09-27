@@ -1,0 +1,303 @@
+---
+import { site } from '../data/site';
+const tasks = [
+  { v: 'figurine', l: 'Фигурка', d: 'портрет, персонаж, статуэтка' },
+  { v: 'cosplay', l: 'Косплей', d: 'шлем, броня, реквизит' },
+  { v: 'merch', l: 'Мерч', d: 'награды, подарки, промо' },
+  { v: 'prototype', l: 'Прототип', d: 'функциональный образец, серия' },
+  { v: 'reverse', l: 'Реверс-инжиниринг', d: 'скан и восстановление детали' },
+  { v: 'modeling', l: 'Только модель', d: 'CAD или скульптинг' },
+  { v: 'other', l: 'Другое', d: 'опишу на шаге 5' },
+];
+const qty = [{ v: '1', l: '1 шт', d: 'единичный объект' }, { v: '2-10', l: '2–10', d: 'небольшая партия' }, { v: '11-100', l: '11–100', d: 'малая серия' }, { v: '100+', l: '100+', d: 'тираж' }];
+const deadlines = [{ v: 'relaxed', l: 'Не горит', d: 'сделать хорошо' }, { v: '2-4w', l: '2–4 недели', d: 'обычный темп' }, { v: 'urgent', l: 'Срочно', d: 'обсудим, что возможно' }];
+const presets = [{ cm: 10, l: 'Ладонь' }, { cm: 30, l: 'Лист А4' }, { cm: 35, l: 'Шлем' }, { cm: 80, l: 'Крупный' }];
+const steps = ['Задача', 'Размер', 'Тираж', 'Срок', 'Описание и файлы', 'Контакт'];
+---
+<div class="quote grid-12" data-quote data-endpoint={site.quoteEndpoint} data-telegram={site.telegram.url}>
+  <form class="q-form" novalidate method="post" enctype="multipart/form-data" action={site.quoteEndpoint || undefined}>
+    <div class="q-progress" aria-hidden="true">
+      <p class="t-label t-num"><span data-cur>01</span> / 06 · <span data-cur-name>{steps[0]}</span></p>
+      <ol class="q-ticks">{steps.map((s, i) => <li><button type="button" class="q-tick" data-goto={i} tabindex="-1" disabled={i > 0}><span class="sr-only">{s}</span></button></li>)}</ol>
+    </div>
+    <p class="sr-only" aria-live="polite" data-live></p>
+
+    <fieldset class="q-step" data-step="0">
+      <legend class="t-h2 q-legend" tabindex="-1">Что будем делать?</legend>
+      <p class="muted q-help" id="task-help">Выберите ближайшее — уточним в разговоре.</p>
+      <div class="q-options q-options--3" role="radiogroup" aria-describedby="task-help task-err">
+        {tasks.map((t, i) => (
+          <label class="q-option">
+            <input type="radio" name="task" value={t.v} required />
+            <span class="t-label t-num q-option__n">0{i + 1}</span>
+            <span class="q-option__l">{t.l}</span>
+            <span class="q-option__d muted">{t.d}</span>
+          </label>
+        ))}
+      </div>
+      <p class="q-err" id="task-err" data-err="task" hidden>Выберите тип задачи.</p>
+    </fieldset>
+
+    <fieldset class="q-step" data-step="1">
+      <legend class="t-h2 q-legend" tabindex="-1">Какого размера?</legend>
+      <p class="muted q-help">Примерная высота или самая длинная сторона готового изделия.</p>
+      <div class="q-size">
+        <div class="q-size__ctl">
+          <label class="t-label" for="q-size">Размер, см</label>
+          <div class="q-size__row">
+            <input id="q-size" class="q-range" type="range" name="size_cm" min="1" max="150" step="1" value="25" aria-describedby="q-size-out" />
+            <output id="q-size-out" class="q-size__out t-num" for="q-size" data-size-out>25 см</output>
+          </div>
+          <div class="q-presets" role="group" aria-label="Быстрый выбор размера">
+            {presets.map((p) => <button type="button" class="filter-chip" data-preset={p.cm}>{p.l} · {p.cm} см</button>)}
+          </div>
+          <label class="q-check"><input type="checkbox" name="size_unknown" value="1" data-size-unknown /> <span>Пока не знаю — подскажите</span></label>
+        </div>
+        <svg class="q-size__viz" viewBox="0 0 200 240" aria-hidden="true" data-size-viz>
+          <defs><pattern id="mm" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="rgba(11,12,16,.1)" /></pattern></defs>
+          <rect x="0" y="0" width="200" height="240" fill="url(#mm)" />
+          <g data-size-obj><rect x="80" y="100" width="40" height="120" rx="10" fill="#2f5bff" /></g>
+          <line x1="170" x2="170" y1="100" y2="220" stroke="#ff2e8e" stroke-width="3" stroke-linecap="round" data-size-dim />
+          <text x="176" y="160" class="q-size__lbl" data-size-lbl>25</text>
+          <text x="6" y="232" class="q-size__lbl">сетка 10 см</text>
+        </svg>
+      </div>
+    </fieldset>
+
+    <fieldset class="q-step" data-step="2">
+      <legend class="t-h2 q-legend" tabindex="-1">Сколько штук?</legend>
+      <div class="q-options q-options--4" role="radiogroup" aria-describedby="qty-err">
+        {qty.map((t) => (
+          <label class="q-option">
+            <input type="radio" name="quantity" value={t.v} required />
+            <span class="q-option__l t-num">{t.l}</span>
+            <span class="q-option__d muted">{t.d}</span>
+          </label>
+        ))}
+      </div>
+      <p class="q-err" id="qty-err" data-err="quantity" hidden>Выберите тираж.</p>
+    </fieldset>
+
+    <fieldset class="q-step" data-step="3">
+      <legend class="t-h2 q-legend" tabindex="-1">Когда нужно?</legend>
+      <div class="q-options q-options--3" role="radiogroup" aria-describedby="dl-err">
+        {deadlines.map((t) => (
+          <label class="q-option">
+            <input type="radio" name="deadline" value={t.v} required />
+            <span class="q-option__l">{t.l}</span>
+            <span class="q-option__d muted">{t.d}</span>
+          </label>
+        ))}
+      </div>
+      <p class="q-err" id="dl-err" data-err="deadline" hidden>Выберите срок.</p>
+      <div class="q-field q-field--narrow">
+        <label class="t-label" for="q-date">К конкретной дате (необязательно)</label>
+        <input id="q-date" class="q-input" type="date" name="deadline_date" />
+      </div>
+    </fieldset>
+
+    <fieldset class="q-step" data-step="4">
+      <legend class="t-h2 q-legend" tabindex="-1">Расскажите и покажите</legend>
+      <div class="q-field">
+        <label class="t-label" for="q-desc">Что хотите создать</label>
+        <textarea id="q-desc" class="q-input q-textarea" name="description" rows="4" minlength="10" required placeholder="Например: фигурка по фотографии, высота 25 см, с покраской" aria-describedby="desc-err"></textarea>
+        <p class="q-err" id="desc-err" data-err="description" hidden>Опишите задачу хотя бы в паре слов (от 10 символов).</p>
+      </div>
+      <div class="q-drop" data-drop>
+        <input id="q-files" class="sr-only" type="file" name="files" multiple accept="image/*,.pdf,.stl,.obj,.step,.stp,.3mf,.zip" data-files aria-describedby="files-help files-err" />
+        <label for="q-files" class="q-drop__zone">
+          <span class="t-h3">Перетащите файлы сюда</span>
+          <span class="muted" id="files-help">или нажмите, чтобы выбрать. Фото, эскиз, STL/OBJ/STEP, PDF — до 10 файлов, до 25 МБ каждый.</span>
+        </label>
+        <ul class="q-files" data-file-list></ul>
+        <p class="q-err" id="files-err" data-err="files" hidden></p>
+      </div>
+    </fieldset>
+
+    <fieldset class="q-step" data-step="5">
+      <legend class="t-h2 q-legend" tabindex="-1">Как с вами связаться?</legend>
+      <div class="q-fields">
+        <div class="q-field">
+          <label class="t-label" for="q-name">Имя</label>
+          <input id="q-name" class="q-input" type="text" name="name" autocomplete="name" required aria-describedby="name-err" />
+          <p class="q-err" id="name-err" data-err="name" hidden>Как к вам обращаться?</p>
+        </div>
+        <div class="q-field">
+          <label class="t-label" for="q-contact">Телефон, почта или Telegram</label>
+          <input id="q-contact" class="q-input" type="text" name="contact" autocomplete="tel" inputmode="text" required placeholder="+7 …, name@mail.ru или @username" aria-describedby="contact-err" />
+          <p class="q-err" id="contact-err" data-err="contact" hidden>Нужен телефон, почта или @username в Telegram.</p>
+        </div>
+      </div>
+      <div class="q-hp" aria-hidden="true"><label>Сайт компании <input type="text" name="company_site" tabindex="-1" autocomplete="off" /></label></div>
+      <label class="q-check q-consent">
+        <input type="checkbox" name="consent" value="1" required aria-describedby="consent-err" />
+        <span>Я согласен(на) на обработку персональных данных в соответствии с Федеральным законом № 152-ФЗ и <a href="/politika-konfidencialnosti/" target="_blank">политикой конфиденциальности</a>.</span>
+      </label>
+      <p class="q-err" id="consent-err" data-err="consent" hidden>Без согласия мы не можем принять заявку.</p>
+    </fieldset>
+
+    <div class="q-nav">
+      <button type="button" class="btn btn--ghost" data-prev hidden><span class="arr" aria-hidden="true">←</span> Назад</button>
+      <button type="button" class="btn" data-next>Далее <span class="arr" aria-hidden="true">→</span></button>
+      <button type="submit" class="btn btn--signal" data-submit hidden><span data-submit-label>Отправить заявку</span> <span class="arr" aria-hidden="true">→</span></button>
+      <a href={site.telegram.url} class="t-label link-u q-tg" rel="noopener" target="_blank" data-tg-shortcut>Проще написать в Telegram</a>
+    </div>
+    <noscript><p class="q-err">Форма работает с включённым JavaScript. Или напишите нам в <a href={site.telegram.url}>Telegram {site.telegram.handle}</a>.</p></noscript>
+  </form>
+
+  <aside class="q-summary chapter--dark" aria-labelledby="q-sum-title">
+    <p class="t-label muted" id="q-sum-title">Ваш бриф</p>
+    <dl class="q-sum">
+      <div><dt class="t-label">Задача</dt><dd data-sum="task">—</dd></div>
+      <div><dt class="t-label">Размер</dt><dd data-sum="size">25 см</dd></div>
+      <div><dt class="t-label">Тираж</dt><dd data-sum="quantity">—</dd></div>
+      <div><dt class="t-label">Срок</dt><dd data-sum="deadline">—</dd></div>
+      <div><dt class="t-label">Файлы</dt><dd data-sum="files">нет</dd></div>
+    </dl>
+    <p class="q-sum__note">Цену не придумываем заранее: оценку со сроком и технологией пришлём в течение рабочего дня после заявки.</p>
+    <button type="button" class="btn btn--ghost btn--sm q-copy" data-copy>Скопировать бриф</button>
+  </aside>
+
+  <div class="q-result" data-result hidden tabindex="-1">
+    <div data-state="success" hidden>
+      <p class="t-label q-result__tag">Заявка отправлена</p>
+      <h2 class="t-display">Спасибо! Бриф у нас.</h2>
+      <p class="t-body-l muted">Ответим в течение рабочего дня с предварительной оценкой. Если срочно — напишите в Telegram.</p>
+    </div>
+    <div data-state="offline" hidden>
+      <p class="t-label q-result__tag">Бриф собран</p>
+      <h2 class="t-display">Осталось отправить его нам.</h2>
+      <p class="t-body-l muted">Отправка с сайта пока не подключена, поэтому мы ничего никуда не передали. Бриф скопирован — вставьте его в чат Telegram, файлы приложите туда же.</p>
+    </div>
+    <div data-state="error" hidden>
+      <p class="t-label q-result__tag q-result__tag--err">Не отправилось</p>
+      <h2 class="t-display">Связь подвела — бриф не потерян.</h2>
+      <p class="t-body-l muted">Попробуйте ещё раз или отправьте его в Telegram: мы скопировали текст брифа.</p>
+    </div>
+    <div class="q-result__actions">
+      <a href={site.telegram.url} class="btn btn--signal" rel="noopener" target="_blank">Открыть Telegram <span class="arr" aria-hidden="true">→</span></a>
+      <button type="button" class="btn btn--ghost" data-retry hidden>Отправить ещё раз</button>
+      <button type="button" class="btn btn--ghost" data-restart>Новый бриф</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .quote { align-items: start; row-gap: 40px; }
+  .q-form { grid-column: 1 / span 8; display: grid; gap: 28px; padding: clamp(18px, 2.4vw, 36px); border-radius: var(--r-card); background: var(--c-paper); }
+  .q-summary { grid-column: 9 / span 4; position: sticky; top: calc(var(--header-h) + 16px); background: var(--c-ink); color: var(--c-fog); padding: 26px; display: grid; gap: 20px; border-radius: var(--r-card); margin: 0; }
+  .q-summary .muted, .q-sum__note { color: var(--c-muted-dark); }
+  .q-sum { display: grid; gap: 0; }
+  .q-sum div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--c-line-dark); }
+  .q-sum dt { color: var(--c-muted-dark); padding-top: 3px; }
+  .q-sum dd { transition: color .6s var(--ease-out); }
+  .q-sum dd.flash { color: var(--f-lime); transition: none; }
+  .q-sum__note { font-size: 14px; }
+  .q-copy { justify-self: start; }
+
+  .q-progress { display: grid; gap: 12px; }
+  .q-ticks { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .q-tick { display: block; width: 100%; height: 8px; border-radius: 8px; background: var(--c-fog-2); transition: background-color .5s var(--ease-out); padding: 0; }
+  .q-tick.is-done { background: var(--c-ink); cursor: pointer; }
+  .q-tick.is-cur { background: var(--spectrum); }
+
+  .q-step { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 20px; }
+  .q-legend { padding: 0; margin-bottom: 8px; outline: none; }
+  :global(.quote.is-stepped) .q-step:not(.is-cur) { display: none; }
+  :global(.quote.is-stepped) .q-step.is-cur { animation: q-in .7s var(--ease-out); }
+  @keyframes q-in { from { opacity: 0; transform: translateY(14px); } }
+  .q-help { max-width: 60ch; }
+
+  .q-options { display: grid; gap: 8px; }
+  .q-options--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .q-options--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .q-option {
+    position: relative; display: grid; gap: 6px; align-content: start; min-height: 108px; padding: 16px 18px; cursor: pointer;
+    border-radius: 20px; background: var(--c-fog); box-shadow: inset 0 0 0 1.5px transparent;
+    transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover), box-shadow var(--d-fast) var(--ease-hover);
+  }
+  .q-option input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .q-option { min-width: 0; }
+  .q-option__l, .q-option__d { overflow-wrap: anywhere; hyphens: auto; }
+  .q-option__n { color: var(--c-muted); }
+  .q-option__l { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .q-option:hover { box-shadow: inset 0 0 0 1.5px var(--c-ink); }
+  .q-option:has(:checked) { background: var(--c-ink); color: var(--c-fog); }
+  .q-option:has(:checked) .q-option__d { color: var(--c-muted-dark); }
+  .q-option:has(:checked) .q-option__n { color: var(--f-lime); }
+  .q-option:has(:focus-visible) { outline: 2px solid var(--f-blue); outline-offset: 3px; }
+  .q-options[aria-invalid="true"] .q-option { box-shadow: inset 0 0 0 1.5px var(--c-error); }
+
+  .q-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .q-field { display: grid; gap: 8px; }
+  .q-field--narrow { max-width: 280px; }
+  .q-input {
+    width: 100%; min-height: 56px; padding: 14px 20px; font-size: 18px; border: 0; border-radius: 18px;
+    background: var(--c-fog); color: var(--c-ink); box-shadow: inset 0 0 0 1.5px transparent;
+    transition: box-shadow var(--d-fast) var(--ease-hover);
+  }
+  .q-input::placeholder { color: var(--c-muted); opacity: 1; }
+  .q-input:hover { box-shadow: inset 0 0 0 1.5px var(--c-line-strong); }
+  .q-input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--f-blue); }
+  .q-input:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--f-blue); }
+  .q-input[aria-invalid="true"] { box-shadow: inset 0 0 0 2px var(--c-error); }
+  .q-textarea { min-height: 136px; resize: vertical; line-height: 1.45; }
+  .q-err { color: var(--c-error); font-size: 14px; font-weight: 500; }
+  .q-err::before { content: "— "; }
+
+  .q-size { display: grid; grid-template-columns: 1fr 200px; gap: 32px; align-items: start; }
+  .q-size__ctl { display: grid; gap: 16px; }
+  .q-size__row { display: flex; align-items: center; gap: 20px; }
+  .q-range { flex: 1; accent-color: var(--f-blue); height: 44px; cursor: pointer; }
+  .q-size__out { font-size: 32px; min-width: 4.5ch; text-align: right; }
+  .q-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+  .q-presets .filter-chip { background: var(--c-fog); }
+  .q-presets .filter-chip:hover { background: var(--c-fog-2); }
+  .q-size__viz { width: 200px; border-radius: 20px; background: var(--c-fog); }
+  .q-size__lbl { font-family: var(--f-mono); font-size: 10px; fill: var(--c-muted); }
+  .q-size.is-unknown .q-size__row, .q-size.is-unknown .q-presets, .q-size.is-unknown .q-size__viz { opacity: .35; pointer-events: none; }
+
+  .q-check { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; min-height: 44px; padding-top: 10px; }
+  .q-check input { width: 20px; height: 20px; accent-color: var(--f-blue); margin: 2px 0 0; flex: none; cursor: pointer; }
+  .q-consent { max-width: 64ch; font-size: 15px; }
+  .q-consent a { color: var(--c-ink); text-decoration-line: underline; text-underline-offset: 3px; }
+  .q-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .q-drop__zone { display: grid; gap: 8px; justify-items: start; padding: 32px; border-radius: 22px; border: 2px dashed var(--c-line-strong); cursor: pointer; transition: background-color var(--d-fast) var(--ease-hover), border-color var(--d-fast) var(--ease-hover); }
+  .q-drop:focus-within .q-drop__zone { outline: 2px solid var(--f-blue); outline-offset: 3px; }
+  .q-drop.is-over .q-drop__zone, .q-drop__zone:hover { background: var(--c-fog); border-color: var(--f-blue); }
+  .q-files { display: grid; gap: 6px; margin-top: 12px; }
+  .q-files li { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; padding: 6px; border-radius: 16px; background: var(--c-fog); }
+  .q-files img, .q-files .q-file__ext { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; background: var(--c-ink); color: var(--c-fog); display: grid; place-items: center; font-family: var(--f-mono); font-size: 11px; }
+  .q-files button { min-height: 44px; padding: 0 14px; border-radius: 999px; font-size: 14px; font-weight: 500; }
+  .q-files button:hover { color: var(--c-error); background: var(--c-paper); }
+
+  .q-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding-top: 24px; border-top: 1px solid var(--c-line); }
+  .q-tg { margin-left: auto; padding: 12px 0; }
+  .btn.is-loading { pointer-events: none; }
+  .btn.is-loading [data-submit-label]::after { content: ""; display: inline-block; width: 10px; height: 10px; margin-left: 10px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: q-spin .7s linear infinite; vertical-align: -1px; }
+  @keyframes q-spin { to { transform: rotate(360deg); } }
+
+  .q-result { grid-column: 1 / -1; display: grid; gap: 24px; padding: clamp(20px, 3vw, 40px); border-radius: var(--r-card); background: var(--c-paper); outline: none; }
+  .q-result[hidden] { display: none; }
+  .q-result [data-state] { display: grid; gap: 20px; max-width: 900px; }
+  .q-result [data-state][hidden] { display: none; }
+  .q-result__tag { color: var(--c-ink); background: var(--f-lime); justify-self: start; padding: 8px 14px; border-radius: 999px; }
+  .q-result__tag--err { background: var(--c-error); color: #fff; }
+  .q-result__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  :global(.quote.is-done) .q-form, :global(.quote.is-done) .q-summary { display: none; }
+
+  @media (max-width: 1023px) {
+    .q-form, .q-summary { grid-column: 1 / -1; }
+    .q-summary { position: static; }
+  }
+  @media (max-width: 767px) {
+    .q-options--3, .q-options--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .q-option { min-height: 92px; padding: 14px; }
+    .q-fields { grid-template-columns: 1fr; }
+    .q-size { grid-template-columns: 1fr; }
+    .q-size__viz { width: 160px; }
+    .q-tg { margin-left: 0; width: 100%; }
+    .q-nav .btn { flex: 1 1 auto; }
+  }
+</style>

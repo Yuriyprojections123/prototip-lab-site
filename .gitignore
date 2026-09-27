@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+clone-workspace/prototiplab/07-lighthouse/*.json
+clone-workspace/prototiplab/01-recon/screenshots/

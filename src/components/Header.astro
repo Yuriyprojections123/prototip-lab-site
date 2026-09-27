@@ -1,0 +1,94 @@
+---
+import Logo from './Logo.astro';
+import { nav, site } from '../data/site';
+import { services } from '../data/services';
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="site-header" data-header>
+  <div class="wrap site-header__in">
+    <a href="/" class="site-header__logo"><Logo /><span class="sr-only"> — на главную</span></a>
+    <nav class="site-header__nav" aria-label="Основная навигация">
+      {nav.map((n) => (
+        <a href={n.href} class="t-nav site-header__link" aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+    <div class="site-header__actions">
+      <a href="/raschet/" class="btn btn--sm site-header__cta"><span class="dot" aria-hidden="true"></span>Рассчитать проект</a>
+      <button class="site-header__burger t-nav" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+        <span>Меню</span><span class="burger" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Меню" hidden data-menu>
+  <div class="menu__card on-dark">
+    <div class="menu__top">
+      <Logo tone="light" />
+      <button type="button" class="menu__close t-nav" data-menu-close>Закрыть <span aria-hidden="true" class="menu__x"></span></button>
+    </div>
+    <nav class="menu__nav" aria-label="Мобильная навигация">
+      <a href="/" class="menu__link" style="--i:0">Главная</a>
+      {nav.map((n, i) => <a href={n.href} class="menu__link" style={`--i:${i + 1}`}>{n.label}</a>)}
+    </nav>
+    <ul class="menu__services">
+      {services.map((s) => <li><a href={`/uslugi/${s.slug}/`} class="chip" data-color={s.color}><i></i>{s.name}</a></li>)}
+    </ul>
+    <div class="menu__foot">
+      <a href="/raschet/" class="btn btn--signal"><span class="dot" aria-hidden="true"></span>Рассчитать проект</a>
+      <a href={site.telegram.url} class="btn btn--ghost" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--header-h); pointer-events: none;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .site-header.is-hidden { transform: translateY(-110%); }
+  .site-header__in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .site-header__in > * { pointer-events: auto; }
+  .site-header__logo { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 14px 6px 6px; border-radius: var(--r-pill); background: var(--c-paper); }
+  .site-header__nav { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--c-paper); }
+  .site-header__link { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--r-pill); transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover); }
+  .site-header__link:hover { background: var(--c-fog-2); }
+  .site-header__link[aria-current="page"] { background: var(--c-ink); color: var(--c-fog); }
+  .site-header__actions { display: flex; align-items: center; gap: 8px; }
+  .site-header__burger { display: none; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px 0 18px; border-radius: var(--r-pill); background: var(--c-paper); }
+  .burger { display: grid; gap: 5px; width: 18px; }
+  .burger i { display: block; height: 2px; border-radius: 2px; background: currentColor; }
+  .burger i:last-child { width: 11px; justify-self: end; }
+  @media (max-width: 1023px) {
+    .site-header__nav { display: none; }
+    .site-header__burger { display: inline-flex; }
+  }
+  @media (max-width: 560px) { .site-header__cta { display: none; } }
+  @media (max-width: 400px) {
+    .site-header__in { gap: 6px; }
+    .site-header__logo { padding-right: 10px; }
+    .site-header__logo :global(.logo) { gap: 7px; }
+    .site-header__burger { padding: 0 12px 0 14px; gap: 8px; }
+  }
+
+  .menu { position: fixed; inset: 0; z-index: 100; padding: var(--inset); background: rgba(11, 12, 16, 0.35); }
+  .menu[hidden] { display: none; }
+  .menu__card {
+    height: 100%; overflow-y: auto; border-radius: var(--r-card); background: var(--c-ink); color: var(--c-fog);
+    display: flex; flex-direction: column; gap: 36px; padding: 16px clamp(16px, 4vw, 40px) 28px;
+    animation: menu-card 0.7s var(--ease-out);
+  }
+  .menu__top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+  .menu__close { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border-radius: var(--r-pill); background: var(--c-ink-3); color: var(--c-fog); }
+  .menu__x { position: relative; width: 12px; height: 12px; }
+  .menu__x::before, .menu__x::after { content: ""; position: absolute; left: 0; top: 5px; width: 12px; height: 2px; border-radius: 2px; background: currentColor; transform: rotate(45deg); }
+  .menu__x::after { transform: rotate(-45deg); }
+  .menu__nav { display: grid; gap: 2px; }
+  .menu__link { font-size: clamp(44px, 12vw, 72px); line-height: 1.02; letter-spacing: -0.05em; font-weight: 350; opacity: 0; transform: translateY(24px); animation: menu-in 0.8s var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 0.05s + 0.1s); }
+  .menu__services { display: flex; flex-wrap: wrap; gap: 8px; }
+  .menu__services .chip { min-height: 36px; font-size: 11px; }
+  .menu__foot { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; }
+  @keyframes menu-in { to { opacity: 1; transform: none; } }
+  @keyframes menu-card { from { clip-path: inset(0 0 100% 0 round var(--r-card)); } to { clip-path: inset(0 0 0 0 round var(--r-card)); } }
+</style>

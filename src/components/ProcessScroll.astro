@@ -1,0 +1,99 @@
+---
+import LayerArt from './LayerArt.astro';
+import { process } from '../data/site';
+const colors = ['cyan', 'blue', 'magenta', 'orange', 'lime'];
+---
+<section class="process chapter" data-process aria-labelledby="process-title">
+  <div class="process__pin">
+    <div class="wrap grid-12 process__head">
+      <p class="chip process__label"><i style="--c: var(--f-magenta)"></i>Как мы работаем</p>
+      <h2 id="process-title" class="t-h2 balance process__title" data-reveal="lines">Один предмет. Пять этапов. Предсказуемый результат.</h2>
+      <p class="t-label t-num process__count" aria-hidden="true"><span data-readout>01</span> / 05</p>
+    </div>
+    <div class="process__viewport">
+      <ol class="process__track" data-track>
+        {process.map((st, i) => (
+          <li class="process__step" data-step={i} data-color={colors[i]}>
+            <div class="process__art"><LayerArt stage={i as 0 | 1 | 2 | 3 | 4} /></div>
+            <div class="process__copy">
+              <p class="t-label t-num process__n">{st.n} · {st.title}</p>
+              <h3 class="t-h2 process__lead">{st.lead}</h3>
+              <p class="process__text">{st.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="wrap"><div class="process__rail" aria-hidden="true"><span data-rail></span></div></div>
+  </div>
+</section>
+
+<style>
+  .process__head { align-items: end; margin-bottom: clamp(28px, 3.5vw, 56px); }
+  .process__label { grid-column: 1 / span 3; align-self: start; justify-self: start; }
+  .process__title { grid-column: 4 / span 7; }
+  .process__count { grid-column: 11 / span 2; justify-self: end; font-size: 14px; }
+  .process__viewport { overflow: hidden; }
+  .process__track { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); padding-inline: var(--margin); }
+  .process__step {
+    display: grid; grid-template-rows: auto 1fr; gap: 20px; padding: 20px 20px 26px;
+    border-radius: var(--r-card); background: var(--c); color: var(--c-on);
+  }
+  .process__art { width: min(100%, 220px); justify-self: center; padding-top: 12px; }
+  .process__copy { display: grid; gap: 12px; align-content: end; }
+  .process__lead { font-size: clamp(26px, 2.4vw, 44px); }
+  .process__text { max-width: 42ch; }
+  .process__rail { display: none; }
+
+  /* live mode (JS, wide screen, motion allowed): pinned, the track slides sideways with the scroll */
+  .process.is-live { height: 420vh; padding-block: 0; }
+  .process.is-live .process__pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: var(--header-h); }
+  .process.is-live .process__track { display: flex; width: max-content; padding-inline: var(--margin) 30vw; will-change: transform; }
+  .process.is-live .process__step {
+    width: min(56vw, 900px); height: min(62svh, 620px); grid-template-columns: 1fr 1.1fr; grid-template-rows: 1fr; align-items: center; gap: 32px; padding: 32px 40px;
+    transform: scale(0.94); opacity: 0.55; transition: transform 0.8s var(--ease-out), opacity 0.8s var(--ease-out);
+  }
+  .process.is-live .process__step.is-active { transform: none; opacity: 1; }
+  .process.is-live .process__art { width: min(100%, 300px); padding: 0; }
+  .process.is-live .process__rail { display: block; position: relative; height: 6px; border-radius: 6px; background: var(--c-fog-2); margin-top: 28px; overflow: hidden; }
+  .process__rail span { position: absolute; inset: 0; border-radius: 6px; background: var(--spectrum); transform-origin: 0 50%; transform: scaleX(0); }
+
+  /* scroll-driven: the slide runs on the compositor, in step with the finger (process.ts sets --shift) */
+  .process.is-native { view-timeline: --proc block; }
+  .process.is-native .process__track { animation: proc-slide linear both; }
+  .process.is-native .process__rail span { animation: proc-rail linear both; }
+  /* timeline in its own block: the minifier folds a same-rule animation-timeline into the shorthand,
+     which Chrome rejects — the whole declaration is dropped and nothing moves */
+  @supports (animation-timeline: view()) {
+    .process.is-native .process__track, .process.is-native .process__rail span { animation-timeline: --proc; animation-range: contain 0% contain 100%; }
+  }
+  @keyframes proc-slide { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(var(--shift, 0px) * -1), 0, 0); } }
+  @keyframes proc-rail { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  /* the global reduced-motion reset shortens animations to 0.01ms, which would detach them from the scroll */
+  @media (prefers-reduced-motion: reduce) {
+    .process.is-native .process__track, .process.is-native .process__rail span { animation-duration: auto !important; }
+  }
+
+  @media (max-width: 1023px) {
+    .process__label, .process__title { grid-column: 1 / -1; }
+    .process__count { display: none; }
+    /* tablets and phones: one tall card per screen, art above the copy */
+    .process.is-live .process__step {
+      width: min(72vw, 560px); height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto; align-items: start; gap: 18px; padding: 24px;
+    }
+    .process.is-live .process__art { width: min(100%, 220px); }
+    /* the filament runs along the screen edge here; a see-through inactive card would show it on top */
+    .process.is-live .process__step { opacity: 1; }
+  }
+  @media (max-width: 767px) {
+    .process.is-live { height: 360vh; }
+    .process.is-live .process__pin { padding-bottom: 12px; }
+    .process.is-live .process__head { margin-bottom: 18px; row-gap: 10px; }
+    .process.is-live .process__title { font-size: clamp(26px, 7.6vw, 36px); }
+    .process.is-live .process__track { padding-inline: var(--margin); gap: 12px; }
+    .process.is-live .process__step { width: 82vw; padding: 20px; gap: 14px; }
+    .process.is-live .process__art { width: min(100%, 150px); padding-top: 4px; }
+    .process.is-live .process__lead { font-size: 26px; }
+    .process.is-live .process__rail { margin-top: 18px; }
+  }
+</style>

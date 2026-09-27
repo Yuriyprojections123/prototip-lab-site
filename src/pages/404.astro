@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import LayerArt from '../components/LayerArt.astro';
+---
+<Base title="Страница не найдена" description="Такой страницы нет. Вернитесь на главную или посмотрите портфолио ПРОТОТИП LAB." noindex>
+  <section class="chapter nf">
+    <div class="wrap grid-12">
+      <div class="nf__copy">
+        <p class="chip"><i style="--c: var(--f-magenta)"></i>Ошибка 404 · слой не найден</p>
+        <h1 class="t-display balance">Такой страницы пока нет</h1>
+        <p class="t-body-l muted">Возможно, ссылка устарела или адрес введён с ошибкой. Страницы старого сайта переехали — начните с главной или посмотрите проекты, которые уже обрели форму.</p>
+        <div class="nf__actions">
+          <a href="/" class="btn"><span class="dot" aria-hidden="true"></span>На главную</a>
+          <a href="/portfolio/" class="btn btn--ghost">Портфолио <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="nf__obj" aria-hidden="true"><LayerArt stage={2} /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding-top: calc(var(--header-h) + clamp(40px, 6vw, 96px)); min-height: 80svh; }
+  .nf .grid-12 { align-items: center; }
+  .nf__copy { grid-column: 1 / span 6; display: grid; gap: 24px; justify-items: start; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .nf__obj { grid-column: 8 / span 4; padding: 12% 20%; border-radius: var(--r-card); background: var(--c-ink); color: var(--f-magenta); }
+  @media (max-width: 1023px) { .nf__copy, .nf__obj { grid-column: 1 / -1; } .nf__obj { max-width: 360px; } }
+</style>

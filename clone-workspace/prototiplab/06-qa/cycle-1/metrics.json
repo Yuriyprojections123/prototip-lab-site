@@ -1,0 +1,21 @@
+{
+  "style_assertions": {
+    "total": 87,
+    "passed": 85,
+    "failed": 2,
+    "failures": [
+      {
+        "selector": "/ .btn--ghost",
+        "prop": "color",
+        "expected": "rgb(20, 20, 19)",
+        "actual": "rgb(228, 227, 222)"
+      },
+      {
+        "selector": "/ .chapter",
+        "prop": "paddingTop",
+        "expected": "120px",
+        "actual": "129.6px"
+      }
+    ]
+  }
+}

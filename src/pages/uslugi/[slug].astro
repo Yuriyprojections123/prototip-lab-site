@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ServiceBlock from '../../components/ServiceBlock.astro';
+import Compare from '../../components/Compare.astro';
+import CtaChapter from '../../components/CtaChapter.astro';
+import { services, type Service } from '../../data/services';
+import { caseBySlug } from '../../data/cases';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const others = services.filter((x) => x.slug !== s.slug);
+const kase = s.caseSlug ? caseBySlug[s.caseSlug] : null;
+const url = `${site.url}/uslugi/${s.slug}/`;
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.description, url,
+    provider: { '@id': `${site.url}/#studio` }, areaServed: { '@type': 'City', name: 'Москва' } },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Главная', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Услуги', item: `${site.url}/uslugi/` },
+    { '@type': 'ListItem', position: 3, name: s.name, item: url } ] },
+];
+---
+<Base title={`${s.name} в Москве`} description={s.description} jsonLd={jsonLd}>
+  <PageHead label={s.name} title={s.title} lead={s.lead} crumbs={[{ href: '/uslugi/', label: 'Услуги' }]} color={s.color}>
+    <div slot="actions" class="svc-actions">
+      <a href={`/raschet/?task=${s.quoteTask}`} class="btn"><span class="dot" aria-hidden="true"></span>Рассчитать проект <span class="arr" aria-hidden="true">→</span></a>
+      <ul class="svc-tags">{s.tags.map((t) => <li class="chip" data-color={s.color}><i></i>{t}</li>)}</ul>
+    </div>
+    <figure class="svc-hero" data-color={s.color}>
+      <div class="frame svc-hero__img" data-reveal="clip">
+        <Image src={s.image} alt={s.imageAlt} widths={[480, 800, 1200]} sizes="(max-width: 1023px) 100vw, 40vw" loading="eager" fetchpriority="high" quality={76} />
+      </div>
+      <figcaption class="svc-hero__cap"><span class="t-num">{s.n}</span><span>{s.area}</span></figcaption>
+    </figure>
+  </PageHead>
+
+  {s.blocks.map((b, i) => <ServiceBlock block={b} index={i} dark={i % 2 === 1} color={s.color} />)}
+
+  {s.slug === 'prototipirovanie' && <Compare />}
+
+  {s.extraImage && (
+    <section class="chapter extra" aria-label="Пример">
+      <div class="wrap grid-12">
+        <figure class="extra__fig">
+          <div class="frame" data-reveal="clip"><Image src={s.extraImage.src} alt={s.extraImage.alt} widths={[640, 1000, 1400]} sizes="(max-width: 1023px) 100vw, 66vw" loading="lazy" quality={74} /></div>
+          <figcaption class="caption">{s.extraImage.caption}</figcaption>
+        </figure>
+        {kase && (
+          <div class="extra__case" data-color={s.color}>
+            <p class="chip"><i></i>Кейс · {kase.catLabel}</p>
+            <h2 class="t-h3">{kase.title}</h2>
+            <p class="muted">{kase.short}</p>
+            <a href={`/portfolio/${kase.slug}/`} class="btn btn--sm"><span class="dot" aria-hidden="true"></span>Читать кейс <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class="chapter chapter--deep more" aria-labelledby="more-title">
+    <div class="wrap">
+      <h2 id="more-title" class="t-h2 more__t">Другие направления</h2>
+      <ul class="more__list">
+        {others.map((o) => (
+          <li><a href={`/uslugi/${o.slug}/`} class="more__link" data-color={o.color} data-flood><span class="more__n t-num">{o.n}</span><span class="t-h3">{o.name}</span><span aria-hidden="true" class="more__arr">→</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaChapter />
+</Base>
+
+<style>
+  .svc-actions { display: grid; gap: 18px; justify-items: start; }
+  .svc-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .svc-hero { position: relative; }
+  .svc-hero__img { aspect-ratio: 4 / 3; border-radius: var(--r-card); }
+  .svc-hero__cap { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--c-paper); font-size: 14px; }
+  .svc-hero__cap span { display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border-radius: var(--r-pill); }
+  .svc-hero__cap .t-num { background: var(--c); color: var(--c-on); }
+  .extra__fig { grid-column: 1 / span 8; }
+  .extra__fig .frame { aspect-ratio: 16 / 10; border-radius: var(--r-card); }
+  .extra__case { grid-column: 9 / span 4; align-self: end; display: grid; gap: 16px; justify-items: start; padding: 24px; border-radius: var(--r-card); background: var(--c-paper); }
+  .more__t { margin-bottom: clamp(24px, 3vw, 40px); }
+  .more__list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gap); }
+  .more__link {
+    position: relative; isolation: isolate; overflow: hidden; display: grid; gap: 12px; align-content: start; min-height: 190px; padding: 18px 18px 60px;
+    border-radius: var(--r-card); background: var(--c-fog); transition: color 0.5s var(--ease-out);
+  }
+  .more__link::before { content: ""; position: absolute; z-index: -1; left: var(--mx, 50%); top: var(--my, 100%); width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--c); transform: scale(0); transition: transform 0.8s var(--ease-out); }
+  .more__link:hover::before, .more__link:focus-visible::before { transform: scale(120); }
+  .more__link:hover, .more__link:focus-visible { color: var(--c-on); }
+  .more__n { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--c); color: var(--c-on); }
+  .more__link:hover .more__n { background: var(--c-ink); color: var(--c-fog); }
+  .more__link .t-h3 { font-size: 20px; }
+  .more__arr { position: absolute; right: 16px; bottom: 16px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--c-ink); color: var(--c-fog); transition: transform var(--d-fast) var(--ease-hover); }
+  .more__link:hover .more__arr { transform: rotate(-45deg); }
+  @media (max-width: 1023px) {
+    .extra__fig, .extra__case { grid-column: 1 / -1; }
+    .more__list { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 767px) { .more__list { grid-template-columns: 1fr; } .more__link { min-height: 0; } }
+</style>

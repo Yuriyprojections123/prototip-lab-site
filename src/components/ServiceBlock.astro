@@ -1,0 +1,65 @@
+---
+import type { Service } from '../data/services';
+interface Props { block: Service['blocks'][number]; index: number; dark?: boolean; color?: string }
+const { block, index, dark = false, color = 'lime' } = Astro.props;
+const id = `blk-${index}`;
+const style = block.style ?? 'list';
+---
+<section class:list={['chapter', 'blk', `blk--${style}`, { 'chapter--dark': dark }]} aria-labelledby={id} data-color={color}>
+  <div class="wrap grid-12">
+    <p class="chip blk__label"><i></i>{block.label}</p>
+    <div class="blk__head">
+      <h2 id={id} class="t-h2 balance" data-reveal="lines">{block.title}</h2>
+      {block.intro && <p class="t-body-l muted blk__intro">{block.intro}</p>}
+    </div>
+    <ol class="blk__items" data-reveal="rise">
+      {block.items.map((it, i) => (
+        <li class="blk__item">
+          <span class="blk__n t-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="t-h3 blk__t">{it.title}</h3>
+          <p class="muted blk__d">{it.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .blk__label { grid-column: 1 / span 3; align-self: start; justify-self: start; }
+  .blk__head { grid-column: 4 / span 8; display: grid; gap: 20px; }
+  .blk__intro { max-width: 56ch; }
+  .blk__items { grid-column: 1 / -1; margin-top: clamp(16px, 2.5vw, 40px); display: grid; gap: var(--gap); }
+  .blk__n { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: var(--c); color: var(--c-on); flex: none; }
+  .blk__item { border-radius: var(--r-card); background: var(--c-paper); }
+  .chapter--dark .blk__item { background: var(--c-ink-2); }
+
+  /* list: rounded rows */
+  .blk--list .blk__items { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+  .blk--list .blk__item { display: grid; grid-template-rows: auto auto 1fr; gap: 12px; padding: 20px 22px 26px; }
+  .blk--list .blk__n { margin-bottom: 14px; }
+
+  /* steps: cards joined by a filament rail */
+  .blk--steps .blk__items { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); position: relative; }
+  .blk--steps .blk__item { position: relative; display: grid; gap: 12px; align-content: start; padding: 20px 20px 26px; }
+  .blk--steps .blk__item:not(:last-child)::after { content: ""; position: absolute; top: 39px; right: calc(var(--gap) * -1 - 2px); width: calc(var(--gap) + 4px); height: 6px; margin-top: -3px; border-radius: 6px; background: var(--c); z-index: 1; }
+  .blk--steps .blk__n { margin-bottom: 14px; }
+
+  /* chain: object → scan → mesh → CAD → part */
+  .blk--chain .blk__items { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .blk--chain .blk__item { position: relative; display: grid; gap: 10px; align-content: start; padding: 20px 20px 26px; }
+  .blk--chain .blk__item:not(:last-child)::after { content: "→"; position: absolute; right: -18px; top: 20px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--c-ink); color: var(--c-fog); z-index: 1; font-size: 15px; }
+  .blk--chain .blk__item:last-child { background: var(--c); color: var(--c-on); }
+  .blk--chain .blk__item:last-child .blk__d { color: inherit; opacity: 0.8; }
+  .blk--chain .blk__item:last-child .blk__n { background: var(--c-ink); color: var(--c-fog); }
+  .blk--chain .blk__n { margin-bottom: 10px; }
+
+  @media (max-width: 1023px) {
+    .blk__label, .blk__head { grid-column: 1 / -1; }
+    .blk--chain .blk__items { grid-template-columns: 1fr; }
+    .blk--chain .blk__item:not(:last-child)::after { content: "↓"; right: auto; left: 22px; top: auto; bottom: -26px; }
+  }
+  @media (max-width: 767px) {
+    .blk--steps .blk__items { grid-template-columns: 1fr; }
+    .blk--steps .blk__item:not(:last-child)::after { top: auto; bottom: -12px; left: 38px; right: auto; width: 6px; height: calc(var(--gap) + 4px); margin: 0; }
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import Logo from './Logo.astro';
+import { nav, site } from '../data/site';
+import { services } from '../data/services';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer chapter--dark" data-dark>
+  <div class="wrap">
+    <div class="grid-12 site-footer__top">
+      <div class="site-footer__brand">
+        <Logo tone="light" size={34} />
+        <p class="t-lead site-footer__claim">Мы не печатаем файлы.<br />Мы создаём изделия.</p>
+        <a href="/raschet/" class="btn btn--signal"><span class="dot" aria-hidden="true"></span>Рассчитать проект</a>
+      </div>
+      <nav class="site-footer__col" aria-label="Студия">
+        <p class="t-label muted">Студия</p>
+        <ul>
+          <li><a href="/" class="link-h">Главная</a></li>
+          {nav.map((n) => <li><a href={n.href} class="link-h">{n.label}</a></li>)}
+          <li><a href="/raschet/" class="link-h">Рассчитать проект</a></li>
+        </ul>
+      </nav>
+      <nav class="site-footer__col" aria-label="Услуги">
+        <p class="t-label muted">Услуги</p>
+        <ul>{services.map((s) => <li><a href={`/uslugi/${s.slug}/`} class="link-h" data-color={s.color}><i aria-hidden="true"></i>{s.name}</a></li>)}</ul>
+      </nav>
+      <div class="site-footer__col">
+        <p class="t-label muted">Связаться</p>
+        <ul>
+          <li><a href={site.telegram.url} class="link-h" rel="noopener" target="_blank">Telegram {site.telegram.handle}</a></li>
+          {site.email && <li><a href={`mailto:${site.email}`} class="link-h">{site.email}</a></li>}
+          {site.whatsapp && <li><a href={`https://wa.me/${site.whatsapp}`} class="link-h" rel="noopener" target="_blank">WhatsApp</a></li>}
+          <li class="muted">{site.city}{site.address && `, ${site.address}`}</li>
+          <li class="muted">{site.scanIntake}</li>
+        </ul>
+      </div>
+    </div>
+    <p class="site-footer__word" aria-hidden="true" data-word="ПРОТОТИП"></p>
+    <div class="site-footer__bottom t-label muted">
+      <span>© {year} ПРОТОТИП LAB</span>
+      <a href="/politika-konfidencialnosti/" class="link-u">Политика конфиденциальности</a>
+      <span>Дизайн · Инжиниринг · Производство</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; z-index: 1; margin: var(--inset); padding-top: var(--section-y); overflow: hidden; }
+  .site-footer__top { row-gap: 40px; }
+  .site-footer__brand { grid-column: 1 / span 5; display: grid; gap: 28px; align-content: start; justify-items: start; }
+  .site-footer__claim { max-width: 16ch; }
+  .site-footer__col { grid-column: span 2; display: grid; gap: 18px; align-content: start; }
+  .site-footer__col:last-child { grid-column: span 3; }
+  .site-footer__col ul { display: grid; gap: 10px; }
+  .link-h { display: inline-flex; align-items: center; gap: 10px; padding: 2px 0; transition: color var(--d-fast) var(--ease-hover), transform var(--d-fast) var(--ease-hover); }
+  .link-h i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
+  .link-h:hover { color: var(--c, var(--f-lime)); transform: translateX(4px); }
+  .site-footer__word::before { content: attr(data-word); }
+  .site-footer__word {
+    font-size: clamp(64px, 18.2vw, 400px); line-height: 0.78; letter-spacing: -0.07em; font-weight: 600;
+    margin-top: clamp(56px, 8vw, 140px); white-space: nowrap; transform: translateX(-0.03em); user-select: none;
+    background: var(--spectrum); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: word-flow 14s linear infinite alternate;
+  }
+  @keyframes word-flow { to { background-position: 100% 0; } }
+  .site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 28px 32px; margin-top: 12px; border-top: 1px solid var(--c-line-dark); }
+  @media (max-width: 1023px) {
+    .site-footer__brand { grid-column: 1 / -1; }
+    .site-footer__col, .site-footer__col:last-child { grid-column: span 4; }
+  }
+  @media (max-width: 767px) { .site-footer__col, .site-footer__col:last-child { grid-column: 1 / -1; } }
+</style>
