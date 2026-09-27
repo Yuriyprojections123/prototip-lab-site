@@ -173,6 +173,11 @@ for (const rm of ['no-preference', 'reduce']) {
   // computed, not inline: with scroll-driven animations the slide is a CSS animation
   const dx = await pg.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('[data-track]')).transform).m41);
   ok(`${tag} → process cards slide with the scroll`, dx < -900, `${Math.round(dx)}px`);
+  // at a resting point the highlighted card is whole and centred (not half cut off at the screen edge)
+  await pg.evaluate((t) => { const e = document.querySelector('[data-process]'); scrollTo(0, t + (e.offsetHeight - innerHeight) * 0.5); }, top);
+  await pg.waitForTimeout(rm === 'reduce' ? 1200 : 600);
+  const rest = await pg.evaluate(() => { const a = document.querySelector('[data-step].is-active').getBoundingClientRect(); return { l: Math.round(a.left), r: Math.round(a.right), off: Math.round((a.left + a.right) / 2 - innerWidth / 2), n: document.querySelector('[data-readout]').textContent }; });
+  ok(`${tag} → active card rests whole and centred`, rest.l >= 0 && rest.r <= 390 && Math.abs(rest.off) <= 4 && rest.n === '03', JSON.stringify(rest));
   ok(`${tag} → filament draws with the scroll`, await pg.evaluate(() => { const p = document.querySelector('[data-filament] path'); return !!p && parseFloat(p.style.strokeDashoffset) > 1; }));
   ok(`${tag} → headings reveal on scroll`, await pg.evaluate(() => document.querySelectorAll('[data-reveal].is-in').length > 3));
   await ctx.close();
