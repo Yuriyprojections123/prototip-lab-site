@@ -35,11 +35,11 @@ const year = new Date().getFullYear();
         </ul>
       </div>
     </div>
-    <p class="site-footer__word" aria-hidden="true" data-word="ПРОТОТИП"></p>
     <div class="site-footer__bottom t-label muted">
       <span>© {year} ПРОТОТИП LAB</span>
       <a href="/politika-konfidencialnosti/" class="link-u">Политика конфиденциальности</a>
       <span>Дизайн · Инжиниринг · Производство</span>
+      <a href="https://verstalabs.ru" class="link-u" target="_blank" rel="noopener">Дизайн и разработка — ВЕРСТА ↗</a>
     </div>
   </div>
 </footer>
@@ -55,15 +55,7 @@ const year = new Date().getFullYear();
   .link-h { display: inline-flex; align-items: center; gap: 10px; padding: 2px 0; transition: color var(--d-fast) var(--ease-hover), transform var(--d-fast) var(--ease-hover); }
   .link-h i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: none; }
   .link-h:hover { color: var(--c, var(--f-lime)); transform: translateX(4px); }
-  .site-footer__word::before { content: attr(data-word); }
-  .site-footer__word {
-    font-size: clamp(64px, 18.2vw, 400px); line-height: 0.78; letter-spacing: -0.07em; font-weight: 600;
-    margin-top: clamp(56px, 8vw, 140px); white-space: nowrap; transform: translateX(-0.03em); user-select: none;
-    background: var(--spectrum); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: word-flow 14s linear infinite alternate;
-  }
-  @keyframes word-flow { to { background-position: 100% 0; } }
-  .site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 28px 32px; margin-top: 12px; border-top: 1px solid var(--c-line-dark); }
+  .site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 28px 32px; margin-top: clamp(56px, 8vw, 112px); border-top: 1px solid var(--c-line-dark); }
   @media (max-width: 1023px) {
     .site-footer__brand { grid-column: 1 / -1; }
     .site-footer__col, .site-footer__col:last-child { grid-column: span 4; }
