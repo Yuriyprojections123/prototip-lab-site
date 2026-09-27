@@ -46,9 +46,10 @@ export default async function initHero(el: HTMLElement) {
   };
   buttons.forEach((b, i) => b.addEventListener('click', () => { autoplay?.kill(); go(i); }));
 
-  // first run: print from an empty bed, then settle in silk
+  // first run: print from an empty bed, then settle in silk (reduced motion: start settled)
   const autoplay = gsap.timeline({ delay: 0.25 });
-  autoplay.add(() => go(1)).add(() => go(2), '+=3.7');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) autoplay.add(() => go(2));
+  else autoplay.add(() => go(1)).add(() => go(2), '+=3.7');
 
   // pointer: push parts, click scatters
   el.addEventListener('pointermove', (e) => c.pointer(e.clientX, e.clientY));

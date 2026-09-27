@@ -156,8 +156,9 @@ html:not(.js) [data-reveal="clip"], html:not(.js) [data-reveal="rise"] > * { cli
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .reveal-line > span, [data-reveal="rise"] > * { transform: none !important; opacity: 1 !important; }
-  [data-reveal="clip"] { clip-path: none !important; opacity: 1 !important; }
+  /* reduce, don't remove: reveals become a plain fade, no travel */
+  .reveal-line > span, [data-reveal="rise"] > *, [data-reveal="clip"] { transform: none !important; clip-path: none !important; opacity: 0; transition: opacity 0.7s var(--ease-out) !important; }
+  .is-in .reveal-line > span, [data-reveal="rise"].is-in > *, [data-reveal="clip"].is-in { opacity: 1; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
 

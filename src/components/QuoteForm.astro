@@ -217,6 +217,8 @@ const steps = ['Задача', 'Размер', 'Тираж', 'Срок', 'Опи
     transition: background-color var(--d-fast) var(--ease-hover), color var(--d-fast) var(--ease-hover), box-shadow var(--d-fast) var(--ease-hover);
   }
   .q-option input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .q-option { min-width: 0; }
+  .q-option__l, .q-option__d { overflow-wrap: anywhere; hyphens: auto; }
   .q-option__n { color: var(--c-muted); }
   .q-option__l { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
   .q-option:hover { box-shadow: inset 0 0 0 1.5px var(--c-ink); }

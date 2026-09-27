@@ -1,13 +1,13 @@
 // Kept apart from sample.ts so the check does not pull three.js into the page.
 /**
- * Low-end / no-WebGL / software-rendered WebGL / reduced motion / Save-Data → the static SVG render instead.
+ * Low-end / no-WebGL / software-rendered WebGL → the static render instead. Reduced motion and Save-Data do
+ * not switch the scene off (phones with «remove animations» or a data-saving browser got a dead hero):
+ * hero.ts skips the print replay under reduced motion instead.
  * `?3d=1` forces the 3D scene (QA in headless browsers, which rasterise WebGL in software).
  */
 export function canRun3D(): boolean {
   if (new URLSearchParams(location.search).get('3d') === '1') return true;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
   const nav = navigator as any;
-  if (nav.connection?.saveData) return false;
   const lowCpu = (nav.hardwareConcurrency ?? 8) <= 4;
   const lowMem = (nav.deviceMemory ?? 8) <= 4;
   if (lowCpu && lowMem) return false;

@@ -1,13 +1,12 @@
 // The filament line (reference: the tube that draws itself through the page). A spectrum-coloured
 // extrusion runs down the page edge and crosses to the other side at every chapter boundary; its length
 // follows the scroll and a nozzle dot rides its head. Dark and deep chapters sit above it, so it
-// passes behind the cards. Reduced motion → drawn in full, no nozzle.
+// passes behind the cards. The line only moves when the reader scrolls, so reduced motion keeps it too.
 const NS = 'http://www.w3.org/2000/svg';
 const STOPS = ['#00c2ff', '#2f5bff', '#ff2e8e', '#ff6a1a', '#ffc61a', '#b6f500'];
 
 export default function initFilament(svg: SVGSVGElement) {
   const main = svg.parentElement as HTMLElement;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let path: SVGPathElement, gloss: SVGPathElement, nozzle: SVGGElement;
   let len = 0, table: { l: number; y: number }[] = [], raf = 0, H = 0;
 
@@ -74,7 +73,7 @@ export default function initFilament(svg: SVGSVGElement) {
     const N = Math.min(1600, Math.ceil(len / 12));
     for (let i = 0; i <= N; i++) { const l = (len * i) / N; table.push({ l, y: path.getPointAtLength(l).y }); }
     for (const p of [path, gloss]) { p.style.strokeDasharray = `${len} ${len}`; }
-    if (reduced) { draw(len); nozzle.style.display = 'none'; } else update();
+    update();
   }
 
   function draw(l: number) {
@@ -99,7 +98,7 @@ export default function initFilament(svg: SVGSVGElement) {
   }
 
   build();
-  if (!reduced) addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
   let w = innerWidth, t = 0;
   const rebuild = () => { clearTimeout(t); t = window.setTimeout(build, 180); };
   addEventListener('resize', () => { if (Math.abs(innerWidth - w) > 30) { w = innerWidth; rebuild(); } });

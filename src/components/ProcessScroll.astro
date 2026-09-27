@@ -61,5 +61,23 @@ const colors = ['cyan', 'blue', 'magenta', 'orange', 'lime'];
   @media (max-width: 1023px) {
     .process__label, .process__title { grid-column: 1 / -1; }
     .process__count { display: none; }
+    /* tablets and phones: one tall card per screen, art above the copy */
+    .process.is-live .process__step {
+      width: min(72vw, 560px); height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto; align-items: start; gap: 18px; padding: 24px;
+    }
+    .process.is-live .process__art { width: min(100%, 220px); }
+    /* the filament runs along the screen edge here; a see-through inactive card would show it on top */
+    .process.is-live .process__step { opacity: 1; }
+  }
+  @media (max-width: 767px) {
+    .process.is-live { height: 360vh; }
+    .process.is-live .process__pin { padding-bottom: 12px; }
+    .process.is-live .process__head { margin-bottom: 18px; row-gap: 10px; }
+    .process.is-live .process__title { font-size: clamp(26px, 7.6vw, 36px); }
+    .process.is-live .process__track { padding-inline: var(--margin); gap: 12px; }
+    .process.is-live .process__step { width: 82vw; padding: 20px; gap: 14px; }
+    .process.is-live .process__art { width: min(100%, 150px); padding-top: 4px; }
+    .process.is-live .process__lead { font-size: 26px; }
+    .process.is-live .process__rail { margin-top: 18px; }
   }
 </style>

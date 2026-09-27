@@ -70,9 +70,8 @@ function initReveals() {
       lineEls.forEach((el) => { splitLines(el); });
     });
   });
-  document.querySelectorAll('[data-reveal]').forEach((el) => {
-    if (reduced) el.classList.add('is-in'); else io.observe(el);
-  });
+  // reduced motion still reveals on scroll — global.css turns the rise into a plain fade
+  document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
 }
 
 /* ---------- header: floating pills; hides on scroll down, returns on scroll up ---------- */

@@ -158,15 +158,32 @@ const mk = async (opts = {}) => {
   }
 }
 
-// 6. reduced motion → static hero fallback, no three.js download
-{
-  const { ctx, pg } = await mk({ reducedMotion: 'reduce' });
-  const got3 = [];
-  pg.on('request', (r) => { if (/cluster\.|three/.test(r.url())) got3.push(r.url()); });
+// 6. phones and reduced motion: motion is reduced, not removed (a phone with «remove animations» on got a dead page)
+for (const rm of ['no-preference', 'reduce']) {
+  const tag = rm === 'reduce' ? 'phone + reduced motion' : 'phone';
+  const { ctx, pg } = await mk({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, reducedMotion: rm });
   await pg.goto(BASE + '/', { waitUntil: 'load' });
+  await pg.waitForTimeout(1200);
+  const top = await pg.evaluate(() => document.querySelector('[data-process]').getBoundingClientRect().top + scrollY);
+  for (let y = 0; y < top; y += 400) { await pg.evaluate((v) => scrollTo(0, v), y); await pg.waitForTimeout(60); }
+  await pg.waitForFunction(() => document.querySelector('[data-process]').classList.contains('is-live'), null, { timeout: 5000 }).catch(() => {});
+  ok(`${tag} → process chapter pinned`, await pg.evaluate(() => document.querySelector('[data-process]').classList.contains('is-live')));
+  await pg.evaluate((t) => { const e = document.querySelector('[data-process]'); scrollTo(0, t + (e.offsetHeight - innerHeight) * 0.9); }, top);
+  await pg.waitForFunction(() => document.querySelector('[data-readout]').textContent === '05', null, { timeout: 5000 }).catch(() => {});
+  const tr = await pg.evaluate(() => document.querySelector('[data-track]').style.transform);
+  ok(`${tag} → process cards slide with the scroll`, /translate3d\(-\d{3,}/.test(tr), tr);
+  ok(`${tag} → filament draws with the scroll`, await pg.evaluate(() => { const p = document.querySelector('[data-filament] path'); return !!p && parseFloat(p.style.strokeDashoffset) > 1; }));
+  ok(`${tag} → headings reveal on scroll`, await pg.evaluate(() => document.querySelectorAll('[data-reveal].is-in').length > 3));
+  await ctx.close();
+}
+{
+  // reduced motion keeps the 3D scene (?3d=1: this browser has no GPU) but skips the print replay
+  const { ctx, pg } = await mk({ reducedMotion: 'reduce' });
+  await pg.goto(BASE + '/?3d=1', { waitUntil: 'load' });
+  await pg.waitForFunction(() => document.querySelector('[data-hero-object]').classList.contains('is-live'), null, { timeout: 15000 }).catch(() => {});
+  ok('reduced motion → 3D hero still runs', /is-live/.test((await pg.locator('[data-hero-object]').getAttribute('class')) ?? ''));
   await pg.waitForTimeout(1500);
-  ok('reduced motion → static hero', /is-static/.test((await pg.locator('[data-hero-object]').getAttribute('class')) ?? ''));
-  ok('reduced motion → three.js not downloaded', got3.length === 0);
+  ok('reduced motion → hero starts settled, no print replay', (await pg.locator('[data-state="2"]').getAttribute('aria-pressed')) === 'true' && !/Слой/.test(await pg.locator('[data-layer]').textContent()));
   await ctx.close();
 }
 

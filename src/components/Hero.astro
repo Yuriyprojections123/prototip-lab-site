@@ -90,8 +90,8 @@ const srcset = (a: { src: string; attributes: Record<string, any> }[], ws: numbe
   @media (max-width: 767px) {
     .hero__stage { height: calc(100svh - var(--header-h) - 40px); min-height: 520px; }
     .hero__title { font-size: clamp(40px, 11.5vw, 64px); left: 16px; bottom: 84px; }
-    .hero__states { left: 12px; right: 12px; bottom: 12px; overflow-x: auto; scrollbar-width: none; }
-    .hero-state { padding: 0 13px; font-size: 13px; flex: 1 0 auto; }
+    .hero__states { left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .hero-state { padding: 4px 6px; font-size: 13px; line-height: 1.1; white-space: normal; text-align: center; }
     .hero__readout { display: none; }
     .hero__top { inset: 12px 12px auto 12px; }
   }
