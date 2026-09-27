@@ -89,8 +89,10 @@ function patch(mat: MeshPhysicalMaterial, glow: Color, minY: number, maxY: numbe
 }
 
 export function createCluster(canvas: HTMLCanvasElement) {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  // phones: a 3× screen hides the jaggies, so skip MSAA and render at 1.5× — the fill rate is what drops frames
+  const phone = matchMedia('(max-width: 767px)').matches;
+  const renderer = new WebGLRenderer({ canvas, antialias: !phone || devicePixelRatio < 2, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, phone ? 1.5 : 1.75));
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = 1.0;

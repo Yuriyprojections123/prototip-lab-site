@@ -8,7 +8,7 @@ const STOPS = ['#00c2ff', '#2f5bff', '#ff2e8e', '#ff6a1a', '#ffc61a', '#b6f500']
 export default function initFilament(svg: SVGSVGElement) {
   const main = svg.parentElement as HTMLElement;
   let path: SVGPathElement, gloss: SVGPathElement, nozzle: SVGGElement;
-  let len = 0, table: { l: number; y: number }[] = [], raf = 0, H = 0;
+  let len = 0, table: { l: number; x: number; y: number }[] = [], raf = 0, H = 0;
 
   const el = <K extends keyof SVGElementTagNameMap>(tag: K, attrs: Record<string, string | number>) => {
     const e = document.createElementNS(NS, tag);
@@ -71,17 +71,18 @@ export default function initFilament(svg: SVGSVGElement) {
     len = path.getTotalLength();
     table = [];
     const N = Math.min(1600, Math.ceil(len / 12));
-    for (let i = 0; i <= N; i++) { const l = (len * i) / N; table.push({ l, y: path.getPointAtLength(l).y }); }
+    for (let i = 0; i <= N; i++) { const l = (len * i) / N; const pt = path.getPointAtLength(l); table.push({ l, x: pt.x, y: pt.y }); }
     for (const p of [path, gloss]) { p.style.strokeDasharray = `${len} ${len}`; }
     update();
   }
 
-  function draw(l: number) {
+  // the nozzle position comes from the table: getPointAtLength walks the whole path and stalls phones mid-scroll
+  function draw(l: number, i: number) {
     const off = String(Math.max(0, len - l));
     path.style.strokeDashoffset = off;
     gloss.style.strokeDashoffset = off;
-    const p = path.getPointAtLength(Math.max(0.1, l));
-    nozzle.setAttribute('transform', `translate(${p.x} ${p.y})`);
+    const p = table[i];
+    nozzle.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);
     nozzle.style.opacity = l < 2 || l >= len - 1 ? '0' : '1';
   }
 
@@ -91,10 +92,10 @@ export default function initFilament(svg: SVGSVGElement) {
     const target = -mTop + innerHeight * 0.72;
     // first table entry whose y passes the target — the path only moves down, so y is monotonic
     let lo = 0, hi = table.length - 1;
-    if (target <= table[0].y) return draw(0);
-    if (target >= table[hi].y) return draw(len);
+    if (target <= table[0].y) return draw(0, 0);
+    if (target >= table[hi].y) return draw(len, hi);
     while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (table[mid].y < target) lo = mid; else hi = mid; }
-    draw(table[hi].l);
+    draw(table[hi].l, hi);
   }
 
   build();

@@ -170,8 +170,9 @@ for (const rm of ['no-preference', 'reduce']) {
   ok(`${tag} → process chapter pinned`, await pg.evaluate(() => document.querySelector('[data-process]').classList.contains('is-live')));
   await pg.evaluate((t) => { const e = document.querySelector('[data-process]'); scrollTo(0, t + (e.offsetHeight - innerHeight) * 0.9); }, top);
   await pg.waitForFunction(() => document.querySelector('[data-readout]').textContent === '05', null, { timeout: 5000 }).catch(() => {});
-  const tr = await pg.evaluate(() => document.querySelector('[data-track]').style.transform);
-  ok(`${tag} → process cards slide with the scroll`, /translate3d\(-\d{3,}/.test(tr), tr);
+  // computed, not inline: with scroll-driven animations the slide is a CSS animation
+  const dx = await pg.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('[data-track]')).transform).m41);
+  ok(`${tag} → process cards slide with the scroll`, dx < -900, `${Math.round(dx)}px`);
   ok(`${tag} → filament draws with the scroll`, await pg.evaluate(() => { const p = document.querySelector('[data-filament] path'); return !!p && parseFloat(p.style.strokeDashoffset) > 1; }));
   ok(`${tag} → headings reveal on scroll`, await pg.evaluate(() => document.querySelectorAll('[data-reveal].is-in').length > 3));
   await ctx.close();

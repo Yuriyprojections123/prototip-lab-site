@@ -58,6 +58,22 @@ const colors = ['cyan', 'blue', 'magenta', 'orange', 'lime'];
   .process.is-live .process__rail { display: block; position: relative; height: 6px; border-radius: 6px; background: var(--c-fog-2); margin-top: 28px; overflow: hidden; }
   .process__rail span { position: absolute; inset: 0; border-radius: 6px; background: var(--spectrum); transform-origin: 0 50%; transform: scaleX(0); }
 
+  /* scroll-driven: the slide runs on the compositor, in step with the finger (process.ts sets --shift) */
+  .process.is-native { view-timeline: --proc block; }
+  .process.is-native .process__track { animation: proc-slide linear both; }
+  .process.is-native .process__rail span { animation: proc-rail linear both; }
+  /* timeline in its own block: the minifier folds a same-rule animation-timeline into the shorthand,
+     which Chrome rejects — the whole declaration is dropped and nothing moves */
+  @supports (animation-timeline: view()) {
+    .process.is-native .process__track, .process.is-native .process__rail span { animation-timeline: --proc; animation-range: contain 0% contain 100%; }
+  }
+  @keyframes proc-slide { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(calc(var(--shift, 0px) * -1), 0, 0); } }
+  @keyframes proc-rail { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  /* the global reduced-motion reset shortens animations to 0.01ms, which would detach them from the scroll */
+  @media (prefers-reduced-motion: reduce) {
+    .process.is-native .process__track, .process.is-native .process__rail span { animation-duration: auto !important; }
+  }
+
   @media (max-width: 1023px) {
     .process__label, .process__title { grid-column: 1 / -1; }
     .process__count { display: none; }
